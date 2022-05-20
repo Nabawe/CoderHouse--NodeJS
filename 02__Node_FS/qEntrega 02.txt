@@ -1,0 +1,161 @@
+Desarrollar la pregunta:
+    La necesidad de usar funciones dentro de .then, .catch y .finally SUPONGO q vendrá de no saber q es lo q se devuelve entonces se lo pasa por una función para nombrarlo, la pregunta seria porque no usar algo tipo la estructura de la Array especial Arguments.
+
+
++ Omitiendo Argumentos en una LLamada a una función
+    Slides : Clase 3  - Programación sincrónica y asincrónica : Pag : 43
+
+    Promise.resolve( 20 )
+        .then( x => x + 1 )
+        .then( x => x * 2 )
+        .then( x => {
+            if ( x == 22 ) throw 'Error'
+            else return 80
+        } )
+        .then( x => 30 )
+        .then( x => x / 2 )
+        .then( console.log )
+        .catch( console.log )
+
+
+    Como es q console.log recibe y manipula sus argumentos? Normalmente tendria q escribir algo como :
+        .then( arg => { console.log( arg ) } )
++
+
+
++ Convención para el nombre de los módulos?
+    Así como usamos Pascal Case para Objetos y Componentes o Todo mayus para constantes globales hay alguna convención para la variable q usamos para manipular el modulo?.
++
+
+
++ mkdir
+    https://nodejs.org/dist/latest-v10.x/docs/api/fs.html#fs_fspromises_mkdir_path_options
+
+    " The optional options argument can be an integer specifying mode (permission and sticky bits), or an object with a mode property and a recursive property indicating whether parent folders should be created. "
+
+    Da este ejemplo:
+        // Creates /tmp/a/apple, regardless of whether `/tmp` and /tmp/a exist.
+        fs.mkdir( '/tmp/a/apple', { recursive: true }, ( err ) => {
+            if ( err ) throw err;
+        } );
+
+    Hay alguna forma mejor para crear directorios con subdirectorios?
++
+
+
++ importando fs
+    VS Code me sugiere:
+        import { promises as fsP } from 'fs';
+    en vez de:
+        const fsP = require('fs').promises;
+
+    1) Pero el uso de require no hace q sea más rápido y prioritario el import? Q ventaja tiene:
+        " File is a CommonJS module; it may be converted to an ES module.ts(80001) "
+
+    2) Para q la clase pueda usar fs no deberia declarar fs dentro de la clase? al menos como una propiedad privada?, Pienso q al momento de hacer el import se lee esta primera línea pero pensando como queda flotando la class Container me pregunto si siempre es vigente, me hace pensar en lo q dimos de Closures.
++
+
+
++ txt vs json
+    getById o getAll
+        const data = JSON.parse( JSON.stringify ( await fsP.readFile( this.filePath, 'utf-8' ) ) );
+
+    Tendría q primero convertir el archivo a json?
++
+
+
++ Retornos de los Tests
+    Es correcto como hice para mostrar los retornos? ya q por como estaba redactado el ejercicio parecia q los metodos eran async o el método en si tenia q esperar la operacion y devolverlo solo al resultado al terminar?.
+    Si intento meter un await luego de return dentro de esos metodos me sigue devolviendo la promesa, no entiendo bien como balancear para q siga sin trabar al programa pero q el método en si se encargue de esperar y devolver el resultado LUEGO de la operacion asincrónica.
++
+
+
++ console.clear()
+    Me manda la CLI al tope pero no me la limpia realmente, alguna recomendación para q nodemon me limpie todo antes de mandarme el output? ( q no sea matar la terminal y crear otra )
++
+
+
++ return data || null
+    En realidad si no encuentra un id o el archivo no tiene objetos definidos dentro no tendría q armar un mecanismo para lidiar con esto?
++
+
+
++ getById
+    await data.find( obj => id === obj.id )
+    1) es correcto pensar q un find pueda tardar como para justificar usar un await adelante de el?
+
+    2) Creo q nunca se daría error aquí ya q los 2 casos mas probables ( q data este vació y q algo del find falle ) ya estan cubiertos.
++
+
+
++ getLastId
+    return data.length ? ( await data[ data.length - 1 ].id ) : 0;
+    1) Es correcto pensar q se pueda demorar aquí?
+
+    2) Esta función creo q deberia ser sincrónica, el problema esta en tener q scan todo el archivo...
++
+
+
++ setIdCounter
+    1) Hay alguna forma más inteligente de hacer eso, tal vez de 1 dentro del mismo constructor?
+
+    2) Aqui nuevamente como fuerzo el esperar a q se complete la operacion, ya q necesito el valor de idCounter para poder continuar o tengo q re escribir todo usando los comandos sincrónicos?.
+
+    La termine escribiendo de forma sincrónica pero deje la vieja de como me parecería q deberia quedar aunque n me funciono así.
++
+
+
++ save y deleteById
+    1) Ambos procesos deberían abrir el archivo y operar al final o en la posición de un carácter, al estilo append en vez d cargar todo el archivo en memoria y modificar.
+    Creo q se hace con handle.write pero nunca lo hice.
+
+    2) Si intento correr varias veces seguidas save se producen errores, no se bien como colocar un lock y un stack para q se espere a q se termine la operacion anterior antes de intentar manipular el archivo de nuevo, creo q tendria q poner un lock siempre para q se ordene cada operacion, vi q hay comandos de fs de open y close pero no tengo idea como usarlos.
+    Lo q intento decir es q todo se corra de forma async pero q haya operaciones q digan q tienen q esperar q se completen las anteriores, q se yo como si colocara un flag en la instancia q diga busy y un stack para ir mandando tareas a ejecutar, igual suena bastante ridículo todo lo q estoy diciendo...
+
+    3) Las siguientes 2 líneas creo q tendrían q ser cambiadas por otra cosa q n interrumpa:
+        if ( payload.length === data.length )
+            return new Error( `Al Borrar: Objeto Inexistente:\n ${err.message}` );
+
+    4) Como hacer para q save pueda operar en un archivo completamente en blanco. Ya probe cambiando this.getAll por otras cosas. O sea si no existe el archivo o si esta vacío q lo cree. En especial si esta vacío me tira varios errores.
++
+
+
++ Naturaleza del Try Catch y New Error
+    A veces si por ejemplo falla getAll en vez de decirme el error en esa función me tira el error de la función q la llamo, es esto correcto o estoy haciendo algo mall?, de esta manera se vuelve dificil de interpretar hay algo para mejorar como identificar donde fue un error?
++
+
+
++ Módulos
+    Si bien use import en ReactJS no tengo idea como hacer módulos de JavaScript correctamente, me separe unos tutoriales pero queria saber si vamos a dar en este curso como hacerlo correctamente y cuales son las practicas más actualizadas.
+    No se si lo implemente bien me guie por los errores que me tiraba la consola.
+
+    Lo mismo para Metodos y Propiedades Privadas.
+
+    El archivo principal se me hace raro q sea index.mjs y q tenga q poner type module en el package.json
++
+
++ Extra
+    Cosas q no pude hacer por un tema de tiempo:
+    RUN npm init -y y marcar el uso de fs?
+        1) ¿Tengo q marcar el required fs? ¿Y si no fuera un modulo nativo? ¿Esto va en dependencies de package.json o se hace de otra forma?
+    Agregar verificación de existencia en el constructor para this.filePath = `./${fileName}`;
+    Doc Strings
+    pregunta cuando hice el desafio nodemon se me ponia loco cuando escribia los archivos
++
+
+
++ Omitiendo Argumentos en una LLamada a una función
++ Convención para el nombre de los módulos?
++ mkdir
++ importando fs
++ txt vs json
++ Retornos de los Tests
++ console.clear()
++ return data || null
++ getById
++ getLastId
++ setIdCounter
++ save y deleteById
++ Naturaleza del Try Catch y New Error
++ Módulos y Metodos Y Propiedades Privadas
++ Extra

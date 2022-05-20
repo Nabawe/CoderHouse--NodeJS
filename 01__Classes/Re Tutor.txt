@@ -1,0 +1,34 @@
+Hola Franco como va? Gracias por subir el desafío. Te felicito, muy completo el desafío, no tengo correcciones así que el desafio está aprobado!
+
+
+Te tu consulta de sobre cómo documentar, por lo general se usa https://jsdoc.app/ y el estándar para definir una variable primitiva, compleja o de instancia es camelcase en javascript, mañana comparto una guía de codificación por el grupo del curso.
+    FF :
+        En q me beneficia usar jsdoc, si ya q si tipeo /** me genera esos campos VS Code sin installar?
+
+
+Tanto array.reduce como reduceRight el parámetro inicial es opcional, en el link que me pasaste lo aclara, fijate en la descripción de los parámetros de los métodos.
+    FF :
+        Se q es opcional pero si hace el experimento va a ver q reduceRight funciona con concat pero reduce solo no funciona si no se especifica el [] ya q la call back usa su resultado anterior y el resultado anterior es modificado por el parametro extra del reduce y por eso no entiendo pork reduceRight si funciona.
+
+
+Las soluciones que planteaste no funcionan porque la forma como las definiste no va como trabaja el método. reduce toma como último valor válido lo que vos le devuelvas en el return del callback, y por ejemplo el push devuelve la nueva longitud del array, entonces en la siguiente iteración toma ese valor que es un número e intenta llamar al método push, y da error. Y en el p[i] devuelve un string, y en la próxima iteración trata de asignar el valor del subindice 1 y rompe porque solo se asigna cosas a una variable, no a valores fijos.
+    FF :
+        “output = this.libros.reduce( ( p, c ) => p.concat( c.titulo ), [] )”
+
+        Aquí nuevamente creo q no me entendio, esta solucion q yo plantie si funciona, y si entiendo q los returns de las otras no funcionaban ya q puse “p[1] = ‘señor de las …’ “, pero como le decia no entiendo el paso a paso, aun si lo debugeo y pongo jump in, ademas todas las strings son una derivacion de array.
+
+
+Bueno espero que se entienda, sino cualquier cosa decime y lo vemos. Saludos.
+
+
+08/05 12:50 Rolando
+¡Listo! La entrega pasó a estar aprobada.
+
+
+08/05 12:50 Rolando
+Ah, me olvidaba. Hay muchas formas de resolver lo de getBookNames. Yo usaría map porque tengo que recorrer todo el array y devolver un nuevo array con el resultado de cada iteración, y eso es lo que exactamente hace map.
+    FF :
+        Yo intento siempre evitar los metodos de JS ya q son muy lentos, map es 100 o 1000 veces mas lento q un for off, 1 porque esta armado como un metodo q tiene q adaptarse a varios escenearios en vez d uno codearlos y 2 pork usa una callback, no tengo el link a mano pero si le interesa se lo paso, hay muchas pruebas medio truchas… pero un argumento q siempre me queda dando vueltas es tener la fe de q cada vez se optimizen mas ese tipo de estructuras, o sea escribiendo un .map tener fe a q cada vez va a funcionar mas rapido, entonces volviendo a lo anterior tiene idea cual de los 2 for of o destructuring for es mejor? no solo por velocidad sino por lo q se acepte mas.
+
+
+Me contesto las respuestas a sus respuestas pero lo unico de valor fue q el reduceRight falla sin el parametro opcional como es de esperarse.
