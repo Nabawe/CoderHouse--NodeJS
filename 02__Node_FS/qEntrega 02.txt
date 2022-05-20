@@ -1,5 +1,19 @@
-Desarrollar la pregunta:
-    La necesidad de usar funciones dentro de .then, .catch y .finally SUPONGO q vendrá de no saber q es lo q se devuelve entonces se lo pasa por una función para nombrarlo, la pregunta seria porque no usar algo tipo la estructura de la Array especial Arguments.
++ Omitiendo Argumentos en una LLamada a una función
++ Convención para el nombre de los módulos?
++ mkdir
++ importando fs
++ txt vs json
++ Retornos de los Tests
++ console.clear()
++ return data || null
++ getById
++ getLastId
++ setIdCounter
++ save y deleteById
++ Naturaleza del Try Catch y New Error
++ Módulos y Metodos Y Propiedades Privadas
++ nodemon
++ Extra
 
 
 + Omitiendo Argumentos en una LLamada a una función
@@ -82,7 +96,7 @@ Desarrollar la pregunta:
 
 + getById
     await data.find( obj => id === obj.id )
-    1) es correcto pensar q un find pueda tardar como para justificar usar un await adelante de el?
+    1) es correcto pensar q un find pueda tardar como para justificar usar un await adelante de el?. Se q lo usan como un 'unpacker' de promesas, pero puede usarse para esperar otro tipo de codigo?
 
     2) Creo q nunca se daría error aquí ya q los 2 casos mas probables ( q data este vació y q algo del find falle ) ya estan cubiertos.
 +
@@ -134,28 +148,18 @@ Desarrollar la pregunta:
     El archivo principal se me hace raro q sea index.mjs y q tenga q poner type module en el package.json
 +
 
-+ Extra
-    Cosas q no pude hacer por un tema de tiempo:
-    RUN npm init -y y marcar el uso de fs?
-        1) ¿Tengo q marcar el required fs? ¿Y si no fuera un modulo nativo? ¿Esto va en dependencies de package.json o se hace de otra forma?
-    Agregar verificación de existencia en el constructor para this.filePath = `./${fileName}`;
-    Doc Strings
-    pregunta cuando hice el desafio nodemon se me ponia loco cuando escribia los archivos
+
++ nodemon
+    Si usaba nodemon aquí se creaba un bucle infinito, nodemon detectaba un cambio en un archivo y reiniciaba el script. Cómo proceder?
 +
 
 
-+ Omitiendo Argumentos en una LLamada a una función
-+ Convención para el nombre de los módulos?
-+ mkdir
-+ importando fs
-+ txt vs json
-+ Retornos de los Tests
-+ console.clear()
-+ return data || null
-+ getById
-+ getLastId
-+ setIdCounter
-+ save y deleteById
-+ Naturaleza del Try Catch y New Error
-+ Módulos y Metodos Y Propiedades Privadas
 + Extra
+    Cosas q no pude hacer por un tema de tiempo:
+        RUN npm init -y y marcar el uso de fs?
+            1) ¿Tengo q marcar el required fs? ¿Y si no fuera un modulo nativo? ¿Esto va en dependencies de package.json o se hace de otra forma?
+
+        Agregar verificación de existencia en el constructor para this.filePath = `./${fileName}`;
+
+        Doc Strings
++
