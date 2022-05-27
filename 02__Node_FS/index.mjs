@@ -12,6 +12,7 @@ function runTest( msg, delay, test ) {
 };
 
 // Uso let pensado q manipularía otro archivo luego.
+    // Seria mejor crear otra variable y cuando se deja de usar una limpiarla.
 /*
     ! La class esta armada para solo usar el archivo si esta en ./testFiles/ el mismo directorio, ya q la consigna decia q se le pasara un nombre
 */
