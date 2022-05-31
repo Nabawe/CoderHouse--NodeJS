@@ -1,0 +1,25 @@
+{
+  "name": "03__express",
+  "version": "1.0.1",
+  "description": "Practica Entregable De NodeJS Express Package",
+  "main": "index.mjs",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nabawe/CoderHouse--NodeJS.git"
+  },
+  "keywords": [
+    "express",
+    "test",
+    "learning"
+  ],
+  "author": "Nabawe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nabawe/CoderHouse--NodeJS/issues"
+  },
+  "homepage": "https://github.com/Nabawe/CoderHouse--NodeJS#readme"
+}
