@@ -1,0 +1,70 @@
++ Qué quiere decir 'tienen la preferencia de cargarse primero'
++ Posibles Errores en la Slide 05
++ npm version patch y git commit
++ Especificar ~ ^ * en el comando npm
++ Server Listener vs connectedServer
++ req = Request Body. res = Response Object
+
+
++ Qué quiere decir 'tienen la preferencia de cargarse primero'
+    Slide 05 - NPM
+        " Los módulos básicos tienen la preferencia de cargarse primero si su identificador es pasado desde require(). "
+
+    Qué significa e implica lo anterior?
++
+
+
++ Posibles Errores en la Slide 05
+    " Si instalamos una dependencia en forma global, todos nuestros programas desarrollados en NodeJS contarán con esa librería, y con la versión que haya sido instalada. "
+        Esto no es incorrecto? Cuando instalamos de forma global no es q simplemente modificamos nuestro entorno? Por ejemplo no veo q se agregue la dependencia nodemon a todos los paquetes q voy creando. O depende de la librería global?
++
+
+
++ npm version patch y git commit
+    https://docs.npmjs.com/cli/v8/commands/npm-version
+        "
+            If run in a git repo, it will also create a version commit and tag. This behavior is controlled by git-tag-version (see below), and can be disabled on the command line by running npm --no-git-tag-version version. It will fail if the working directory is not clean, unless the -f or --force flag is set.
+
+            If supplied with -m or --message config option, npm will use it as a commit message when creating a version commit. If the message config contains %s then that will be replaced with the resulting version number
+        "
+    No entiendo bien como utilizar lo anterior.
+
+    Quiciera crear un comando q me hace version patch, git add . y git commit en 1 línea, es este correcto:
+
++
+
+
++ Especificar ~ ^ * en el comando npm
+    Como se hace para q al instalar una librería se coloquen los símbolos ~ ^ * etc. sin tener q editarlos manualmente del package.json
++
+
+
++ Server Listener vs connectedServer
+    Leyendo la documentación vi q lo q devuelve Serve.Listen es un "escuchador" (listener) entonces no seria más correcto guardarlo como puse en mi codigo?.
+    index.mjs:
+        Server.Listeners = [ Server.listen ]
+
+    Hay alguna razón para como lo pusieron en Coder?
+
+    Slides : " Listen, además, devuelve un objeto que contiene los datos del servidor conectado. "
+
+    Más q los datos del servidor conectado los datos del escuchador creado o no?. El puntero al server es la constante Server no?.
++
+
+
++ req = Request Body. res = Response Object
+    // req = Request Body
+    // res = Response Object
+
+    Es correcto o son otra cosa?
++
+
+
+
+
+
+
+
+
+
+Quiciera crear un comando q me hace version patch, git add . y git commit en 1 línea, es este correcto:

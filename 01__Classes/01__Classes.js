@@ -40,12 +40,14 @@ class Usuario {
 
     getBookNames() {
         let output = [];
-        /* ? Q forma de hacerlo es mejor y porque? las mas rapida y q menos consume? for of vs destructuring for vs reduce */
+        /* ? Q forma de hacerlo es mejor y porque? las más rapida y q menos consume? for of vs destructuring for vs reduce */
         // for ( const libro of this.libros )
             // output.push( libro.titulo );
-        // for ( const { titulo: t } of this.libros )
-            // output.push( t );
-        output = this.libros.reduce( ( p, c ) => p.concat( c.titulo ), [] );
+        for ( const { titulo: t } of this.libros )
+            output.push( t );
+        // output = this.libros.reduce( ( p, c ) => p.concat( c.titulo ), [] );
+        // output = this.libros.reduce( ( p, c ) => p.concat( [c.titulo] ), [] );
+            // Array.concat takes either Arrays or Values to concatenate into the new array.
             /*
                 ? No me queda muy claro pork no puedo resolverlo de una de las siguientes maneras:
                     output = this.libros.reduce( ( p, c ) => p.push( c.titulo ), [] );
