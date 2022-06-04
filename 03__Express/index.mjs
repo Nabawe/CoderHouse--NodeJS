@@ -1,23 +1,10 @@
 /*
-    import HTTP from 'http';
-    const PORT = 8080;
+    1) GitHub y Glitch
+        a) Ruta get '/productos' que devuelva un array con todos los productos disponibles en el servidor
+        b) Ruta get '/productoRandom' que devuelva un producto elegido al azar entre todos los productos disponibles
 
-    // req = Request Body
-    // res = Response Object
-    const Server = HTTP.createServer( ( req, res ) => {
-        res.end( console.log( res ) );
-    } );
-
-    const currentListener = Server.listen( PORT, () => {
-        console.log( `Server Up and Listening, Info: ${ JSON.stringify( currentListener.address(), null, 4 ) }` );
-    } );
-
-    Server.Listeners = [ currentListener ];
+    2) Incluir un archivo de texto 'productos.txt' y utilizar la clase Contenedor del desafío anterior para acceder a los datos persistidos del servidor.
+        b) Al menos 3 productos
 */
 
 import Express from 'express';
-/* El objeto obtenido luego del import es una función... q devuelve una App Servidor Basica Configurable - Slides */
-    // Parece ser una funcion llena de otras funciones, createApplication?
-    // console.log( Express );
-
-const App = Express();

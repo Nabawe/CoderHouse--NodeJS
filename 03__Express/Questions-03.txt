@@ -4,6 +4,10 @@
 + Especificar ~ ^ * en el comando npm
 + Server Listener vs connectedServer
 + req = Request Body. res = Response Object
++ HTTPS Express Server
++ App vs Server
++ Tipos de res
++ Orden de Server.listen
 
 
 + Qué quiere decir 'tienen la preferencia de cargarse primero'
@@ -42,7 +46,7 @@
 + Server Listener vs connectedServer
     Leyendo la documentación vi q lo q devuelve Serve.Listen es un "escuchador" (listener) entonces no seria más correcto guardarlo como puse en mi codigo?.
     index.mjs:
-        Server.Listeners = [ Server.listen ]
+        Server.activeListeners = [ Server.listen ]
 
     Hay alguna razón para como lo pusieron en Coder?
 
@@ -60,11 +64,45 @@
 +
 
 
++ HTTPS Express Server
+    Pedir al profesor q de un ejemplo de como levantar un server HTTPS, y sobre los certificados.
+
+    https://stackoverflow.com/questions/11744975/enabling-https-on-express-js
++
+
+
++ App vs Server
+    Al usar el modulo HTTP al servidor lo llaman server pero en express le ponen app ... me terminan mareando con la inconsistencia, hay alguna razón? Si vi q en la doc oficial también esta así.
++
+
+
++ Tipos de res
+    Un lugar q explique claramente los tipos de response, send, render, end, etc.
++
+
+
++ Orden de Server.listen
+    Hay alguna razon por la cual el profesor coloca:
+        app.listen( PORT, ()
+
+    Debajo de todos los:
+        app.get
+
+    Afecta en algo? Si no entiendo mal es como si preparase el Server Primero y recien ahi lo 'activa', qué es lo más correcto? Ya q hay cosas como el 'on error' q se especifican LUEGO de tener el listener.
++
 
 
 
 
 
+
+
+Server.use(Express.static("public"));
+
+res.sendFile(__dirname + "/views/index.html");
 
 
 Quiciera crear un comando q me hace version patch, git add . y git commit en 1 línea, es este correcto:
+
+
+HTTPS Express Server
