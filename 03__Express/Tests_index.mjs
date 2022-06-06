@@ -26,7 +26,7 @@ const Server = Express();
 
 let viewsCounter = 0;
 const front = {
-    top: `<body style='background-color: #AAA'>`,
+    top: `<body style='background-color: #AAA;'>`,
     bot: `</body>`
 };
 
@@ -34,7 +34,7 @@ const front = {
 Server.get( '/', ( req, res ) => {
     const content = `
         ${front.top}
-            <h1 style='color: hsla(212, 78%, 50%, 1)'>
+            <h1 style='color: hsla(212, 78%, 50%, 1);'>
                 Welcome to this NodeJS Express Server
             </h1>
         ${front.bot}
@@ -45,7 +45,7 @@ Server.get( '/', ( req, res ) => {
 Server.get( '/views', ( req, res ) => {
     const content = `
         ${front.top}
-            <h1 style='color: hsla(212, 78%, 50%, 1)'>
+            <h1 style='color: hsla(212, 78%, 50%, 1);'>
                 Current Views Count is : ${ ++viewsCounter }
             </h1>
         ${front.bot}
@@ -60,7 +60,7 @@ Server.get( '/fyh', ( req, res ) => {
 Server.get( '*', ( req, res ) => {
     const content = `
         ${front.top}
-            <h1 style='color: hsla(0, 78%, 50%, 1)'>
+            <h1 style='color: hsla(0, 78%, 50%, 1);'>
                 404 Page not Found.
             </h1>
         ${front.bot}

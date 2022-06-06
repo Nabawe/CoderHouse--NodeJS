@@ -121,7 +121,7 @@
 
 + save y deleteById
     1) Ambos procesos deberían abrir el archivo y operar al final o en la posición de un carácter, al estilo append en vez d cargar todo el archivo en memoria y modificar.
-    Creo q se hace con handle.write pero nunca lo hice.
+    Creo q se hace con handle.write o filehandle.write pero nunca lo hice.
 
     2) Si intento correr varias veces seguidas save se producen errores, no se bien como colocar un lock y un stack para q se espere a q se termine la operacion anterior antes de intentar manipular el archivo de nuevo, creo q tendria q poner un lock siempre para q se ordene cada operacion, vi q hay comandos de fs de open y close pero no tengo idea como usarlos.
     Lo q intento decir es q todo se corra de forma async pero q haya operaciones q digan q tienen q esperar q se completen las anteriores, q se yo como si colocara un flag en la instancia q diga busy y un stack para ir mandando tareas a ejecutar, igual suena bastante ridículo todo lo q estoy diciendo...

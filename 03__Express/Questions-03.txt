@@ -8,6 +8,8 @@
 + App vs Server
 + Tipos de res
 + Orden de Server.listen
++ Async File Retrieve and Display
++ Primer [ es indentado
 
 
 + Qué quiere decir 'tienen la preferencia de cargarse primero'
@@ -92,11 +94,29 @@
 +
 
 
++ Async File Retrieve and Display
+    Esta planteado correctamente en index.mjs el colocar async así:
+        Server.get( '/products', async ( req, res ) => {
+
+    O eso arruina al .get?.
+    O debería poner una async function englobando todo hasta el res.send para q espere la lectura del archivo y recien ahi envíe?.
++
+
+
++ Primer [ es indentado
+    Porque aparece corrido el corchete si el archivo JSON no tiene indentación alguna, la etiqueta pre esta agregando eso?
+
+    Para verlo borre /n en index.mjs :
+        \n${JSON.stringify( ( await JSONBoxy.getAll() ), null, 4 )}
+
+    Y cual es la forma correcta de solucionarlo?
+
+    white-space: pre-line;
++
 
 
 
-
-
+https://expressjs.com/en/starter/static-files.html
 Server.use(Express.static("public"));
 
 res.sendFile(__dirname + "/views/index.html");
@@ -106,3 +126,23 @@ Quiciera crear un comando q me hace version patch, git add . y git commit en 1 l
 
 
 HTTPS Express Server
+
+Improve getLastId
+
+Conciderar dejar index.mjs bastante peleado y crear una clase FileServer a la q se le pasa un JSONBox en la creación.
+
+
+Porque muestra address de esa manera
+    Server Up and Listening, Info: {
+        "address": "::",
+
+
+JSONBox Esta lleno de errores, de diceño y no funcionales y muchas de mis preguntas apuntan a eso.
+
+
+Pensar agregar un package.json por cada clase de /classes ya q usan import y son módulos, así no depende de solo la extensión el reconocerlos y pensar como es q se le agregarían las dependencias de por ejemplo JSONBox al proyecto q lo fuera a utilizar.
+    ! Ademas es importante ya q sino no se save q version de fs se uso
+        Aunque parece q al ser modulo nativo no aparece hacer pregunta de como se marca q version de modulo nativo usar o eso ya seria la version de NodeJS en si?
+
+
+Apropósito el archivo productos.json le falta el id 3, así se ve q pasa cuando el rnd da null

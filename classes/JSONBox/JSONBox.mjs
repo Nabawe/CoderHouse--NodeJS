@@ -1,15 +1,29 @@
-// const fs = require('fs');
+/*
+    To-Do Crear un mecanismo de FLAGS al estilo Flag_Lock_Save, entonces todas las funciones q se podrian ver afectadas por el save esperan q se resuelva esa cola, y así para otros casos al estilo Flag_Lock_RetrievingLastIdFromFile.
+        Supuestamente eso es lo q se tendria q lograr con las promises, el estado pending pero estoy estructurando mal.
+        Al estilo diga busy o avise al stack.
+    To-Do remover todas las funciones Sync, una cosa es q la Class se frene pero no tiene q frenar la ejecucion completa del servidor.
+*/
+
 import fs from 'fs';
 const fsP = fs.promises;
 
+/** Creates a simple interface wich helps manipulate a basic array of items stored in a JSON file. */
 class JSONBox {
-    constructor( fileName ) {
+    /**
+     * @param {String} fileName
+     * @param {String} filePath The path must end with a slash /
+     */
+    constructor( fileName, filePath ) {
         this.fileName = fileName;
-        this.filePath = `./testFiles/${fileName}`;
-        // this.setIdCounter();
+        this.filePath = `${filePath}${fileName}`;
         this.#initIdsCounter();
     };
 
+    /**
+     * Retrieves all the items from the file asynchronously.
+     * @returns JSON formmated data.
+     */
     async getAll() {
         try {
             const data = JSON.parse( await fsP.readFile( this.filePath, 'utf-8' ) );
@@ -18,33 +32,22 @@ class JSONBox {
             return new Error( `Al intentar leer el archivo:\n ${err.message}` );
         };
     };
-    /* getAll() {
-        try {
-            const data = JSON.parse( fs.readFileSync( this.filePath, 'utf-8' ) );
-            return data;
-        } catch( err ) {
-            return new Error( `Al intentar leer el archivo:\n ${err.message}` );
-        };
-    }; */
 
+    /**
+     * Finds a product by id.
+     * @param {Number} id of the product.
+     * @returns an object with the single's product data, null if no result is found or Error if the file's data was undefined, missing, [], etc.
+     */
     async getById( id ) {
         try {
             const data = await this.getAll();
-            // el primer null es por si find retorna undefined, sin matches
-            // el segundo es por si data es undefined o []
             return data.length ?
-                // ( await data.find( obj => id === obj.id ) ) || null
                 ( data.find( obj => id === obj.id ) ) || null
             :
-                null
+                new Error( 'Archivo Vacio' );
             ;
-            /* if ( data ) {
-                return ( await data.find( obj => id === obj.id ) ) || null;
-            } else {
-                return new Error( 'Archivo Vacio' );
-            }; */
         } catch( err ) {
-            return new Error( `No Encontrado:\n ${err.message}` );
+            return new Error( `Se produzco un error al realizar la busqueda:\n ${err.message}` );
         };
     };
 
@@ -52,7 +55,7 @@ class JSONBox {
     /* Comentario a mi mismo - .- seria mejor si esto fuera la primera linea del archivo o como un dato aparte facil de relevar tambien definido dentro... aunque si esta adentro fuerza a cargar todo junto, o es la primera linea o se lo guarda aparte en otro lado */
     /* https://stackoverflow.com/a/61839489/3170694 falta length -1 vs at(-1), Comparacion de formas de obtener el ultimo elemento */
     // Aun si esta vacio debería devolver 0.
-    async getLastId() {
+    async getLastIdFromFile() {
         try {
             const data = await this.getAll();
             // return data.length ? ( await data[ data.length - 1 ].id ) : 0;
@@ -62,11 +65,39 @@ class JSONBox {
         };
     };
 
+    async getFirstIdFromFile() {
+        try {
+            const data = await this.getAll();
+            return data.length ? ( data[0].id ) : 0;
+        } catch( err ) {
+            return new Error( `No Encontrado:\n ${err.message}` );
+        };
+    };
+
+    async getRndItem( min, max ) {
+        try {
+            const data = await this.getAll();
+            if ( data.length ) {
+                min = min || await this.getFirstIdFromFile();
+                max = max || await this.getLastIdFromFile();
+                // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+                // max and min are inclusive
+                const id = Math.floor(Math.random() * (max - min + 1) + min);
+                return ( data.find( obj => id === obj.id ) ) || null
+            } else {
+                new Error( 'Archivo Vacio' );
+            };
+        } catch( err ) {
+            return new Error( `Se produzco un error al realizar la busqueda:\n ${err.message}` );
+        };
+    };
+
     async setIdCounter() {
-        return this.idCounter = await this.getLastId();
+        return this.idCounter = await this.getLastIdFromFile();
     };
 
     // Aun si esta vacio( JSON vacio [] o {}; y no completamente vacio ) debería devolver 0.
+    // ! Hacer q esto tambien sea ASYNC
     #initIdsCounter() {
         try {
             const data = JSON.parse( fs.readFileSync( this.filePath, 'utf-8' ) );
@@ -78,11 +109,18 @@ class JSONBox {
 
     // ! No se fija si el objeto ya existe
     // ! Puede operar en JSONs vacios [] pero no en un archivo completamente en blanco
-    // ! No crea un archivo nuevo si no existe
+    // ! No crea un archivo nuevo si no existe, de tener q crearlo tambien tendria q poder crear toda la ruta, o sea los dirs
+    /*
+        ! Tendria q ser sincronico o avisar cuando se completa el proceso para garantizar q se ejecuten en el orden correcto y asi se escriba de forma correcta el archivo, asignen Ids, creo q en una de mis tests marque algo parecido, disparando rapido varios eventos.
+    */
+    /*
+        ! Tendria q usar append es una animalada hacerlo de esta forma, esta en las preguntas Questons-02.txt.
+        ? confirmar q el metodo append de FS no cargue todo el archivo para modificarlo
+    */
     async save( payload ) {
         try {
             let id = ++this.idCounter;
-            // let id = ( await this.getLastId() ) + 1;
+            // let id = ( await this.getLastIdFromFile() ) + 1;
             payload = { ...payload, 'id': id };
             // const data = ( await this.getAll() ) || [];
             let data = await this.getAll();
