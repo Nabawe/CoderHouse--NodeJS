@@ -80,6 +80,9 @@ class JSONBox {
      * @param {Number} [max=getLastIdFromFile()]
      * @returns {Promise} a random single item, null if no result is found or Error if the file's data was undefined, missing, [], etc.
      */
+    /*
+        ! WIP Ver como garantizar q se devuelva un resultado, o sea no tiene mucho sentido q devuelva null cuando se supone q tiene q dar un item al azar.
+    */
     async getRndItem( min, max ) {
         try {
             const data = await this.getAll();
@@ -88,7 +91,7 @@ class JSONBox {
                 max = max || await this.getLastIdFromFile();
                 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
                 // max and min are inclusive
-                const id = Math.floor(Math.random() * (max - min + 1) + min);
+                const id = Math.floor( Math.random() * ( max - min + 1 ) + min );
                 return ( data.find( obj => id === obj.id ) ) || null
             } else {
                 new Error( 'Archivo Vacio' );

@@ -10,6 +10,7 @@
 + Orden de Server.listen
 + Async File Retrieve and Display
 + Primer [ es indentado
++ ReTutor
 
 
 + Qué quiere decir 'tienen la preferencia de cargarse primero'
@@ -23,6 +24,9 @@
 + Posibles Errores en la Slide 05
     " Si instalamos una dependencia en forma global, todos nuestros programas desarrollados en NodeJS contarán con esa librería, y con la versión que haya sido instalada. "
         Esto no es incorrecto? Cuando instalamos de forma global no es q simplemente modificamos nuestro entorno? Por ejemplo no veo q se agregue la dependencia nodemon a todos los paquetes q voy creando. O depende de la librería global?
+
+            Tutor - La afirmación de la diapositiva es correcta. Cuando uno instala una dependencia global, se instala en el root de tu usuario de tu máquina, y queda con la versión que se instaló. Y desde ahí es accesible por cualquier proyecto existente o nuevo, al ser global no agrega a cada proyecto.
+                FF - Entonces como agrego la dependencia de un paquete q tengo instalado de forma global a un proyecto?
 +
 
 
@@ -42,6 +46,7 @@
 
 + Especificar ~ ^ * en el comando npm
     Como se hace para q al instalar una librería se coloquen los símbolos ~ ^ * etc. sin tener q editarlos manualmente del package.json
+        Tutor - npm install [package]@[version]
 +
 
 
@@ -55,6 +60,9 @@
     Slides : " Listen, además, devuelve un objeto que contiene los datos del servidor conectado. "
 
     Más q los datos del servidor conectado los datos del escuchador creado o no?. El puntero al server es la constante Server no?.
+
+        Tutor - Es un objeto escucha de la conexión del servidor, como lo tenemos en las diapositivas es la forma tradicional del cual se usa para un servidor web. Pero el tema de guardarlo es depende de qué quieras hacer con el objeto. Si lo necesitás en algún lado de tu aplicación y necesitás accederlo está bien guardarlo, caso contrario no tiene sentido.
+            FF - Pero me parecio ver q hay algo q ya los guarda o guarda algo similar y la pregunta apuntaba a cual era la forma correcta de hacerlo.
 +
 
 
@@ -63,6 +71,7 @@
     // res = Response Object
 
     Es correcto o son otra cosa?
+        FF - Incorrecto son solo objetos y a estos se les suele agregar varias cosas.
 +
 
 
@@ -75,11 +84,17 @@
 
 + App vs Server
     Al usar el modulo HTTP al servidor lo llaman server pero en express le ponen app ... me terminan mareando con la inconsistencia, hay alguna razón? Si vi q en la doc oficial también esta así.
+        Luego de leer más y aprender creo q a Express le pondría MiddleWare o MidServer.
+            Le volvi a poner Server xD va a depender de q realmente este haciendo. Lo de app parece venir por express app instance.
+
+        Respuesta del Tutor descartada.
 +
 
 
 + Tipos de res
     Un lugar q explique claramente los tipos de response, send, render, end, etc.
+
+        FF - https://expressjs.com/en/4x/api.html
 +
 
 
@@ -91,6 +106,9 @@
         app.get
 
     Afecta en algo? Si no entiendo mal es como si preparase el Server Primero y recien ahi lo 'activa', qué es lo más correcto? Ya q hay cosas como el 'on error' q se especifican LUEGO de tener el listener.
+
+        Tutor - La razón sería que idealmente se ponga abajo de todo, luego de inicializar todo lo que necesita la app pero no pasa nada si se pone el listen arriba de los app.get. En aplicaciones complejas uno tiene que asegurar que antes del listen se cargue todo lo que la app necesita, de lo contrario la app figurará disponible cuando en realidad no lo está.
+            FF - Respuesta genérica...
 +
 
 
@@ -100,6 +118,8 @@
 
     O eso arruina al .get?.
     O debería poner una async function englobando todo hasta el res.send para q espere la lectura del archivo y recien ahi envíe?.
+
+        Tutor - Está correcto lo que hiciste, sino te lo marcaría
 +
 
 
@@ -112,6 +132,18 @@
     Y cual es la forma correcta de solucionarlo?
 
     white-space: pre-line;
++
+
+
++ ReTutor
+    Hola Franco, como va? Ahí revisé el desafío y está aprobado! Muy buen trabajo. Como consejo te diría que trates de implementar solo lo que te pide la consigna, con las pautas que te da. Porque sino sopones escenarios que no pasarán y complejizan la solución. A medida que pasen los desafíos tendrás mayor complejidad o más consignas a implementar así que no te preocupes si por ahora te resulta fácil.
+
+    Te comento esto porque vi que agregaste métodos para obtener el 1er y último elemento del archivo, y también de pasar la ubicación de donde está el archivo. Súper válido pero para la consigna no era necesario, vos controlás el contenido del archivo y su ubicación, en esta instancia estaba más que bien que dentro de la clase sepa donde está el archivo de productos, lo mismo con el contenido, el endpoint de random no tendría que responder null, porque lo controlás vos. Distinto sería si se pedía un endpoint donde te pasan cualquier ID.
+        FF - Estoy de acuerdo con lo q dice y tome nota pero... lo de solo obtener un resultado q exista es algo mucho más complejo ya q el numero tiene q ser al azar y tendria q quitar de los posibles resultados al azar las id q no existan, tonces tendría q primero relevar todos los id q existen y generar esa pileta de donde se sacan los ids lo puedo imaginar pero...
+        Lo del primer y ultimo resultado fueron consecuencias del desarrollo.
+
+    FF - JSONBox Esta lleno de errores, de diceño y no funcionales
+        Tutor - Depende de como lo veas, para este desafío que se avalúa el getAll y el random, está perfecto. Ya te comenté sobre lo que vi en random y como no está mal, está aprobado. En desafíos que correspondan, te marcaré las cosas de diseño.
 +
 
 
