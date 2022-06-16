@@ -1,0 +1,92 @@
++ Cada End Point Debería Terminar en return ?
++ Testear Server json cfg
++ Qué significa archivos estáticos?
++ Como reemplazar __dirname
++ Express.static vs Server.get( '/'...
+
+
++ Cada End Point Debería Terminar en return ?
+    Cuando pongo:
+        '  res.status( 200 ).send( phrase[pos] ); '
+
+    No debería poner:
+        ' return  res.status( 200 ).send( phrase[pos] ); '
+
+    ?
++
+
+
++ Testear Server json cfg
+    Para que nuestro servidor express pueda interpretar en forma automática mensajes de tipo JSON en formato urlencoded al recibirlos, debemos indicarlo en forma explícita, agregando las siguiente líneas luego de crearlo.
+
+        Server.use(express.json())
+        Server.use(express.urlencoded({ extended: true }))
+
+    Aclaración: {extended:true} precisa que el objeto req.body contendrá valores de cualquier tipo en lugar de solo cadenas.
+    ¡Sin esta línea, el servidor no sabrá cómo interpretar los objetos recibidos!
+
+    Los significados de estas lineas.
++
+
+
++ Qué significa archivos estáticos?
+    Entiendo q son el CSS, HTML y demás pero q son exactamente? q propiedades tienen q tener O NO tener para q Express los pueda usar para levantar un servidor Web? Q serian dinámicos?
++
+
+
++ Como reemplazar __dirname
+    Si no entiendo mal ya no se usa más, cual sería la forma correcta de suplantarlo? Yo me base en este articulo:
+        https://blog.logrocket.com/alternatives-dirname-node-js-es-modules/
+
+    Realmente creo q lo hice mal, q tendría q usar algo tipo Path.dirname o alguna otra forma, prove distintas cosas pero termine usando algo parecido a lo q muestran al principio.
+
+    O por casualidad ahora NodeJS lo hace solo?
+
+    Server.get( '/', ( req, res ) => {
+        res.sendFile( fileURLToPath( new URL( './public/index.html', import.meta.url ) ) );
+    } );
+
+    Todo el siguiente choclo no se si combiene ponerlo en una variable para q no se ejecute cada vez, el problema es q si lo hago no se si pierde la gracia ya q supuestamente es para q se adapte:
+    const path_index = fileURLToPath( new URL( './public/index.html', import.meta.url ) );
+    Server.get( '/', ( req, res ) => {
+        res.sendFile( path_index );
+    } );
++
+
+
++ Express.static vs Server.get( '/'...
+    \04__ReST_API\.tests\08_Tests\Desafio__02\index.mjs
+
+    Cuando coloco:
+        Server.use( Express.static( fileURLToPath( new URL( './public', import.meta.url ) ) ) );
+
+    Si luego pongo cualquier cosa en el endpoint:
+        Server.get( '/', ( req, res ) => {
+            res.sendFile( fileURLToPath( new URL( './public/index.html', import.meta.url ) ) );
+        } );
+
+    No parece afectar o cumple alguna función el Server.get? Ya q si no entendi mal la documentación el setear Express.static ya setea ese endpoint.
+
+    https://expressjs.com/en/4x/api.html#express.static
+        index
+            Sends the specified directory index file. Set to false to disable directory indexing.
+            Defaults: “index.html”
++
+
+
++ Multer Storage Direction
+    No se si la estoy especificando bien o si tengo q usar algo al estilo de:
+
+    fileURLToPath( new URL( './uploads', import.meta.url ) )
+
+    const Storage = Multer.diskStorage( {
+    destination: ( req, file, cb ) => {
+        cb( null, './uploads' );
+    },
+
+    Aparte esto q puse en mis notas es correcto? Creo q me estoy confundiendo con lo de como se le pasa al engine de Storage.
+        http://expressjs.com/en/resources/middleware/multer.html
+
+        !!! Cuando se lo pasa por dest parece ser una string y cuando es storage se le manda la configuración del engine elegido.
+            Si no entiendo mal si se usa storage y no existe el directorio donde guardar los archivos tira error y no lo crea, pero si se le pasa por dest si lo hace.
++

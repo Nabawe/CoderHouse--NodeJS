@@ -1,26 +1,35 @@
 import Express from 'express';
-import { fileURLToPath } from 'node:url';
-import Route_Single from './routes/single.js';
-import Route_Multy from './routes/multy.js';
+import Route_Peeps from './routes/peeps.js';
+import Route_Pets from './routes/pets.js';
 
 const PORT = 8080;
 const Server = Express();
-
 // Server.use set ups this Express Server cfg by adding middlewares.
 Server.use( Express.json() );
 Server.use( Express.urlencoded( { extended: true } ) );
-Server.use( Express.static( fileURLToPath( new URL( './public', import.meta.url ) ) ) );
+
+const PHRASE = 'Hola mundo cómo están';
 
 const Front = {
     top: `<body style='background-color: #AAA;'>`,
     bot: `</body>`
 };
 
-console.log( `============================== ${ new Date }` );
+
+Server.get( '/', ( req, res ) => {
+    const content = `
+        ${Front.top}
+            <h1 style='color: hsla(212, 78%, 50%, 1);'>
+                Welcome to this NodeJS Express Server
+            </h1>
+        ${Front.bot}
+    `;
+    res.send( content );
+} );
 
 // Settingup Imported Routes
-Server.use( '/', Route_Single );
-Server.use( '/', Route_Multy );
+Server.use( '/', Route_Peeps );
+Server.use( '/', Route_Pets );
 
 Server.get( '*', ( req, res ) => {
     const content = `

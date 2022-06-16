@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test: File Upload</title>
+</head>
+
+<body>
+  <h2>Single File</h2>
+  <form action="/single" enctype="multipart/form-data" method="POST">
+    <input type="file" name="filePointer" required />
+    <button type="submit">Upload</button>
+  </form>
+
+  <br>
+  <hr>
+
+  <h2>Multy File (Up to 10)</h2>
+  <form action="/multy" enctype="multipart/form-data" method="POST">
+    <input type="file" name="filesArrayPointer" multiple required />
+    <button type="submit">Upload</button>
+  </form>
+</body>
+
+</html>

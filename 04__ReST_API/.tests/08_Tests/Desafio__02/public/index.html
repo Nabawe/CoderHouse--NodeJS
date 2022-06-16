@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test: Form POST Send</title>
+</head>
+
+<body>
+  <h2>Pets</h2>
+  <form action="/pets" method="POST">
+    name: <input type="text" name="name" required />
+    race: <input type="text" name="race" required />
+    age: <input type="text" name="age" required />
+    <button type="submit">Submit</button>
+  </form>
+
+  <br>
+  <hr>
+
+  <h2>Peeps</h2>
+  <form action="/peeps" method="POST">
+    name: <input type="text" name="name" required />
+    surname: <input type="text" name="surname" required>
+    age: <input type="text" name="age" required />
+    <button type="submit">Submit</button>
+  </form>
+</body>
+
+</html>
