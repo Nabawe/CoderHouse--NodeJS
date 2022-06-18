@@ -21,6 +21,7 @@ Implementar la API en una clase separada, utilizando un array como soporte de pe
         Server.use( '/api', products );
             Pedir explicación de esta línea.
             Rogelio Arzola Gomez:	Es solo los datos del producto pero en todos las rutas…ok
+            Creo q se refiere a q aparte de tener los productos en un archivo tenerlos en memoria?
 
 
 Incorporar el Router de express en la url base '/api/productos' y configurar todas las sub-rutas en base a este.

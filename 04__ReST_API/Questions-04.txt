@@ -3,6 +3,7 @@
 + Qué significa archivos estáticos?
 + Como reemplazar __dirname
 + Express.static vs Server.get( '/'...
++ Arquitectura de un Proyecto
 
 
 + Cada End Point Debería Terminar en return ?
@@ -89,4 +90,10 @@
 
         !!! Cuando se lo pasa por dest parece ser una string y cuando es storage se le manda la configuración del engine elegido.
             Si no entiendo mal si se usa storage y no existe el directorio donde guardar los archivos tira error y no lo crea, pero si se le pasa por dest si lo hace.
++
+
+
++ Arquitectura de un Proyecto
+    Recomendación de donde ver esto, sobre el orden y organización.
+    Aparte si bien me imagino q por lo general esto esta en una base de datos, donde guardaría el json con los productos? y he visto el uso de la carpeta assets pero me suena q es más para imágenes y esas cosas.
 +
