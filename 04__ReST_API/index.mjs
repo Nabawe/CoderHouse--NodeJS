@@ -1,12 +1,12 @@
 import Express from 'express';
 import { fileURLToPath } from 'node:url';
-import Route_Single from './routes/single.js';
-import Route_Multy from './routes/multy.js';
+// Routes
+import Route_Products from './routes/products.js';
 
 const PORT = 8080;
 const Server = Express();
 
-// Server.use set ups this Express Server cfg by adding middlewares.
+// Server.use configures this Express Server by adding middlewares.
 Server.use( Express.json() );
 Server.use( Express.urlencoded( { extended: true } ) );
 Server.use( Express.static( fileURLToPath( new URL( './public', import.meta.url ) ) ) );
@@ -18,9 +18,8 @@ const Front = {
 
 console.log( `============================== ${ new Date }` );
 
-// Settingup Imported Routes
-Server.use( '/', Route_Single );
-Server.use( '/', Route_Multy );
+// Setting up Imported Routes
+Server.use( '/api', Route_Products );
 
 Server.get( '*', ( req, res ) => {
     const content = `

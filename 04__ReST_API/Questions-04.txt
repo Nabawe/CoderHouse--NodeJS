@@ -4,6 +4,11 @@
 + Como reemplazar __dirname
 + Express.static vs Server.get( '/'...
 + Arquitectura de un Proyecto
++ return new Error vs throw
++ ERR__NO_DATA
++ f_productNotFound
++ Destructuring with Arrays Indexes
++ Consigna
 
 
 + Cada End Point Debería Terminar en return ?
@@ -14,6 +19,8 @@
         ' return  res.status( 200 ).send( phrase[pos] ); '
 
     ?
+
+    Esta pregunta me importa bastante por ejemplo se ve en .../routes/products.js pero también me viene la duda si es algo q debería poner en todos los res. q sean finales.
 +
 
 
@@ -97,3 +104,67 @@
     Recomendación de donde ver esto, sobre el orden y organización.
     Aparte si bien me imagino q por lo general esto esta en una base de datos, donde guardaría el json con los productos? y he visto el uso de la carpeta assets pero me suena q es más para imágenes y esas cosas.
 +
+
+
++ return new Error vs throw
+    Esta es otra pregunta importante q quedo acarreada de las entregas anteriores y todabia no me pude poner a revisar q me respondió y q no así q la dejo aquí en caso de q jamás pueda hacerlo:
+
+    El problema q veo es q si uso throw no paralizo todo o parcialmente al servidor? lo q busco es tirar el error pero o yo dejar un método o q el usuario pueda lidiar con el.
++
+
+
++ ERR__NO_DATA
+    Cuál sería el codigo de error correcto?
+    El tipo de res.send correcto? json?
+
+    res.status( 412 ).send( new Error( ERR__NO_DATA ) );
+        La línea anterior solo me deja {} en la pantalla del browser.
++
+
+
++ f_productNotFound
+    si la función retorna un res.send, end, etc. Cómo es el hilo de ejecución? Donde se termina la response, dentro de la función? dentro de la ruta? devuelvo la response y luego el return de la ruta lo termina?
++
+
++ Destructuring with Arrays Indexes
+    Como puedo hacer esto mejor, basándome en :
+
+        https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+            Assigning to new variable names
+                const o = {p: 42, q: true};
+                const {p: foo, q: bar} = o;
+
+                console.log(foo); // 42
+                console.log(bar); // true
+
+        No sería realmente una nueva variable
+
+    ( {
+        title: Products[index].title,
+        price: Products[index].price,
+        thumbnail: Products[index].thumbnail
+    } = req.body );
++
+
+
++ Consigna
++
+
+
+
+
+
+
+
+
+import Products from '../data/products.json' assert { type: "json" };
+! Este import falla si el archivo esta completamente vacío (ni siquiera []) o si no existe, crashing el server code: 'ERR_MODULE_NOT_FOUND' (para cuando no existe)
+
+undefined:1
+
+
+SyntaxError: D:\Nabawe\B\Mc\MEGA\Formal\Coder House\Backend - NodeJS\Entregas\04__ReST_API\data\products.json: Unexpected end of JSON input
+    at parse (<anonymous>)
+    at ESMLoader.jsonStrategy (node:internal/modules/esm/translators:300:21)
+    at ESMLoader.moduleProvider (node:internal/modules/esm/loader:337:14)
+[nodemon] app crashed - waiting for file changes before starting...

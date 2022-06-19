@@ -1,15 +1,8 @@
-/*
-    To-Do Crear un mecanismo de FLAGS al estilo Flag_Lock_Save, entonces todas las funciones q se podrian ver afectadas por el save esperan q se resuelva esa cola, y así para otros casos al estilo Flag_Lock_RetrievingLastIdFromFile.
-        Supuestamente eso es lo q se tendria q lograr con las promises, el estado pending pero estoy estructurando mal.
-        Al estilo diga busy o avise al stack.
-    To-Do remover todas las funciones Sync, una cosa es q la Class se frene pero no tiene q frenar la ejecucion completa del servidor.
-*/
-
 import fs from 'fs';
 const fsP = fs.promises;
 
 /** Creates a simple interface wich helps manipulate a basic array of items stored in a JSON file. A JSON file's internal items manager. */
-class JSONBox {
+class RAMBox {
     /**
      * @param {String} fileName
      * @param {String} filePath The path must end with a slash /
@@ -30,6 +23,17 @@ class JSONBox {
             return data;
         } catch( err ) {
             return new Error( `Al intentar leer el archivo:\n ${err.message}` );
+        };
+    };
+
+    // Aun si esta vacio( JSON vacio [] o {}; y no completamente vacio ) debería devolver 0.
+    // ! Hacer q esto tambien sea ASYNC
+    #init() {
+        try {
+            const data = JSON.parse( fs.readFileSync( this.filePath, 'utf-8' ) );
+            return this.idCounter = data.length ? ( data[ data.length - 1 ].id ) : 0;
+        } catch( err ) {
+            return new Error( `Al Initializar la Class:\n ${err.message}` );
         };
     };
 
@@ -105,17 +109,6 @@ class JSONBox {
         return this.idCounter = await this.getLastIdFromFile();
     };
 
-    // Aun si esta vacio( JSON vacio [] o {}; y no completamente vacio ) debería devolver 0.
-    // ! Hacer q esto tambien sea ASYNC
-    #initIdsCounter() {
-        try {
-            const data = JSON.parse( fs.readFileSync( this.filePath, 'utf-8' ) );
-            return this.idCounter = data.length ? ( data[ data.length - 1 ].id ) : 0;
-        } catch( err ) {
-            return new Error( `Al Initializar la Class:\n ${err.message}` );
-        };
-    };
-
     // ! No se fija si el objeto ya existe
     // ! Puede operar en JSONs vacios [] pero no en un archivo completamente en blanco
     // ! No crea un archivo nuevo si no existe, de tener q crearlo tambien tendria q poder crear toda la ruta, o sea los dirs
@@ -176,4 +169,4 @@ class JSONBox {
     };
 };
 
-export default JSONBox;
+export default RAMBox;

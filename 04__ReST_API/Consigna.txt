@@ -4,14 +4,6 @@ POST '/api/productos' -> recibe y agrega un producto, y lo devuelve con su id as
 PUT '/api/productos/:id' -> recibe y actualiza un producto según su id.
 DELETE '/api/productos/:id' -> elimina un producto según su id.
 
-Formato producto
-    {
-        id: comenzando en 1, autoincrementando
-        title: (nombre del producto),
-        price: (precio),
-        thumbnail: (url al logo o foto del producto)
-    }
-
 Para el caso de que un producto no exista, se devolverá el objeto:
 { error : 'producto no encontrado' }
 
@@ -22,6 +14,8 @@ Implementar la API en una clase separada, utilizando un array como soporte de pe
             Pedir explicación de esta línea.
             Rogelio Arzola Gomez:	Es solo los datos del producto pero en todos las rutas…ok
             Creo q se refiere a q aparte de tener los productos en un archivo tenerlos en memoria?
+            Clase o Ruta separada?
+            O Sea q no uso JSONBox? ( Container de entrega 02__Node_FS )
 
 
 Incorporar el Router de express en la url base '/api/productos' y configurar todas las sub-rutas en base a este.

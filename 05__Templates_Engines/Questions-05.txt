@@ -1,0 +1,8 @@
++ res.render()
+
+
++ res.render()
+    res.render()         Render a view template.
+
+    Esto pasa en el servidor y ya envía la pagina? o el proceso de render se refiere a pasarlo por el engine de Templates para q produzca un html coherente a enviar?
++

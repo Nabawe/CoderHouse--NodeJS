@@ -75,6 +75,9 @@ MidServer.get( '/api/letter/:num', ( req, res ) => {
 } );
 
 MidServer.get( '/api/word/:num', ( req, res ) => {
+
+    // * Mas q copy paste hubiera sido mejor armar una f con todas las verificaciones.
+
     if ( isNaN( req.params.num ) ) {
         const content = `
             ${Front.top}
