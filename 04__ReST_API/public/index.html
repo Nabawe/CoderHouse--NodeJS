@@ -6,23 +6,63 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Test: File Upload</title>
+  <link href="css/main.css" type="text/css" rel="stylesheet">
 </head>
 
+
 <body>
-  <h2>Single File</h2>
-  <form action="/single" enctype="multipart/form-data" method="POST">
-    <input type="file" name="filePointer" required />
-    <button type="submit">Upload</button>
-  </form>
+  <main>
+    <h2>Show Products</h2>
+    <form action="/api/products" method="GET">
+      <button type="submit">Show</button>
+    </form>
 
-  <br>
-  <hr>
+    <h2>New Product</h2>
+    <form action="/api/products" method="post">
+      <fieldset>
+        <label >Title:
+          <input type="text" name="title" maxlength="50" required>
+        </label>
+        <label >Price:
+          <input type="number" name="price" max="9999999999" required>
+        </label>
+        <label >Thumbnail:
+          <input type="url" name="thumbnail" required>
+        </label>
+      </fieldset>
+      <button type="submit">Save</button>
+    </form>
 
-  <h2>Multy File (Up to 10)</h2>
-  <form action="/multy" enctype="multipart/form-data" method="POST">
-    <input type="file" name="filesArrayPointer" multiple required />
-    <button type="submit">Upload</button>
-  </form>
+    <h2>Update a Product</h2>
+    <form action="/api/products" method="PUT">
+      <fieldset>
+        <label >ID:
+          <input type="text" name="id" maxlength="50" required>
+        </label>
+        <label >Title:
+          <input type="text" name="title" maxlength="50" required>
+        </label>
+        <label >Price:
+          <input type="number" name="price" max="9999999999" required>
+        </label>
+        <label >Thumbnail:
+          <input type="url" name="thumbnail" required>
+        </label>
+      </fieldset>
+      <button type="submit">Update</button>
+    </form>
+
+    <h2>Delete a Product</h2>
+    <form action="/api/products" method="DELETE">
+      <fieldset>
+        <label >ID:
+          <input type="text" name="id" maxlength="50" required>
+        </label>
+      </fieldset>
+      <button type="submit">Delete</button>
+    </form>
+  </main>
 </body>
+
 
 </html>

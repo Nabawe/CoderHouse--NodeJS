@@ -8,6 +8,8 @@
 + ERR__NO_DATA
 + f_productNotFound
 + Destructuring with Arrays Indexes
++ Forma Correcta de Guardar los JSON de Errores
++ Porque necesito el required
 + Consigna
 
 
@@ -144,6 +146,25 @@
         price: Products[index].price,
         thumbnail: Products[index].thumbnail
     } = req.body );
++
+
+
++ Forma Correcta de Guardar los JSON de Errores
+    Usar JSON y convertir cada vez vs importar como un objeto con objetos, creo q la 2 opción es más pesada y supuestamente solo tendría q frenarse cuando falla, q sería lo correcto?.
+
+    Al correr la línea :
+        import ErrorsMsgs from '../data/errors.msg.json' assert { type: "json" };
+
+    No termina volviéndose un objeto de objetos? ( prove con console log ), entonces pork no definirlo directamente en un archivo .js normal como:
+        const ErrorsMsgs = { key: { error: 'Message' } };
+        export default ErrorsMsgs;
+
+    Use .json por intuición... pensando q si eran strings pesaba menos en la memoria.
++
+
+
++ Porque necesito el required
+    Si no coloco required en los inputs no me manda la info. Hay alguna forma distinta ya q es absurdo q necesite required en todos.
 +
 
 

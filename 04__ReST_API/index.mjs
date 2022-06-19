@@ -11,25 +11,13 @@ Server.use( Express.json() );
 Server.use( Express.urlencoded( { extended: true } ) );
 Server.use( Express.static( fileURLToPath( new URL( './public', import.meta.url ) ) ) );
 
-const Front = {
-    top: `<body style='background-color: #AAA;'>`,
-    bot: `</body>`
-};
-
 console.log( `============================== ${ new Date }` );
 
 // Setting up Imported Routes
 Server.use( '/api', Route_Products );
 
 Server.get( '*', ( req, res ) => {
-    const content = `
-        ${Front.top}
-            <h1 style='color: hsla(0, 78%, 50%, 1);'>
-                404 Page not Found.
-            </h1>
-        ${Front.bot}
-    `;
-    res.status( 404 ).send( content );
+    res.status( 404 ).sendFile( fileURLToPath( new URL( './public/404.html', import.meta.url ) ) );
 } );
 
 

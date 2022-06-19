@@ -3,24 +3,20 @@ import { Router } from "express";
 import Products from '../data/products.json' assert { type: "json" };
 import { nanoid as f_makeUUID } from 'nanoid';
 // Products = Products || [];
-
+import ErrsMsgs from '../data/errors.msg.json' assert { type: "json" };
 
 const Route_Products = Router();
-
-// WIP Mover a un archivo aparte e importat como array usando claves
-const ERR__PRODUCT__NOT_FOUND = { error : 'Product not found.' };
-const ERR__NO_DATA = { error : 'No data to realize the operation. Empty products list.' };
 
 function f_dataChecks( data ) {
     // WIP Add Other Checks
     /* ? Pensar bien antes de mover esta f a una clase ya q en el archivo de rutas se debería manejar toda la parte del servidor y en JSONBox lo pertinente a data. */
     if ( !data.length )
-        return { status: 412, error: ERR__NO_DATA };
+        return { status: 412, error: ErrsMsgs.NO_DATA };
     return true;
 };
 
 function f_productNotFound( res ) {
-    return res.status( 404 ).json( ERR__PRODUCT__NOT_FOUND );
+    return res.status( 404 ).json( ErrsMsgs.PRODUCT__NOT_FOUND );
 };
 
 
@@ -107,6 +103,7 @@ Route_Products.put( '/products/:id', ( req, res ) => {
     // en vez de tener el import en la ruta de los productos se initializa la instancia de la clase con ese archivo y ahi se hace la validacion del mismo y carga a RAM
 // ! revisar como esta redactada la pregunta de append a ver si es lo mismo q leer, sacar, y reescribir todo? parcial?
 // To-Do Mover nanoid a lo q lo use, modificar package.json
+// ! Frenar el cambio de pagina del submit
 
 
 

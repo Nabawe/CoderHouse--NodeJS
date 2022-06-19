@@ -1,3 +1,4 @@
+import ErrsMsgs from '../../data/messages/errors.msg.json' assert { type: "json" };
 import fs from 'fs';
 const fsP = fs.promises;
 
@@ -6,11 +7,26 @@ class RAMBox {
     /**
      * @param {String} fileName
      * @param {String} filePath The path must end with a slash /
+     * WIP Hacer q lo reciva usando la expresion URLToPath new URL
      */
     constructor( fileName, filePath ) {
         this.fileName = fileName;
         this.filePath = `${filePath}${fileName}`;
-        this.#initIdsCounter();
+        this.fileDir = filePath;
+        this.#init(); // test if this runs and saves properly
+    };
+
+    // Aun si esta vacio( JSON vacio [] o {}; y no completamente vacio ) debería devolver 0.
+    // WIP Hacer q esto tambien sea ASYNC
+    #init() {
+        try {
+            // this.data o this.Items y pensar si debe ser privado pero lo mas probable q n
+            this.items = JSON.parse( fs.readFileSync( this.filePath, 'utf-8' ) );
+            this.items.length ? null : this.items = [];
+            return false;
+        } catch( err ) {
+            return new Error( `${ErrsMsgs.CLASS__INIT}:\n ${err.message}` );
+        };
     };
 
     /**
@@ -23,17 +39,6 @@ class RAMBox {
             return data;
         } catch( err ) {
             return new Error( `Al intentar leer el archivo:\n ${err.message}` );
-        };
-    };
-
-    // Aun si esta vacio( JSON vacio [] o {}; y no completamente vacio ) debería devolver 0.
-    // ! Hacer q esto tambien sea ASYNC
-    #init() {
-        try {
-            const data = JSON.parse( fs.readFileSync( this.filePath, 'utf-8' ) );
-            return this.idCounter = data.length ? ( data[ data.length - 1 ].id ) : 0;
-        } catch( err ) {
-            return new Error( `Al Initializar la Class:\n ${err.message}` );
         };
     };
 
