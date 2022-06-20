@@ -1,7 +1,7 @@
 import Express from 'express';
 import JSONBox from './JSONBox.mjs';
 
-const JSONBoxy = new JSONBox( 'productos.json', './ProductsArrays/' )
+const JSONBoxy = new JSONBox( 'productos.json', './ProductsArrays/' );
 const PORT = 8080;
 
 const Server = Express();

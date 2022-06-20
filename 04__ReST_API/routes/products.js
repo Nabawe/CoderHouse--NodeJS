@@ -1,100 +1,46 @@
 import { Router } from "express";
-// * Intresting new requirement for data imports.
-import Products from '../data/products.json' assert { type: "json" };
-import { nanoid as f_makeUUID } from 'nanoid';
-// Products = Products || [];
-import ErrsMsgs from '../data/errors.msg.json' assert { type: "json" };
+import { fileURLToPath } from 'node:url';
+import RAMBox from "../classes/RAMBox.mjs";
+import Verdicts from "../data/verdicts.js";
 
+const MerchMan = new RAMBox( 'products.json', fileURLToPath( new URL( '../data/', import.meta.url ) ) );
 const Route_Products = Router();
-
-function f_dataChecks( data ) {
-    // WIP Add Other Checks
-    /* ? Pensar bien antes de mover esta f a una clase ya q en el archivo de rutas se debería manejar toda la parte del servidor y en JSONBox lo pertinente a data. */
-    if ( !data.length )
-        return { status: 412, error: ErrsMsgs.NO_DATA };
-    return true;
-};
-
-function f_productNotFound( res ) {
-    return res.status( 404 ).json( ErrsMsgs.PRODUCT__NOT_FOUND );
-};
 
 
 Route_Products.get( '/products', ( req, res ) => {
-    res.status( 200 ).json( Products );
+    res.status( 200 ).json( MerchMan.i );
 } );
 
 Route_Products.get( '/products/:id', ( req, res ) => {
-    const verdict = f_dataChecks( Products );
-    if ( verdict === true ) {
-        const id = req.params.id;
-        const match = Products.find( obj => id === obj.id );
-        if ( match ) {
-            return res.status( 200 ).json( match );
-        } else {
-            return f_productNotFound( res );
-        };
-    } else {
-        return res.status( verdict.status ).json( verdict.error );
+    const match = MerchMan.m_getById( req.params.id );
+    if ( match instanceof Error ) {
+        const v = Verdicts[match.cause];
+        return res.status( v.status )[v.type]( v.outcome );
     };
+    res.status( 200 ).json( match );
 } );
 
 Route_Products.post( '/products', ( req, res ) => {
-    // ! Agregar algo de este estilo al mover save a la class : Products = Products || [];
-        // Tal vez no es necesario ya q al initializar el server se crearia Products y por ende no seria necesario checkear esto
-
-    const { title, price, thumbnail } = req.body;
-    const id = f_makeUUID();
-
-    Products.push( {
-        id: id,
-        dateCreated: Date.now(),
-        title, price, thumbnail
-    } );
-
-    res.status( 200 ).json( { id } );
+    res.status( 200 ).json( { id: MerchMan.m_new( req.body ) } );
 } );
 
 Route_Products.delete( '/products', ( req, res ) => {
-    let index;
-    const verdict = f_dataChecks( Products );
-    if ( verdict === true ) {
-        const id = req.params.id;
-        index = Products.findIndex( obj => id === obj.id );
-        if ( index === -1 )
-            return f_productNotFound( res );
-
-        return res.status( 200 ).json( Products.splice( index, 1 ) );
-    } else {
-        return res.status( verdict.status ).json( verdict.error );
+    const match = MerchMan.m_del( req.params.id );
+    if ( match instanceof Error ) {
+        const v = Verdicts[match.cause];
+        return res.status( v.status )[v.type]( v.outcome );
     };
+    res.status( 200 ).json( match );
 } );
 
 // * No permite actualizar el id de forma manual
 Route_Products.put( '/products/:id', ( req, res ) => {
-    let index;
-    const verdict = f_dataChecks( Products );
-    if ( verdict === true ) {
-        const id = req.params.id;
-        index = Products.findIndex( obj => id === obj.id );
-        if ( index === -1 )
-            return f_productNotFound( res );
-
-        ( {
-            title: Products[index].title,
-            price: Products[index].price,
-            thumbnail: Products[index].thumbnail
-        } = req.body );
-        // const { title, price, thumbnail } = req.body;
-        // Products[index].title = title;
-        // Products[index].price  = price;
-        // Products[index].thumbnail = thumbnail;
-        Products[index].dateMod = Date.now();
-
-        return res.status( 200 ).json( Products[index] );
-    } else {
-        return res.status( verdict.status ).json( verdict.error );
+    const match = MerchMan.m_set( req.params.id, req.body );
+    if ( match instanceof Error ) {
+        const v = Verdicts[match.cause];
+        return res.status( v.status )[v.type]( v.outcome );
     };
+    res.status( 200 ).json( match );
 } );
 
 // ! Hacer q cada tanto se graben en un archivo, usando timer o cada vez q termina una operación -> Peligro si es ASYNC

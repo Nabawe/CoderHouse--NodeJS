@@ -1,5 +1,0 @@
-{
-    "CLASS__INIT": { "error": "Class Initialization Error" },
-    "NO_DATA": { "error": "No data to realize the operation. Empty items list" },
-    "PRODUCT__NOT_FOUND": { "error": "Product not found" }
-}

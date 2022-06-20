@@ -13,7 +13,7 @@
 <body>
   <main>
     <h2>Show Products</h2>
-    <form action="/api/products" method="GET">
+    <form action="/api/products" method="get">
       <button type="submit">Show</button>
     </form>
 
@@ -34,7 +34,7 @@
     </form>
 
     <h2>Update a Product</h2>
-    <form action="/api/products" method="PUT">
+    <form action="/api/products" method="post">
       <fieldset>
         <label >ID:
           <input type="text" name="id" maxlength="50" required>
@@ -53,7 +53,7 @@
     </form>
 
     <h2>Delete a Product</h2>
-    <form action="/api/products" method="DELETE">
+    <form action="/api/products" method="get">
       <fieldset>
         <label >ID:
           <input type="text" name="id" maxlength="50" required>

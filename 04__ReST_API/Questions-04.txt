@@ -9,7 +9,8 @@
 + f_productNotFound
 + Destructuring with Arrays Indexes
 + Forma Correcta de Guardar los JSON de Errores
-+ Porque necesito el required
++ Porque necesito el required en los inputs?
++ Como determinar si un objeto es un Error
 + Consigna
 
 
@@ -115,7 +116,7 @@
 +
 
 
-+ ERR__NO_DATA
++ NO_DATA
     Cuál sería el codigo de error correcto?
     El tipo de res.send correcto? json?
 
@@ -163,8 +164,27 @@
 +
 
 
-+ Porque necesito el required
++ Porque necesito el required en los inputs?
     Si no coloco required en los inputs no me manda la info. Hay alguna forma distinta ya q es absurdo q necesite required en todos.
++
+
+
++ Como determinar si un objeto es un Error
+    Encontre estos 2 metodos, cada uno con sus contras quería saber q me recomendabas o si habia alguna forma mejor:
+
+        import ErrsMsgs from '../data/messages/errors.msg.json' assert { type: "json" };
+
+        function ErrorTest() {
+            return  new Error( ErrsMsgs['CAN_T_READ'], { cause: 'CAN_T_READ' } );
+        };
+        console.log( ErrorTest() instanceof Error );
+        console.log( Object.prototype.toString( ErrorTest() ) );
+
+    instanceof puede tener problemas si hay distintos entornos globales.
+    toString puede ser afectado por las decisiones de otras personas.
+
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString
 +
 
 
@@ -176,7 +196,7 @@
 
 
 
-
+Preguntar por lo de PUT y DELETE en el formulario, y si hay otra forma aparte de AJAX o armar una query personalizada en las rutas usando ?query o etc.
 
 import Products from '../data/products.json' assert { type: "json" };
 ! Este import falla si el archivo esta completamente vacío (ni siquiera []) o si no existe, crashing el server code: 'ERR_MODULE_NOT_FOUND' (para cuando no existe)
@@ -189,3 +209,19 @@ SyntaxError: D:\Nabawe\B\Mc\MEGA\Formal\Coder House\Backend - NodeJS\Entregas\04
     at ESMLoader.jsonStrategy (node:internal/modules/esm/translators:300:21)
     at ESMLoader.moduleProvider (node:internal/modules/esm/loader:337:14)
 [nodemon] app crashed - waiting for file changes before starting...
+
+
+Plantear q los productos usen su ID como clave,
+deja de ser un array de objetos y pasa a un object object y si se necesitase se puede usar Object.keys para tratar como array.
+Esto deberia hacer la search mucho más rápido, aunque tal vez si solo se usaran metodos de lectura y modificación desde el disco ahí sea más lento?
+
+{
+    '4h35634w6': {
+        price,
+        thumbnail
+    },
+    '34gh5343hb': {
+        price,
+        thumbnail
+    }
+}

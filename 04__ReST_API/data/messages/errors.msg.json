@@ -1,0 +1,6 @@
+{
+    "CAN_T_READ": "Could not read from file",
+    "CLASS__INIT": "Class Initialization Error",
+    "NO_DATA": "No data to realize the operation. Empty Items List",
+    "SEARCH__NOT_FOUND": "No match found"
+}

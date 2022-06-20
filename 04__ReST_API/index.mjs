@@ -11,7 +11,7 @@ Server.use( Express.json() );
 Server.use( Express.urlencoded( { extended: true } ) );
 Server.use( Express.static( fileURLToPath( new URL( './public', import.meta.url ) ) ) );
 
-console.log( `============================== ${ new Date }` );
+console.log( `##################################### ${ new Date }` );
 
 // Setting up Imported Routes
 Server.use( '/api', Route_Products );
