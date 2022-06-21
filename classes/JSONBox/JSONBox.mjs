@@ -130,7 +130,7 @@ class JSONBox {
         try {
             let id = ++this.idCounter;
             // let id = ( await this.getLastIdFromFile() ) + 1;
-            payload = { ...payload, 'id': id };
+            payload = { 'id': id, ...payload };
             // const data = ( await this.getAll() ) || [];
             let data = await this.getAll();
             data.push( payload );

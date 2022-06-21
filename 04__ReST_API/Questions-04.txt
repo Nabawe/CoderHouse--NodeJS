@@ -1,17 +1,21 @@
 + Cada End Point Debería Terminar en return ?
-+ Testear Server json cfg
 + Qué significa archivos estáticos?
 + Como reemplazar __dirname
 + Express.static vs Server.get( '/'...
 + Arquitectura de un Proyecto
-+ return new Error vs throw
-+ ERR__NO_DATA
-+ f_productNotFound
++ NO_DATA y status codes
 + Destructuring with Arrays Indexes
 + Forma Correcta de Guardar los JSON de Errores
 + Porque necesito el required en los inputs?
 + Como determinar si un objeto es un Error
++ Q formas tiene una pág. cliente de enviarle data a un servidor?
++ Formato /data/products.js
++ Encabezado RAMBox.mjs
++ RAMBox.mjs #init
++ return new Error vs throw
++ return new Error y métodos privados
 + Consigna
++ Encabezado Entrega
 
 
 + Cada End Point Debería Terminar en return ?
@@ -23,25 +27,12 @@
 
     ?
 
-    Esta pregunta me importa bastante por ejemplo se ve en .../routes/products.js pero también me viene la duda si es algo q debería poner en todos los res. q sean finales.
-+
-
-
-+ Testear Server json cfg
-    Para que nuestro servidor express pueda interpretar en forma automática mensajes de tipo JSON en formato urlencoded al recibirlos, debemos indicarlo en forma explícita, agregando las siguiente líneas luego de crearlo.
-
-        Server.use(express.json())
-        Server.use(express.urlencoded({ extended: true }))
-
-    Aclaración: {extended:true} precisa que el objeto req.body contendrá valores de cualquier tipo en lugar de solo cadenas.
-    ¡Sin esta línea, el servidor no sabrá cómo interpretar los objetos recibidos!
-
-    Los significados de estas lineas.
+    Esta pregunta me importa bastante por ejemplo se ve en .../routes/products.js pero también me viene la duda si es algo q debería poner en todos los res. q no sean finales.
 +
 
 
 + Qué significa archivos estáticos?
-    Entiendo q son el CSS, HTML y demás pero q son exactamente? q propiedades tienen q tener O NO tener para q Express los pueda usar para levantar un servidor Web? Q serian dinámicos?
+    Entiendo q son el CSS, HTML y demás pero q son exactamente? q propiedades tienen q tener O NO tener para q Express los pueda usar para levantar un servidor Web? Q serían dinámicos?
 +
 
 
@@ -95,6 +86,8 @@
         cb( null, './uploads' );
     },
 
+    Lo use en mis tests : .../04__ReST_API/.tests
+
     Aparte esto q puse en mis notas es correcto? Creo q me estoy confundiendo con lo de como se le pasa al engine de Storage.
         http://expressjs.com/en/resources/middleware/multer.html
 
@@ -109,25 +102,16 @@
 +
 
 
-+ return new Error vs throw
-    Esta es otra pregunta importante q quedo acarreada de las entregas anteriores y todabia no me pude poner a revisar q me respondió y q no así q la dejo aquí en caso de q jamás pueda hacerlo:
-
-    El problema q veo es q si uso throw no paralizo todo o parcialmente al servidor? lo q busco es tirar el error pero o yo dejar un método o q el usuario pueda lidiar con el.
-+
-
-
-+ NO_DATA
++ NO_DATA y status codes
     Cuál sería el codigo de error correcto?
     El tipo de res.send correcto? json?
+    En realidad no sería un error del Servidor? ( 500 )?
+    Los otros códigos de status los use bien? se ven en /data/verdicts.js
 
     res.status( 412 ).send( new Error( ERR__NO_DATA ) );
         La línea anterior solo me deja {} en la pantalla del browser.
 +
 
-
-+ f_productNotFound
-    si la función retorna un res.send, end, etc. Cómo es el hilo de ejecución? Donde se termina la response, dentro de la función? dentro de la ruta? devuelvo la response y luego el return de la ruta lo termina?
-+
 
 + Destructuring with Arrays Indexes
     Como puedo hacer esto mejor, basándome en :
@@ -147,11 +131,13 @@
         price: Products[index].price,
         thumbnail: Products[index].thumbnail
     } = req.body );
+
+    Esto esta en su versión final en /classes/RAMBox.mjs método m_set
 +
 
 
 + Forma Correcta de Guardar los JSON de Errores
-    Usar JSON y convertir cada vez vs importar como un objeto con objetos, creo q la 2 opción es más pesada y supuestamente solo tendría q frenarse cuando falla, q sería lo correcto?.
+    Usar JSON y convertir cada vez vs importar como un objeto con objetos?, creo q la 2 opción es más pesada y supuestamente solo tendría q frenarse cuando falla, q sería lo correcto?.
 
     Al correr la línea :
         import ErrorsMsgs from '../data/errors.msg.json' assert { type: "json" };
@@ -161,11 +147,13 @@
         export default ErrorsMsgs;
 
     Use .json por intuición... pensando q si eran strings pesaba menos en la memoria.
+
+    Aparte si no entendi mal importar con require es un proceso sincrónico e import asincrónico, puede causar algun problema como lo use? estoy diciendo cualquier cosa?
 +
 
 
 + Porque necesito el required en los inputs?
-    Si no coloco required en los inputs no me manda la info. Hay alguna forma distinta ya q es absurdo q necesite required en todos.
+    Si no coloco required en los inputs no me manda la info. Hay alguna forma distinta ya q es absurdo q necesite required en todos. O hay algo q este haciendo mal o en mi entorno podría estar el problema?
 +
 
 
@@ -188,40 +176,77 @@
 +
 
 
-+ Consigna
++ Q formas tiene una pág. cliente de enviarle data a un servidor?
+    En el desafío habia cosas q se tenían q mandar con postman para probarlas, yo agregue 2 métodos para cuando se modifica el archivo pero no estaba seguro si estaba 'rompiendo' el protocolo REST.
+
+    Q formas hay, o cuales son las q se consideran más correctas, me imagino q JavaScript deberia poder enviar POST, GET, PUT y demás, mientras q un formulario HTML solo puede POST y GET.
+
+    AJAX? Encadenar y testear si se paso un body, query determinado usando forms?
+
+    Ej: /routes/products.js
+        Route_Products.post( '/products/save', ( req, res ) => {
 +
 
 
++ Formato /data/products.js
+    No sería más eficiente si usáramos un Objeto con Objetos dentro con la key siendo el id en string?. Pienso q achicaría codigo y la busqueda de los Ids sería al menos 100 veces más rápida.
+    Si fuera por las ventajas de los metodos de arrays se pueden usar Object.keys para extraer solo las keys del Objeto.
+
+    Ejemplo:
+        {
+            '4h35634w6': {
+                price,
+                thumbnail
+            },
+            '34gh5343hb': {
+                price,
+                thumbnail
+            }
+        }
+
+    Tiene algo q ver con bases de datos o manipulación de archivos q usemos los arrays?
++
 
 
++ Encabezado RAMBox.mjs
+    Agradecería si lee los comentarios q están al inicio de la /class/RAMBox.mjs y me da una opinión; Mas q nada me pone un poco triste no poder manipular bien las funciones async ya q sino lo hubiera codeado algo más próximo a lo q planteé allí.
++
 
 
-Preguntar por lo de PUT y DELETE en el formulario, y si hay otra forma aparte de AJAX o armar una query personalizada en las rutas usando ?query o etc.
++ RAMBox.mjs #init
+    Este método q inicializa la una instancia de la class me dio varios problemas pero en especial me gustaría si me puede responder ¿Cómo correctamente validad q el archivo JSON se importo bien?.
 
-import Products from '../data/products.json' assert { type: "json" };
-! Este import falla si el archivo esta completamente vacío (ni siquiera []) o si no existe, crashing el server code: 'ERR_MODULE_NOT_FOUND' (para cuando no existe)
+    Al estar en un try catch si el archivo tiene algun carácter no valido o si esta vació para JSON.parse se pasa el error pero el problema no termina solo allí, ya q por ejemplo un archivo con un número solo dentro es un archivo JSON valido, así como {}, etc. , el número de checks sería bastante largo y tampoco estoy seguro como lo podría hacer.
 
-undefined:1
+    También supuestamente los métodos de fs confirman si el archivo existe o no, com hago para aprovechar eso? o sea si no existe crearlo y a los directorios especificados en la dirección?
 
-
-SyntaxError: D:\Nabawe\B\Mc\MEGA\Formal\Coder House\Backend - NodeJS\Entregas\04__ReST_API\data\products.json: Unexpected end of JSON input
-    at parse (<anonymous>)
-    at ESMLoader.jsonStrategy (node:internal/modules/esm/translators:300:21)
-    at ESMLoader.moduleProvider (node:internal/modules/esm/loader:337:14)
-[nodemon] app crashed - waiting for file changes before starting...
+    Aparte se q existen imports dinámicos pero no tengo idea como se usan o si sería correcto usarlos aquí.
++
 
 
-Plantear q los productos usen su ID como clave,
-deja de ser un array de objetos y pasa a un object object y si se necesitase se puede usar Object.keys para tratar como array.
-Esto deberia hacer la search mucho más rápido, aunque tal vez si solo se usaran metodos de lectura y modificación desde el disco ahí sea más lento?
++ return new Error vs throw
+    Esta es otra pregunta importante q quedo acarreada de las entregas anteriores y todabia no me cierra del todo:
 
-{
-    '4h35634w6': {
-        price,
-        thumbnail
-    },
-    '34gh5343hb': {
-        price,
-        thumbnail
-    }
-}
+    El problema q veo es q si uso throw no paralizo todo? o parcialmente al servidor? lo q busco es tirar el error para poder resolverlo en un catch o método o q el usuario pueda lidiar con el.
+
+    Y aparte los estoy usando bien? ya q no se si los estoy 'convirtiendo' en una especie de Objeto q contiene cosas pero q o esta funcionado como un error propiamente programado.
++
+
+
++ return new Error y métodos privados
+    En los métodos privados de RAMBox tuve q cambiar un poco como tiraba error el programa, ya q cuando pongo return new Error si no hay algo q reciba esa info se quedan en la nada, es correcto usar console.error o como debería hacer?.
++
+
+
++ Consigna
+    La gran mayoría de los cambios y cosas q me pasaron en está entrega tienen q ver con :
+        " Implementar la API en una clase separada, utilizando un array como soporte de persistencia en memoria. "
+
+    Espero haber entendido bien, más q nada use una class y una route pero me pregunto si queria q saque los endpoints de la rute en si y como sería.
++
+
+
++ Encabezado Entrega
+    Como le comente la tenía lista antes y no la pude entregar, a causa de eso y como me sentía inconforme la termine haciéndola 3 veces, mas q nada para adaptar como se comunicaban el servidor y la clase Contenedor ( q yo le di los nombres RAMBox y JSONBox según como operaban ). Esto se puede ver en commits viejos, q esta funcional o casi funcional pero completamente distinto codeada.
+    Este ultimo commit fue a esta hora mas q nada revisando las preguntas de esta entrega; Me queda aun recopilar las preguntas de las entregas 02 y 03 para re-enviárselas.
++

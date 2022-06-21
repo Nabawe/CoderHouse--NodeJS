@@ -21,10 +21,15 @@ Route_Products.get( '/products/:id', ( req, res ) => {
 } );
 
 Route_Products.post( '/products', ( req, res ) => {
-    res.status( 200 ).json( { id: MerchMan.m_new( req.body ) } );
+    const id = MerchMan.m_new( req.body );
+    if ( id instanceof Error ) {
+        const v = Verdicts[id.cause];
+        return res.status( v.status )[v.type]( v.outcome );
+    };
+    res.status( 200 ).json( { id } );
 } );
 
-Route_Products.delete( '/products', ( req, res ) => {
+Route_Products.delete( '/products/:id', ( req, res ) => {
     const match = MerchMan.m_del( req.params.id );
     if ( match instanceof Error ) {
         const v = Verdicts[match.cause];
@@ -43,6 +48,25 @@ Route_Products.put( '/products/:id', ( req, res ) => {
     res.status( 200 ).json( match );
 } );
 
+// WIP Pensar q sería mejor retornar
+Route_Products.post( '/products/save', ( req, res ) => {
+    const result = MerchMan.m_fileSave();
+    if ( result instanceof Error ) {
+        const v = Verdicts[result.cause];
+        return res.status( v.status )[v.type]( v.outcome );
+    };
+    res.status( 200 ).json( MerchMan.i );
+} );
+
+// WIP Pensar q sería mejor retornar
+Route_Products.post( '/products/reset', ( req, res ) => {
+    const result = MerchMan.m_fileReset();
+    if ( result instanceof Error ) {
+        const v = Verdicts[result.cause];
+        return res.status( v.status )[v.type]( v.outcome );
+    };
+    res.status( 200 ).json( MerchMan.i );
+} );
 // ! Hacer q cada tanto se graben en un archivo, usando timer o cada vez q termina una operación -> Peligro si es ASYNC
 // ! Crear JSONBoxRAMCached, q use UUID y agregar timestamp creted, timestamp mod, si se mod o crea se agrega o re agrega al final del array ( borra y agrega )
     //  q tenga una funcion save o commitToDisk para elegir cuando se guarda en disco y pedir ayuda como diceñar y o investigar (la cola de escritura, etc)

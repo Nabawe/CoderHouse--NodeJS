@@ -1,3 +1,25 @@
+/* WIP
+    Error de diceño fundamental, no se deberia dar acceso directo a this.i ( items ), sino q todo se haga a travez de metodos para garantizar integridad.
+
+    Operaciones Sincronicas a Asincronicas:
+        Quiero q m_fileSave, m_fileReset y #init sean async:
+            - #init:
+                · Posiblemente tenga q comunicar q se están cargando los datos.
+
+            - m_fileSave:
+                1 - Retorna aviso de q esta por comensar para q tanto el Backend como el Frontend bloqueen todas las operaciones q usen el modulo fs ( los metodos q comienzan con m_file ) pero NO las que se realizen solo en RAM ( las q manipulan this.i ), colocar los botones en estado disabled, etc.
+                2 - Dispara la operación asincronica SIN AWAIT y retorna la ejecución al server.
+                Aqui no se si es q tendria q colocar en forma de promesa a todo, el grabar y lo q tenga q correrse luego de terminarse de grabar.
+                3 - Q se ejecuten los pasos faltantes de la funcion grabar q no tengan q ver con la escritura en disco.
+                4 - Desbloquea lo bloqueado en 1.
+                5 - Para luego evolucionar a q el save se dispare acordé a criterios, cierta cantidad de info nueva o cada x segs, etc.
+
+            - m_fileReset:
+                1 - Corre m_reset.
+                Idem del punto 1 a 4 de m_fileSave
+
+*/
+
 import ErrsMsgs from '../data/messages/errors.msg.json' assert { type: "json" };
 import fs from 'fs';
 import { nanoid as f_makeUUID } from 'nanoid';
@@ -19,8 +41,10 @@ class RAMBox {
 
 
     // WIP Hacer q esto tambien sea ASYNC
-    // WIP hacer q cree el archivo si no existe o q eso pase al apretar save (commit to file)?
-        // * Ver cual es el resutlado del error para q el catch lo haga
+    /* WIP hacer q cree el archivo si no existe o q eso pase al apretar save (commit to file)? (Por ahora si pasara eso habria un error al pasar el arg o se dispararia el catch); también tendría q crear los directorios */
+        /* * Ver cual es el resutlado del error para q el catch lo haga, o sea si JSON.parse o readFile dan error ver q se le pasa al catch por err y ejecutar solución */
+    /* ! Esto puede tambien fallar si la totalidad del archivo es uno de los tipos minimos de JSON ejemplo si solo tuviera null dentro. No se si es suficiente el checkear el lenght */
+    /* ! Aqui return new Error no tiene sentido ya q no hay nadie q lo capture al error y lo muestre */
     /**
      * Initializes the items storage in memory.
      * @returns Returns false if it initialized without errors.
@@ -28,18 +52,19 @@ class RAMBox {
     #init() {
         try {
             this.i = JSON.parse( fs.readFileSync( this.filePath, 'utf-8' ) );
-            this.i.length ? null : this.i = [];
             return false;
         } catch( err ) {
-            return new Error( `${ErrsMsgs.CLASS__INIT}:\n ${err.message}` );
+            return console.error( new Error( `${ErrsMsgs.CLASS__INIT}:\n ${err.message}`, { cause: 'CLASS__INIT' } ) );
         };
     };
 
     // WIP Add Other Checks
-    /* WIP Add ways to specify the checks like with a hash 3b40v69 so it can skip unnecesary checks for a given scenario */
-    #dataChecks( data = this.i ) {
-        if ( !data.length )
-            return new Error( ErrsMsgs['NO_DATA'], { cause: 'NO_DATA' } );
+    /* WIP Add ways to specify the checks like with a hash 3b40v69 or binary string 010110 or flags object, so it can skip unnecesary checks for a given scenario */
+    // * Both Parameters are optional
+    #dataChecks( flags, data = this.i ) {
+        let F = { NO_DATA: true, chespirito: true, meripoppins: true, ...flags };
+        if ( F.NO_DATA && !data.length )
+            return console.error( new Error( `${ErrsMsgs.NO_DATA}:\n ${err.message}`, { cause: 'NO_DATA' } ) );
         return false;
     };
 
@@ -52,7 +77,7 @@ class RAMBox {
             const data = JSON.parse( await fsP.readFile( this.filePath, 'utf-8' ) );
             return data;
         } catch( err ) {
-            return new Error( `${ErrsMsgs.CAN_T_READ}:\n ${err.message}` );
+            return new Error( `${ErrsMsgs.CAN_T_READ}:\n ${err.message}`, { cause: 'CAN_T_READ' } );
         };
     };
 
@@ -65,7 +90,7 @@ class RAMBox {
             const data = JSON.parse( fs.readFileSync( this.filePath, 'utf-8' ) );
             return data;
         } catch( err ) {
-            return new Error( `${ErrsMsgs.CAN_T_READ}:\n ${err.message}` );
+            return new Error( `${ErrsMsgs.CAN_T_READ}:\n ${err.message}`, { cause: 'CAN_T_READ' } );
         };
     };
 
@@ -89,6 +114,10 @@ class RAMBox {
     };
 
     m_new( { title, price, thumbnail } ) {
+        const verdict = this.#dataChecks( { NO_DATA: false } );
+        if ( verdict )
+            return verdict;
+
         const id = f_makeUUID();
         this.i.push( {
             id: id,
@@ -98,6 +127,7 @@ class RAMBox {
         return id;
     };
 
+    // Se podria usar delete[index] y luego al grabar o reindexar remover los undefined
     m_del( id ) {
         const verdict = this.#dataChecks();
         if ( verdict )
@@ -119,90 +149,45 @@ class RAMBox {
         if ( index === -1 )
                 return new Error( ErrsMsgs['SEARCH__NOT_FOUND'], { cause: 'SEARCH__NOT_FOUND' } );
 
+        const Target = this.i[index];
+        // Como this.i[index] ya esta declarado tengo q colocar el destructuring entre ()
         ( {
-            title: this.i[index].title,
-            price: this.i[index].price,
-            thumbnail: this.i[index].thumbnail
+            title: Target.title,
+            price: Target.price,
+            thumbnail: Target.thumbnail
         } = data );
-        // const { title, price, thumbnail } = req.body;
-        // Products[index].title = title;
-        // Products[index].price  = price;
-        // Products[index].thumbnail = thumbnail;
-        this.i[index].dateMod = Date.now();
+        // const { title, price, thumbnail } = data;
+        // Target.title = title;
+        // Target.price  = price;
+        // Target.thumbnail = thumbnail;
+        Target.dateMod = Date.now();
 
-        return this.i[index];
+        return Target;
     };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // ! No se fija si el objeto ya existe
-    // ! Puede operar en JSONs vacios [] pero no en un archivo completamente en blanco
-    // ! No crea un archivo nuevo si no existe, de tener q crearlo tambien tendria q poder crear toda la ruta, o sea los dirs
-    /* ! Tendria q ser sincronico o avisar cuando se completa el proceso para garantizar q se ejecuten en el orden correcto y asi se escriba de forma correcta el archivo, asignen Ids, creo q en una de mis tests marque algo parecido, disparando rapido varios eventos. */
     /*
+        ! No crea un archivo nuevo si no existe, de tener q crearlo tambien tendria q poder crear toda la ruta, o sea los dirs
+
         ! Tendria q usar append es una animalada hacerlo de esta forma, esta en las preguntas Questons-02.txt.
         ? confirmar q el metodo append de FS no cargue todo el archivo para modificarlo
     */
-    async save( payload ) {
+    m_fileSave() {
         try {
-            let id = ++this.idCounter;
-            // let id = ( await this.getLastIdFromFile() ) + 1;
-            payload = { ...payload, 'id': id };
-            // const data = ( await this.getAll() ) || [];
-            let data = await this.getAll();
-            data.push( payload );
-            await fsP.writeFile( this.filePath, JSON.stringify( data, null, 4 ), 'utf-8' );
-            return id;
+            fs.writeFileSync( this.filePath, JSON.stringify( this.i, null, 4 ), 'utf-8' );
+            return false;
         } catch( err ) {
-            return new Error( `Al Guardar:\n ${err.message}` );
-        };
-        // } finally {
-        //     // La sig linea es simplemente para jugar y probar
-        //     console.log( `Se ejecuto ${this.fileName}.save` );
-        // };
-    };
-
-    // ! No modifica this.idCounter ni livera los ids eliminados
-    // ! No retorna el objeto eliminado
-    async deleteById( id ) {
-        try {
-            const data = await this.getAll();
-            let payload;
-            if ( data ) {
-                payload = await data.filter( obj => id !== obj.id );
-                if ( payload.length === data.length )
-                    return new Error( `Al Borrar: Objeto Inexistente:\n` );
-            } else {
-                return new Error( `Al Borrar: Archivo Vacio:\n` );
-            };
-            await fsP.writeFile( this.filePath, JSON.stringify( payload, null, 4 ), 'utf-8' );
-        } catch( err ) {
-            return new Error( `Inesperado al Borrar:\n ${err.message}` );
+            return new Error( `${ErrsMsgs.CAN_T_SAVE}:\n ${err.message}`, { cause: 'CAN_T_SAVE' } );
         };
     };
 
-    async deleteAll() {
+    // Pensar ¿Tiene algun sentido q solo borre el archivo del disco pero deje la RAM?
+    m_fileReset() {
         try {
-            await fsP.writeFile( this.filePath, '[]', 'utf-8' );
-            /* De anular la sig linea esta bueno ver q toma los ids antes del reset, ya q idCounter se initializa antes q deleteAll. */
-            this.idCounter = 0;
-            return 'Se reseteo el archivo de forma exitosa.'
+            fs.writeFileSync( this.filePath, '[]', 'utf-8' );
+            this.i = [];
+            return false;
         } catch( err ) {
-            return new Error( `Inesperado al intentar Borrar Todo:\n ${err.message}` );
+            return new Error( `${ErrsMsgs.CAN_T_RESET}:\n ${err.message}`, { cause: 'CAN_T_RESET' } );
         };
     };
 };

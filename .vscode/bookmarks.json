@@ -26,21 +26,6 @@
 			]
 		},
 		{
-			"path": "04__ReST_API/Questions-04.txt",
-			"bookmarks": [
-				{
-					"line": 29,
-					"column": 25,
-					"label": ""
-				},
-				{
-					"line": 213,
-					"column": 14,
-					"label": ""
-				}
-			]
-		},
-		{
 			"path": "03__Express/Questions-03.txt",
 			"bookmarks": [
 				{
@@ -89,13 +74,23 @@
 			"path": "04__ReST_API/classes/RAMBox.mjs",
 			"bookmarks": [
 				{
-					"line": 132,
+					"line": 3,
 					"column": 28,
+					"label": ""
+				}
+			]
+		},
+		{
+			"path": "04__ReST_API/routes/products.js",
+			"bookmarks": [
+				{
+					"line": 60,
+					"column": 36,
 					"label": ""
 				},
 				{
-					"line": 159,
-					"column": 4,
+					"line": 69,
+					"column": 18,
 					"label": ""
 				}
 			]
