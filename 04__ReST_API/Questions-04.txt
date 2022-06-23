@@ -249,4 +249,8 @@
 + Encabezado Entrega
     Como le comente la tenía lista antes y no la pude entregar, a causa de eso y como me sentía inconforme la termine haciéndola 3 veces, mas q nada para adaptar como se comunicaban el servidor y la clase Contenedor ( q yo le di los nombres RAMBox y JSONBox según como operaban ). Esto se puede ver en commits viejos, q esta funcional o casi funcional pero completamente distinto codeada.
     Este ultimo commit fue a esta hora mas q nada revisando las preguntas de esta entrega; Me queda aun recopilar las preguntas de las entregas 02 y 03 para re-enviárselas.
+
+    Como siempre por favor revise el archivo de preguntas: Questions-04.txt.
+
+    Gracias y 'buen día'.
 +

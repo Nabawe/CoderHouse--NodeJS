@@ -1,0 +1,51 @@
+[
+    {
+        "id": "1",
+        "title": "Escuadra",
+        "price": 123.45,
+        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+        "dateCreated": 1655604430649
+    },
+    {
+        "id": "2",
+        "title": "Calculadora",
+        "price": 234.56,
+        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
+        "dateCreated": 1655604430649
+    },
+    {
+        "id": "4",
+        "title": "EXCELSIOR 1653018148549",
+        "price": 345573492395,
+        "thumbnail": "https://picsum.photos/200/300",
+        "dateCreated": 1655604431485
+    },
+    {
+        "id": "d89Jbwvb4EFpBE26g7KNt",
+        "title": "Firulais 1653018148549",
+        "price": 1,
+        "thumbnail": "https://picsum.photos/200/300",
+        "dateCreated": 1655604431485
+    },
+    {
+        "id": "6",
+        "title": "Emanuelle 1653018148549",
+        "price": 142.12,
+        "thumbnail": "https://picsum.photos/200/300",
+        "dateCreated": 1655604517566
+    },
+    {
+        "id": "7",
+        "title": "Santino 1653018148549",
+        "price": 659.63,
+        "thumbnail": "https://picsum.photos/200/300",
+        "dateCreated": 1655604517566
+    },
+    {
+        "id": "LL9uMZJzycNaCm_Ae6Z-U",
+        "dateCreated": 1655787745783,
+        "title": "The Catman",
+        "price": "325",
+        "thumbnail": "https://picsum.photos/200/300"
+    }
+]

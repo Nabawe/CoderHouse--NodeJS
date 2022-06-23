@@ -1,4 +1,5 @@
 + res.render()
++ Mensaje al terminar el server
 
 
 + res.render()
@@ -6,3 +7,26 @@
 
     Esto pasa en el servidor y ya envía la pagina? o el proceso de render se refiere a pasarlo por el engine de Templates para q produzca un html coherente a enviar?
 +
+
+
++ Mensaje al terminar el server
+    Así como solemos poner un mensaje al iniciar el server, como haría para disparar algo al terminarlo? Ctrl C lo termina de forma bruta o le manda la señal de q se cierre? Cualquiera sea el caso como podría estar consiente de eso?
++
+
+
+
+
+
++ Testear Server json cfg
+    Para que nuestro servidor express pueda interpretar en forma automática mensajes de tipo JSON en formato urlencoded al recibirlos, debemos indicarlo en forma explícita, agregando las siguiente líneas luego de crearlo.
+
+        Server.use(express.json())
+        Server.use(express.urlencoded({ extended: true }))
+
+    Aclaración: {extended:true} precisa que el objeto req.body contendrá valores de cualquier tipo en lugar de solo cadenas.
+    ¡Sin esta línea, el servidor no sabrá cómo interpretar los objetos recibidos!
+
+    Los significados de estas lineas.
++
+
+Revisar Questions 02 y 03 y la contestación del tutor por plataforma, buscar 'muchas' o 'son muchas' o 'preguntas'.
