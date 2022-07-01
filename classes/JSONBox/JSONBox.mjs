@@ -5,7 +5,7 @@
     To-Do remover todas las funciones Sync, una cosa es q la Class se frene pero no tiene q frenar la ejecucion completa del servidor.
 */
 
-import fs from 'fs';
+import fs from 'node:fs';
 const fsP = fs.promises;
 
 /** Creates a simple interface wich helps manipulate a basic array of items stored in a JSON file. A JSON file's internal items manager. */

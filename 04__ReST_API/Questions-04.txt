@@ -27,7 +27,7 @@
 
     ?
 
-    Esta pregunta me importa bastante por ejemplo se ve en .../routes/products.js pero también me viene la duda si es algo q debería poner en todos los res. q no sean finales.
+    Esta pregunta me importa bastante por ejemplo se ve en .../routes/products.route.js pero también me viene la duda si es algo q debería poner en todos los res. q no sean finales.
 +
 
 

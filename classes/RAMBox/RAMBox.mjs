@@ -20,7 +20,7 @@
 
 */
 import ErrsMsgs from '../data/messages/errors.msg.json' assert { type: "json" };
-import fs from 'fs';
+import fs from 'node:fs';
 import { nanoid as f_makeUUID } from 'nanoid';
 const fsP = fs.promises;
 

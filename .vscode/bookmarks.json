@@ -81,7 +81,7 @@
 			]
 		},
 		{
-			"path": "04__ReST_API/routes/products.js",
+			"path": "04__ReST_API/routes/products.route.js",
 			"bookmarks": [
 				{
 					"line": 60,

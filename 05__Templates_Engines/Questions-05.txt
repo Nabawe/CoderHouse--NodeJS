@@ -1,12 +1,6 @@
-+ res.render()
 + Mensaje al terminar el server
-
-
-+ res.render()
-    res.render()         Render a view template.
-
-    Esto pasa en el servidor y ya envía la pagina? o el proceso de render se refiere a pasarlo por el engine de Templates para q produzca un html coherente a enviar?
-+
++ Lambda
++ Handlebars Docs
 
 
 + Mensaje al terminar el server
@@ -14,7 +8,34 @@
 +
 
 
++ Lambda
+    Q es la letra Lambda uppercase Λ, lowercase λ q veo en algunos lados?
++
 
+
++ Handlebars Docs
+    Hola no entendi por completo ni su usabilidad:
+        HTML Escaping
+        Partials
+
+    En especial cual seria su uso, ejemplo lo de Partials lo manejaría desde JavaScript antes q Handlebars, q ventaja tendría usar un Partial?
++
+
+
+
+
+
+
+
+
+
+
+
++ res.render()
+    res.render()         Render a view template.
+
+    Esto pasa en el servidor y ya envía la pagina? o el proceso de render se refiere a pasarlo por el engine de Templates para q produzca un html coherente a enviar?
++
 
 
 + Testear Server json cfg
@@ -29,4 +50,11 @@
     Los significados de estas lineas.
 +
 
+
 Revisar Questions 02 y 03 y la contestación del tutor por plataforma, buscar 'muchas' o 'son muchas' o 'preguntas'.
+
+
++ res.render()
+
+
+Id mostrada no deberia ser id interna, prodId zapatos negros
