@@ -1,0 +1,8 @@
+{
+    "CAN_T_READ": "Could not read from file",
+    "CAN_T_RESET": "Could not reset",
+    "CAN_T_SAVE": "Could not save to file",
+    "CLASS__INIT": "Could not initialize the class",
+    "NO_DATA": "No data to realize the operation. Empty Items List",
+    "SEARCH__NOT_FOUND": "No match found"
+}

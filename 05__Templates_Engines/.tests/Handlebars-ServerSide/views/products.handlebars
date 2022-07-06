@@ -1,0 +1,11 @@
+<h1>Products</h1>
+<ul>
+    {{#each Product}}
+        <li>id: {{this.id}}</li>
+        <li>title: {{this.title}}</li>
+        <li>price: {{this.price}}</li>
+        <li><img src="{{this.thumbnail}}" alt="Product's Picture" /></li>
+        <li>dateCreated: {{this.dateCreated}}</li>
+        <hr>
+    {{/each}}
+</ul>

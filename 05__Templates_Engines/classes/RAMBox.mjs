@@ -24,6 +24,7 @@ import fs from 'node:fs';
 import { nanoid as f_makeUUID } from 'nanoid';
 const fsP = fs.promises;
 
+/* TO-DO Add this quirk to DocString No permite actualizar el id de forma manual, de necesitarlo borrar el producto y re agregarlo, así garantiza el uso correcto de UUID */
 /** Creates a simple interface wich helps manipulate a basic array of items stored in a JSON file. A JSON file's internal items manager. This variation of JSONBox makes its instances work on a RAM cached array and they only commit it to JSON file on command. */
 class RAMBox {
     /**
@@ -118,13 +119,12 @@ class RAMBox {
         if ( verdict )
             return verdict;
 
-        const id = f_makeUUID();
         this.i.push( {
-            id: id,
+            id: f_makeUUID(),
             dateCreated: Date.now(),
             title, price, thumbnail
         } );
-        return id;
+        return this.i;
     };
 
     // Se podria usar delete[index] y luego al grabar o reindexar remover los undefined
@@ -140,6 +140,7 @@ class RAMBox {
         return this.i.splice( index, 1 );
     };
 
+    // If the ID does not exist it creates a new item.
     m_set( id, data ){
         const verdict = this.#dataChecks();
         if ( verdict )
@@ -147,10 +148,10 @@ class RAMBox {
 
         const index = this.i.findIndex( obj => id === obj.id );
         if ( index === -1 )
-            return new Error( ErrsMsgs['SEARCH__NOT_FOUND'], { cause: 'SEARCH__NOT_FOUND' } );
+            return this.m_new( data );
 
         const Target = this.i[index];
-        // Como this.i[index] ya esta declarado tengo q colocar el destructuring entre ()
+        /* Como this.i[index] ya esta declarado tengo q colocar el destructuring entre (), ya q al no usar const o let {} se tomaría como un bloque de codigo, por eso los parentesis */
         ( {
             title: Target.title,
             price: Target.price,
@@ -181,7 +182,7 @@ class RAMBox {
         };
     };
 
-    // Pensar ¿Tiene algun sentido q solo borre el archivo del disco pero deje la RAM?
+    // Pensar ¿Tiene algun sentido q solo borre el archivo del disco pero deje sin tocar la RAM?
     m_fileReset() {
         try {
             fs.writeFileSync( this.filePath, '[]', 'utf-8' );

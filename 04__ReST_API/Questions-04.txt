@@ -40,7 +40,7 @@
     Si no entiendo mal ya no se usa más, cual sería la forma correcta de suplantarlo? Yo me base en este articulo:
         https://blog.logrocket.com/alternatives-dirname-node-js-es-modules/
 
-    Realmente creo q lo hice mal, q tendría q usar algo tipo Path.dirname o alguna otra forma, prove distintas cosas pero termine usando algo parecido a lo q muestran al principio.
+    Realmente creo q lo hice mal, q tendría q usar algo tipo Path.dirname o alguna otra forma, probé distintas cosas pero termine usando algo parecido a lo q muestran al principio.
 
     O por casualidad ahora NodeJS lo hace solo?
 

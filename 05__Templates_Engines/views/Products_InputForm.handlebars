@@ -1,0 +1,41 @@
+<main>
+    <h2>
+        <a href="products">Products List</a>
+    </h2>
+
+    <h2>Set a Product</h2>
+    <form action="/products" method="post">
+        <fieldset>
+            <label>Id:
+                <input type="text" name="title" maxlength="50" required>
+            </label>
+            <label>Title:
+                <input type="text" name="title" maxlength="50" required>
+            </label>
+            <label>Price:
+                <input type="number" name="price" max="9999999999" required>
+            </label>
+            <label>Thumbnail:
+                <input type="url" name="thumbnail" required>
+            </label>
+        </fieldset>
+        <button type="submit">Set</button>
+    </form>
+
+    <h2>Delete a Product</h2>
+    <form action="/api/products" method="get">
+        <fieldset>
+            <label>ID:
+                <input type="text" name="id" maxlength="50" required>
+            </label>
+        </fieldset>
+        <button type="submit">Delete</button>
+    </form>
+
+    <form action="/api/products/save" method="post">
+        <button type="submit">Guardar Archivo</button>
+    </form>
+    <form action="/api/products/reset" method="post">
+        <button type="submit">Elimiar Lista</button>
+    </form>
+</main>

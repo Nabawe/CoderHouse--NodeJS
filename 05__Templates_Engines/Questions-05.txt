@@ -1,6 +1,16 @@
++ Consigna
 + Mensaje al terminar el server
 + Lambda
 + Handlebars Docs
++ Handlebars-ClientSide
++ Handlebars-ServerSide
++ Eligiendo un Template Engine
++ Encabezado Entrega
+
+
++ Consigna
+    Cuando dice no ReST se refiere a q no se exponga la API?.
++
 
 
 + Mensaje al terminar el server
@@ -14,7 +24,7 @@
 
 
 + Handlebars Docs
-    Hola no entendi por completo ni su usabilidad:
+    No entendi por completo ni su usabilidad:
         HTML Escaping
         Partials
 
@@ -22,12 +32,59 @@
 +
 
 
++ Handlebars-ClientSide
+    Quería ver como puedo colocar lo q se conceptualiza como "Views" en archivos separados pero cuando lo estoy usando como cliente, en lo q arme como /05__Templates_Engines/.tests/Handlebars-ClientSide/public/scripts/main.js y lo asigna a la variable content.
+
+    La pregunta en si seria ¿Cómo puedo desde el lado de un script q se ejecuta en el cliente importar archivos q no sean JavaScript o JSON o sea para q me entienda .handlebars?
+
+    Se ve en el choclo de comentarios arriba de todo en main.js lo q intente por más q con lo poco q se me doy cuenta q no tenia sentido. Pero como pregunta me parecía q tenia valor ya q creo q es algo q me podría cruzar con otras cosas.
++
 
 
++ Handlebars-ServerSide
+    05__Templates_Engines/.tests/Handlebars-ServerSide/
+
+        index.mjs
+            import DatosPersonales from './data/DatosPersonales.json' assert { type: "json" };
+            import Products from './data/products.json' assert { type: "json" };
+                ¿Cuál sería la forma correcta de cargar la data de cada página?, ya q mandarla con un import desde el inicio del server parece una animalada, import dinámico? pero no arruinaría el cache de handlebars?
+
+        Server.get( '/products', ( req, res ) => {
+            res.render('Products', { 'Product': Products } );
+        } );
+            Leyendo la doc vi q tenia q pasárselo como objeto con una key pero siento q hice algo mal, podría revisar en 05__Templates_Engines/.tests/Handlebars-ServerSide/views/Products.handlebars
+
+    Como habilito el Template Caching?
+        https://github.com/express-handlebars/express-handlebars#template-caching
+
+        Segun en link de anterior solo tengo q:
+            app.enable('view cache');
+            process.env.NODE_ENV === "production"
+
+        Lo q no entiendo bien es como setear esa variable de entorno, q cosas implica y si me estoy olvidando de algo más q sea obvio para alguien q sepa. Si tuviera q adivinar lo pondría en index.mjs debajo de : const PORT = 8080 pero se me ocurre q tal vez va en otro lado o q el servidor tenga algun otro archivo dedicado a eso.
++
 
 
++ Eligiendo un Template Engine
+    Me puse a mirar varios proyectos, q está siendo usado, tamaño del npm, etc. y quería saber si ve algún problema o razon para NO usar estos dos:
+
+        - https://markojs.com/
+
+        - https://squirrelly.js.org/
+
+    Entender internamente mercado, como funcionan y la comunidad (cantidad/calidad) q los usa creo q son los criterios q más importan.
+
+    Info Extra:
+        https://openbase.com/categories/js/best-nodejs-html-templating-engine-libraries
+        https://www.inkoop.io/blog/3-fast-template-engines-for-express-js-squirrelly-marko-swig/
++
 
 
++ Encabezado Entrega
+    Sobre EJs, Handlebars backend y PUG frontend.
+
+    Q use put en vez de post para permitir actualizar
++
 
 
 
@@ -58,3 +115,16 @@ Revisar Questions 02 y 03 y la contestación del tutor por plataforma, buscar 'm
 
 
 Id mostrada no deberia ser id interna, prodId zapatos negros
+
+
+http://localhost:8080/ no es lo mismo q http://localhost:8080/index.html
+
+
+el como utilizar más layouts y si el formulario de carga no deberia ser una layout distinta
+
+
+si es posible enviar mas de un res o solo 1 por endpoint?
+    Route_Products.get( '/products', ( req, res ) => {
+    res.status( 200 ).json( MerchMan.i );
+    res.render('Products_List', { 'Products': MerchMan.i } );
+} );

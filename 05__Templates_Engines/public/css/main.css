@@ -1,0 +1,130 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Noto+Sans&family=Hina+Mincho&display=swap");
+/*
+  font-family: 'Open Sans', sans-serif; Main Font
+  font-family: 'Noto Sans', sans-serif; The "Almost All" Languages Font
+  font-family: 'Hina Mincho', serif; Styled Font
+*/
+@import url("https://fonts.googleapis.com/css2?family=Monoton&display=swap");
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+
+/* +Defaults */
+:root {
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: #6296BA;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  /* ESTO ES UN RECORDATORIO YA Q VEO PROBLEMAS POR ESTAS 2 lineas Aquí primero no estoy completamente seguro si deberia usar flexbox por defecto para Mobile First y segundo no estoy seguro si usar items o content para body?  */
+  align-items: center;
+}
+body h1, body h2, body h3, body h4 {
+  color: #F2FBFF;
+}
+body p {
+  color: #F2FBFF;
+}
+body ul {
+  color: #F2FBFF;
+  list-style-position: inside;
+}
+body ul li {
+  margin-top: 0.5rem;
+}
+/* +Defaults */
+
+
+/* +Main */
+main {
+  width: 90%;
+  margin-top: 50px;
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  gap: 10px;
+  /* justify-content: center; */
+  /* align-content: center; */
+}
+main section {
+  width: 100%;
+  height: 100%;
+  background-color: #0397D1;
+  box-shadow: 3px 3px 2px 4px rgba(34, 34, 34, 0.6);
+  /* es #222 con 0.6 de alpha */
+  border-radius: 4px;
+  padding: 5px;
+  margin: 10px 0px;
+}
+/* +Main */
+
+
+/* +404 */
+.e404--logo {
+  font-size: 28rem;
+  color: #EEE8A9;
+  text-shadow: 2px 2px 2px #444;
+  font-family: "Monoton", cursive;
+}
+/* +404 */
+
+
+/* +Media Querries */
+@media only screen and (min-width: 1024px) {
+  main section {
+    margin: 0px 0px;
+  }
+}
+/* +Media Querries */
+
+
+button {
+  width: fit-content;
+  height: fit-content;
+  font-size: 1rem;
+  padding: 0.5%;
+};
+
+input {
+  width: 100%;
+  height: 1rem;
+}
+
+form {
+  width: 90%;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+
+}
+
+form fieldset {
+  width: 25%;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.5%;
+}
+
+.g-WIP {
+  visibility: hidden;
+}

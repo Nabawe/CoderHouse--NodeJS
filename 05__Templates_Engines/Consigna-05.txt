@@ -1,0 +1,11 @@
+- Un formulario de carga de productos en la ruta raíz (configurar la ruta '/productos' para recibir el POST, y redirigir al mismo formulario).
+
+- Una vista de los productos cargados (utilizando plantillas de handlebars) en la ruta GET '/productos'.
+
+- Ambas páginas contarán con un botón que redirija a la otra.
+
+- En el caso de no encontrarse datos, mostrar el mensaje: 'No hay productos'.
+
+- formato tabla dinámica
+
+- No ReST

@@ -135,7 +135,7 @@ class RAMBox {
 
         const index = this.i.findIndex( obj => id === obj.id );
         if ( index === -1 )
-                return new Error( ErrsMsgs['SEARCH__NOT_FOUND'], { cause: 'SEARCH__NOT_FOUND' } );
+            return new Error( ErrsMsgs['SEARCH__NOT_FOUND'], { cause: 'SEARCH__NOT_FOUND' } );
 
         return this.i.splice( index, 1 );
     };
@@ -147,7 +147,7 @@ class RAMBox {
 
         const index = this.i.findIndex( obj => id === obj.id );
         if ( index === -1 )
-                return new Error( ErrsMsgs['SEARCH__NOT_FOUND'], { cause: 'SEARCH__NOT_FOUND' } );
+            return new Error( ErrsMsgs['SEARCH__NOT_FOUND'], { cause: 'SEARCH__NOT_FOUND' } );
 
         const Target = this.i[index];
         // Como this.i[index] ya esta declarado tengo q colocar el destructuring entre ()

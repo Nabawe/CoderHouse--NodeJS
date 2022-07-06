@@ -1,7 +1,7 @@
 {
 	"files": [
 		{
-			"path": "classes/JSONBox/JSONBox.mjs",
+			"path": "zz__Common/classes/JSONBox/JSONBox.mjs",
 			"bookmarks": [
 				{
 					"line": 54,
@@ -101,6 +101,41 @@
 				{
 					"line": 190,
 					"column": 27,
+					"label": ""
+				}
+			]
+		},
+		{
+			"path": "05__Templates_Engines/Questions-05.txt",
+			"bookmarks": [
+				{
+					"line": 67,
+					"column": 2,
+					"label": ""
+				}
+			]
+		},
+		{
+			"path": "05__Templates_Engines/routes/products.route.js",
+			"bookmarks": [
+				{
+					"line": 11,
+					"column": 35,
+					"label": ""
+				},
+				{
+					"line": 24,
+					"column": 42,
+					"label": ""
+				}
+			]
+		},
+		{
+			"path": "05__Templates_Engines/public/404.html",
+			"bookmarks": [
+				{
+					"line": 17,
+					"column": 18,
 					"label": ""
 				}
 			]
