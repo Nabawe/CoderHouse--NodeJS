@@ -42,6 +42,77 @@ body ul li {
 /* +Defaults */
 
 
+/* +Header */
+header {
+  width: 95%;
+}
+/* +Header */
+
+
+/* +p-nav */
+#p-nav {
+  display: grid;
+  gap: 0px 13px;
+  grid-template-areas:
+    "logo .    .    ."
+    "logo btn-1 btn-2 ."
+    "logo .    .    ."
+    "logo btn-3 btn-4 ."
+    "logo .    .    ."
+  ;
+}
+#p-nav a:hover {
+  color: #EEE8A9;
+}
+#p-nav .btn {
+  min-width: 110px;
+  font-size: 0.9rem;
+  color: #F2FBFF;
+  text-decoration: none;
+  background-color: #0397d1;
+  border-radius: 10px;
+  text-align: center;
+  padding: 3% 0px;
+  padding-bottom: 4%;
+}
+#p-nav .miniText {
+  font-size: 0.9rem;
+  color: #F2FBFF;
+  text-align: center;
+  position: relative;
+  bottom: 1.5rem;
+}
+#p-nav .logo {
+  border: none;
+  background-color: unset;
+  grid-area: logo;
+  padding: 0px;
+  margin-top: 4%;
+  justify-self: left;
+  text-decoration: none;
+  border-radius: 10px;
+}
+#p-nav .logo .svg {
+  height: 7rem;
+}
+#p-nav .logo:hover .miniText {
+  color: #EEE8A9;
+}
+#p-nav .btn-1 {
+  grid-area: btn-1;
+}
+#p-nav .btn-2 {
+  grid-area: btn-2;
+}
+#p-nav .btn-3 {
+  grid-area: btn-3;
+}
+#p-nav .btn-4 {
+  grid-area: btn-4;
+}
+/* +p-nav */
+
+
 /* +Main */
 main {
   width: 90%;
@@ -80,6 +151,34 @@ main section {
 
 /* +Media Querries */
 @media only screen and (min-width: 1024px) {
+  header {
+    width: 90%;
+  }
+
+  #p-nav {
+    gap: 0px 40px;
+    grid-template-areas:
+      "logo btn-1 btn-2 btn-3 btn-4"
+      "logo .     .         .     ."
+    ;
+  }
+  #p-nav .svg {
+    height: 10rem;
+  }
+  #p-nav .btn {
+    min-width: 256px;
+    font-size: 1.5rem;
+    position: relative;
+    top: 5px;
+  }
+  #p-nav .logo {
+    border: none;
+    background-color: unset;
+    grid-area: logo;
+    padding: 0px;
+    margin: 0px;
+  }
+
   main section {
     margin: 0px 0px;
   }

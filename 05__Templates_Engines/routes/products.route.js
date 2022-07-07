@@ -11,8 +11,8 @@ Route_Products.get( '/products', ( req, res ) => {
     res.render( 'Products_List', { 'Products': MerchMan.i } );
 } );
 
-Route_Products.delete( '/products/:id', ( req, res ) => {
-    const match = MerchMan.m_del( req.params.id );
+Route_Products.post( '/products/del', ( req, res ) => {
+    const match = MerchMan.m_del( req.body.id );
     if ( match instanceof Error ) {
         const v = Verdicts[match.cause];
         return res.status( v.status )[v.type]( v.outcome );
@@ -21,14 +21,14 @@ Route_Products.delete( '/products/:id', ( req, res ) => {
 } );
 
 /* * No permite actualizar el id de forma manual, de necesitarlo borrar el producto y re agregarlo, así garantiza el uso correcto de UUID */
-// ! Testear q pasa si se deja el ID vacio
-Route_Products.put( '/', ( req, res ) => {
+// ! Pork no puedo poner put aquí y q el form lo indique
+Route_Products.post( '/products/set', ( req, res ) => {
     const match = MerchMan.m_set( req.body.id, req.body );
     if ( match instanceof Error ) {
         const v = Verdicts[match.cause];
         return res.status( v.status )[v.type]( v.outcome );
     };
-    res.status( 200 ).json( match );
+    res.render( 'Products_List', { 'Products': MerchMan.i } );
 } );
 
 Route_Products.get( '/', ( req, res ) => {

@@ -6,12 +6,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicon -->
+        {{!-- WIP Creo q hay mejores formas de hacer el favicon, y descargarlo en vez d ponerlo como https --}}
+        <link rel="icon" href="/favicon/cropped-austral-favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" href="/favicon/cropped-austral-favicon-192x192.png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/favicon/cropped-austral-favicon-180x180.png" />
+        <meta name="msapplication-TileImage" content="/favicon/cropped-austral-favicon-270x270.png" />
+        {{!-- ? No se si cometí un error en este ultimo --}}
+    <!-- Favicon -->
+
     <title>Austral</title>
     <link href="/css/main.css" type="text/css" rel="stylesheet">
 </head>
 
 
 <body>
+    <header>
+        <nav id="p-nav">
+            <a class="logo" href="/"><img class="svg" src="/img/logo/logo-small-menu.png" alt="Inicio. Austral Interpretar Logo.">
+            </a>
+            <a class="btn btn-1" href="/products">· Products ·</a>
+        </nav>
+    </header>
     {{{body}}}
 </body>
 

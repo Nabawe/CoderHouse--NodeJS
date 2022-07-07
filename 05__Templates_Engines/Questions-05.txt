@@ -128,3 +128,6 @@ si es posible enviar mas de un res o solo 1 por endpoint?
     res.status( 200 ).json( MerchMan.i );
     res.render('Products_List', { 'Products': MerchMan.i } );
 } );
+
+
+necesito agregar esto en el form html? enctype="multipart/form-data"

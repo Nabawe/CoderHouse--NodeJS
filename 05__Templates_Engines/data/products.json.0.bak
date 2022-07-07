@@ -43,9 +43,9 @@
     },
     {
         "id": "LL9uMZJzycNaCm_Ae6Z-U",
-        "dateCreated": 1655787745783,
         "title": "The Scatman",
         "price": "325",
-        "thumbnail": "https://picsum.photos/200/300/?3568"
+        "thumbnail": "https://picsum.photos/200/300/?3568",
+        "dateCreated": 1655787745783
     }
 ]
