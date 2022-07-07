@@ -8,7 +8,7 @@ const Route_Products = Router();
 
 
 Route_Products.get( '/products', ( req, res ) => {
-    res.render( 'Products_List', { 'Products': MerchMan.i } );
+    res.render( 'Products_List', { 'Products': MerchMan.i, 'title': 'Austral Interpretar : Products' } );
 } );
 
 Route_Products.post( '/products/del', ( req, res ) => {
@@ -20,19 +20,28 @@ Route_Products.post( '/products/del', ( req, res ) => {
     res.status( 200 ).json( match );
 } );
 
+Route_Products.post( '/products/add', ( req, res ) => {
+    const match = MerchMan.m_new( req.body );
+    if ( match instanceof Error ) {
+        const v = Verdicts[match.cause];
+        return res.status( v.status )[v.type]( v.outcome );
+    };
+    res.render( 'Products_List', { 'Products': MerchMan.i, 'title': 'Austral Interpretar : Products' } );
+} );
+
 /* * No permite actualizar el id de forma manual, de necesitarlo borrar el producto y re agregarlo, así garantiza el uso correcto de UUID */
 // ! Pork no puedo poner put aquí y q el form lo indique
-Route_Products.post( '/products/set', ( req, res ) => {
+Route_Products.post( '/products/update', ( req, res ) => {
     const match = MerchMan.m_set( req.body.id, req.body );
     if ( match instanceof Error ) {
         const v = Verdicts[match.cause];
         return res.status( v.status )[v.type]( v.outcome );
     };
-    res.render( 'Products_List', { 'Products': MerchMan.i } );
+    res.render( 'Products_List', { 'Products': MerchMan.i, 'title': 'Austral Interpretar : Products' } );
 } );
 
 Route_Products.get( '/', ( req, res ) => {
-    res.render( 'Products_InputForm' );
+    res.render( 'Products_InputForm', { 'title': 'Austral Interpretar : Inicio' } );
 } );
 
 // WIP Pensar q sería mejor retornar

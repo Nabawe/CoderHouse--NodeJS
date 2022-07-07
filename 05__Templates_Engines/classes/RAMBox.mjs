@@ -140,15 +140,16 @@ class RAMBox {
         return this.i.splice( index, 1 );
     };
 
-    // If the ID does not exist it creates a new item.
     m_set( id, data ){
-        const verdict = this.#dataChecks( { NO_DATA: false } );
+        const verdict = this.#dataChecks();
         if ( verdict )
             return verdict;
 
         const index = this.i.findIndex( obj => id === obj.id );
         if ( index === -1 )
-            return this.m_new( data ); // ! Se corre dataChecks 2 veces así
+            return new Error( ErrsMsgs['SEARCH__NOT_FOUND'], { cause: 'SEARCH__NOT_FOUND' } );
+            /* The idea was if the ID didn't not exist it would creates a new item, but that kind of behaviour may lead to create entries by mistake when mistyping an Id. */
+            // return this.m_new( data ); // ! Se corre dataChecks 2 veces así
 
         const Target = this.i[index];
         /* Como this.i[index] ya esta declarado tengo q colocar el destructuring entre (), ya q al no usar const o let {} se tomaría como un bloque de codigo, por eso los parentesis */

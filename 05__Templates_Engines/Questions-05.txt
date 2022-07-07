@@ -1,15 +1,23 @@
 + Consigna
+
 + Mensaje al terminar el server
 + Lambda
 + Handlebars Docs
 + Handlebars-ClientSide
 + Handlebars-ServerSide
-+ Eligiendo un Template Engine
++ res.render()
++ Navbar y Cambiar el titulo
++ Direcciones Absolutas
++ HTML Form
+
+
 + Encabezado Entrega
 
 
 + Consigna
     Cuando dice no ReST se refiere a q no se exponga la API?.
+
+    Y "formato tabla dinámica" estimo q era q se carguen de un objeto y no tipo una pivot table q se puede filtrar, modificar tamaño o ordenar a-z, z-a.
 +
 
 
@@ -28,7 +36,7 @@
         HTML Escaping
         Partials
 
-    En especial cual seria su uso, ejemplo lo de Partials lo manejaría desde JavaScript antes q Handlebars, q ventaja tendría usar un Partial?
+    En especial cual seria su uso, ejemplo lo de Partials lo manejaría desde JavaScript antes q Handlebars, q ventaja tendría usar un Partial? Cache?
 +
 
 
@@ -47,12 +55,13 @@
         index.mjs
             import DatosPersonales from './data/DatosPersonales.json' assert { type: "json" };
             import Products from './data/products.json' assert { type: "json" };
-                ¿Cuál sería la forma correcta de cargar la data de cada página?, ya q mandarla con un import desde el inicio del server parece una animalada, import dinámico? pero no arruinaría el cache de handlebars?
+                1) ¿Cuál sería la forma correcta de cargar la data de cada página?, ya q mandarla con un import desde el inicio del server parece una animalada, import dinámico? pero no arruinaría el cache de handlebars?
+                    En la entrega la info la levanta la class.
 
-        Server.get( '/products', ( req, res ) => {
+        2) Server.get( '/products', ( req, res ) => {
             res.render('Products', { 'Product': Products } );
         } );
-            Leyendo la doc vi q tenia q pasárselo como objeto con una key pero siento q hice algo mal, podría revisar en 05__Templates_Engines/.tests/Handlebars-ServerSide/views/Products.handlebars
+            Leyendo la doc vi q tenia q pasárselo como objeto con una key para q Handlebars sepa q es q, pero siento q hice algo mal, podría revisar en 05__Templates_Engines/.tests/Handlebars-ServerSide/views/Products.handlebars
 
     Como habilito el Template Caching?
         https://github.com/express-handlebars/express-handlebars#template-caching
@@ -61,8 +70,81 @@
             app.enable('view cache');
             process.env.NODE_ENV === "production"
 
-        Lo q no entiendo bien es como setear esa variable de entorno, q cosas implica y si me estoy olvidando de algo más q sea obvio para alguien q sepa. Si tuviera q adivinar lo pondría en index.mjs debajo de : const PORT = 8080 pero se me ocurre q tal vez va en otro lado o q el servidor tenga algun otro archivo dedicado a eso.
+        Lo q no entiendo bien es como setear esa variable de entorno, q cosas implica y si me estoy olvidando de algo más q sea obvio para alguien q sepa del tema. Si tuviera q adivinar lo pondría en index.mjs debajo de : const PORT = 8080 pero se me ocurre q tal vez va en otro lado o q el servidor tenga algun otro archivo dedicado a eso.
 +
+
+
++ res.render()
+    res.render()         Render a view template.
+
+    Esto pasa en el servidor y ya envía la pagina? o el proceso de render se refiere a pasarlo por el engine de Templates para q produzca un html coherente a enviar?
++
+
+
++ Navbar y Cambiar el titulo
+    No estaba seguro si era correcto colocar en la layout otra variable q no sea body, ya q si lo hago no se si esto hace q lo q pasa debajo como el cache q falle. Hice como sugería el siguiente link:
+        https://stackoverflow.com/questions/56212809/change-page-title-in-nodejs
+
+        <title>{{title}}</title>
+
+    Y en cuanto a la Navbar no sabía si lo correcto era ponerla repetida en cada una de las Views.
++
+
+
++ Direcciones Absolutas
+    en /public/404.html puse:
+        <!-- De no usar el path absoluto la página no aplica el CSS en sub directorios -->
+        <link href="/css/main.css" type="text/css" rel="stylesheet">
+
+    Me paso en casi todas las direcciones q tuviera q especificar q de no usar un URL absoluta el recurso no era encontrado, no sabía si lo estoy aplicando bien o si tuviera q hacerlo de otra forma o pasarlo como una variable y q Handlebars la cambié.
+
+    El ejemplo de arriba con la 404 es aun más especial q las otras ocurrencias ya q el 404 puede pasar en cualquier subnivel. /cualquier-cosa/o3i426 ; /mas/cual/quiera , etc.
+
+    !) Otra cosa importante q me paso fue q:
+        http://localhost:8080/ no es lo mismo q http://localhost:8080/index.html
+
+        Al configurar la ruta raíz use:
+            Route_Products.get( '/', ( req, res ) => {
+
+        Pero de alguna forma no tendría q apuntar a index.html o algo así? el tema q cuando estamos armando server side por lo general tenemos un index.mjs y no un index.html. Q tendría q hacer para q este bien para un cliente? o simplemente duplico la ruta o le mando un next usando:
+            Route_Products.get( '/index.html', ( req, res ) => {
+
+        Pero lo q intente usando eso y variaciones me fallo.
++
+
+
++ HTML Form
+    necesito agregar esto en el form? enctype="multipart/form-data"
++
+
+
+
+
+
+
+
+
+
+
++ Encabezado Entrega
+    Sobre EJs, Handlebars backend y PUG frontend.
+
+    Q use put en vez de post para permitir actualizar
++
+
+
+
+el como utilizar más layouts y si el formulario de carga no deberia ser una layout distinta
+
+
+si es posible enviar mas de un res o solo 1 por endpoint?
+    Route_Products.get( '/products', ( req, res ) => {
+        res.status( 200 ).json( MerchMan.i );
+        res.render('Products_List', { 'Products': MerchMan.i } );
+    } );
+
+    Agregar al encabezado : q se q estoy mezclando json y render y preguntar como hacerlo correctamente, separando lo q es para servidores o para q otros re usen como /API?
+
 
 
 + Eligiendo un Template Engine
@@ -80,54 +162,11 @@
 +
 
 
-+ Encabezado Entrega
-    Sobre EJs, Handlebars backend y PUG frontend.
+Hola voy contestando por partes:
 
-    Q use put en vez de post para permitir actualizar
-+
+"Si tenés temas personales que te producen ese estado" : por ahi suena patético o cualquier cosa pero en esta entrega creo q el 60% del tiempo se fue en depresión y un problema medico menor q al final por suerte no fue nada.
 
-
-
-+ res.render()
-    res.render()         Render a view template.
-
-    Esto pasa en el servidor y ya envía la pagina? o el proceso de render se refiere a pasarlo por el engine de Templates para q produzca un html coherente a enviar?
-+
+    URL buscar archivo de disco File URL
 
 
-+ Testear Server json cfg
-    Para que nuestro servidor express pueda interpretar en forma automática mensajes de tipo JSON en formato urlencoded al recibirlos, debemos indicarlo en forma explícita, agregando las siguiente líneas luego de crearlo.
-
-        Server.use(express.json())
-        Server.use(express.urlencoded({ extended: true }))
-
-    Aclaración: {extended:true} precisa que el objeto req.body contendrá valores de cualquier tipo en lugar de solo cadenas.
-    ¡Sin esta línea, el servidor no sabrá cómo interpretar los objetos recibidos!
-
-    Los significados de estas lineas.
-+
-
-
-Revisar Questions 02 y 03 y la contestación del tutor por plataforma, buscar 'muchas' o 'son muchas' o 'preguntas'.
-
-
-+ res.render()
-
-
-Id mostrada no deberia ser id interna, prodId zapatos negros
-
-
-http://localhost:8080/ no es lo mismo q http://localhost:8080/index.html
-
-
-el como utilizar más layouts y si el formulario de carga no deberia ser una layout distinta
-
-
-si es posible enviar mas de un res o solo 1 por endpoint?
-    Route_Products.get( '/products', ( req, res ) => {
-    res.status( 200 ).json( MerchMan.i );
-    res.render('Products_List', { 'Products': MerchMan.i } );
-} );
-
-
-necesito agregar esto en el form html? enctype="multipart/form-data"
+sobre typescript
