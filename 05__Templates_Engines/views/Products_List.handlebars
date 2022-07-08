@@ -1,18 +1,17 @@
 <main>
-    <h1>Products</h1>
     <ul>
         {{#each Products}}
-            <li>id: {{this.id}}</li>
-            <li>title: {{this.title}}</li>
-            <li>price: {{this.price}}</li>
-            <li>dateCreated: {{this.dateCreated}}</li>
-            {{#if this.dateMod}}
-                <li>dateMod: {{this.dateMod}}</li>
-            {{/if}}
-            <img src="{{this.thumbnail}}" alt="Product's Picture" />
-            <hr>
+        <li>id: {{this.id}}</li>
+        <li>title: {{this.title}}</li>
+        <li>price: {{this.price}}</li>
+        <li>dateCreated: {{this.dateCreated}}</li>
+        {{#if this.dateMod}}
+        <li>dateMod: {{this.dateMod}}</li>
+        {{/if}}
+        <img src="{{this.thumbnail}}" alt="Product's Picture" />
+        <hr>
         {{else}}
-            <h1 class="e404 e404--logo">Empty</h1>
+        <h1 class="e404 e404--logo">Empty</h1>
         {{/each}}
     </ul>
 </main>

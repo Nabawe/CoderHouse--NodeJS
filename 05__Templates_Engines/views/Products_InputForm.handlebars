@@ -1,53 +1,53 @@
 <main>
-    <h2>Add a Product</h2>
+    <h2 class="text-light">Add a Product</h2>
     <form action="/products/add" method="post">
-        <fieldset>
+        <fieldset class="form-group">
             <label>Title:
-                <input type="text" name="title" maxlength="50" required>
+                <input type="text" class="form-control" name="title" maxlength="50" required>
             </label>
             <label>Price:
-                <input type="number" name="price" max="9999999999" required>
+                <input type="number" class="form-control" name="price" max="9999999999" required>
             </label>
             <label>Thumbnail:
-                <input type="url" name="thumbnail" required>
+                <input type="url" class="form-control" name="thumbnail" required>
             </label>
         </fieldset>
-        <button type="submit">Add</button>
+        <button type="submit" class="btn btn-secondary">Add</button>
     </form>
 
-    <h2>Update a Product</h2>
+    <h2 class="text-light">Update a Product</h2>
     <form action="/products/update" method="post">
-        <fieldset>
+        <fieldset class="form-group">
             <label>Id:
-                <input type="text" name="id" maxlength="50" required>
+                <input type="text" class="form-control" name="id" maxlength="50" required>
             </label>
             <label>Title:
-                <input type="text" name="title" maxlength="50" required>
+                <input type="text" class="form-control" name="title" maxlength="50" required>
             </label>
             <label>Price:
-                <input type="number" name="price" max="9999999999" required>
+                <input type="number" class="form-control" name="price" max="9999999999" required>
             </label>
             <label>Thumbnail:
-                <input type="url" name="thumbnail" required>
+                <input type="url" class="form-control" name="thumbnail" required>
             </label>
         </fieldset>
-        <button type="submit">Set</button>
+        <button type="submit" class="btn btn-secondary">Set</button>
     </form>
 
-    <h2>Delete a Product</h2>
+    <h2 class="text-light">Delete a Product</h2>
     <form action="/products/del" method="post">
-        <fieldset>
+        <fieldset class="form-group">
             <label>ID:
-                <input type="text" name="id" maxlength="50" required>
+                <input type="text" class="form-control" name="id" maxlength="50" required>
             </label>
         </fieldset>
-        <button type="submit">Delete</button>
+        <button type="submit" class="btn btn-secondary">Delete</button>
     </form>
 
     <form action="/products/save" method="post">
-        <button type="submit">Guardar Archivo</button>
+        <button type="submit" class="btn btn-secondary">Guardar Archivo</button>
     </form>
     <form action="/products/reset" method="post">
-        <button type="submit">Elimiar Lista</button>
+        <button type="submit" class="btn btn-secondary">Elimiar Lista</button>
     </form>
 </main>

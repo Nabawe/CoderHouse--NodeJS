@@ -9,9 +9,11 @@
 + Navbar y Cambiar el titulo
 + Direcciones Absolutas
 + HTML Form
-
++ Como utilizar más layouts
++ Es posible enviar más de una res o solo una por Endpoint
 
 + Encabezado Entrega
++ Chat CoderHouse
 
 
 + Consigna
@@ -118,55 +120,74 @@
 +
 
 
-
-
-
-
-
-
-
-
-+ Encabezado Entrega
-    Sobre EJs, Handlebars backend y PUG frontend.
-
-    Q use put en vez de post para permitir actualizar
++ Como utilizar más layouts
+    Por las dudas hablo del concepto de Layouts y no de Views.
+    No me queda claro como utilizar más layouts, vi el ejemplo avanzado de express-handlebars.
+    Ya q lo q esta en este ejercicio pareciera q solo aplica a single page.
 +
 
 
++ Es posible enviar más de una res o solo una por Endpoint
+    Algo al estilo de:
+        Route_Products.get( '/products', ( req, res ) => {
+            res.status( 200 ).json( MerchMan.i );
+            res.render('Products_List', { 'Products': MerchMan.i } );
+        } );
 
-el como utilizar más layouts y si el formulario de carga no deberia ser una layout distinta
-
-
-si es posible enviar mas de un res o solo 1 por endpoint?
-    Route_Products.get( '/products', ( req, res ) => {
-        res.status( 200 ).json( MerchMan.i );
-        res.render('Products_List', { 'Products': MerchMan.i } );
-    } );
-
-    Agregar al encabezado : q se q estoy mezclando json y render y preguntar como hacerlo correctamente, separando lo q es para servidores o para q otros re usen como /API?
+    Me imagino q estará mal y q tendría q separar lo q es para servidores || APIs en /api pero queria saber si era posible ya q con un next tampoco pude y si podría haber un caso donde se aplique.
++
 
 
++ Encabezado Entrega
+    Bueno terminé teniendo q investigar mucho más de lo q esperaba si no entendi mal las intenciones de la gente:
+        EJs = Backend
+        PUG = Frontend
 
-+ Eligiendo un Template Engine
-    Me puse a mirar varios proyectos, q está siendo usado, tamaño del npm, etc. y quería saber si ve algún problema o razon para NO usar estos dos:
+    Handlebars y EJs son los más populares en la parte de Backend pero yo creo q usaría Marko o Squirelly, es más la entrega la empecé a hacer en Marko pero despues me acorde q pedía Handlebars.
+    Lo q se le critica a Handlebars es q es lento y pesado a comparación de los otros paquetes. Use Handlebars en vez de EJs porque casi todas las nuevas librerías parecen usar una "Mustache Syntax".
 
-        - https://markojs.com/
+    En la entrega estoy mezclando json y render como respuestas y una de las preguntas tiene q ver con eso.
 
-        - https://squirrelly.js.org/
-
-    Entender internamente mercado, como funcionan y la comunidad (cantidad/calidad) q los usa creo q son los criterios q más importan.
+    En una de las entregas anteriores también pregunte por lo del PUT en formularios esta vez coloque la solución q se me ocurrio, espero sea correcta pero en la pregunta esa de la entrega 04 marco otras.
 
     Info Extra:
+        https://markojs.com/
+        https://squirrelly.js.org/
         https://openbase.com/categories/js/best-nodejs-html-templating-engine-libraries
         https://www.inkoop.io/blog/3-fast-template-engines-for-express-js-squirrelly-marko-swig/
 +
 
 
-Hola voy contestando por partes:
++ Chat CoderHouse
+    Hola voy contestando por partes:
 
-"Si tenés temas personales que te producen ese estado" : por ahi suena patético o cualquier cosa pero en esta entrega creo q el 60% del tiempo se fue en depresión y un problema medico menor q al final por suerte no fue nada.
+    "Si Tenes temas personales que te producen ese estado" - Tutor : por ahi suena patético o cualquier cosa pero en esta entrega creo q el 60% del tiempo se fue en depresión y un problema medico menor q al final por suerte no fue nada. Sigo devil pero mañana espero estar todo el día en mi casa y quiero rezar q voy a poder adelantar.
+    ( Otros problemas, disco, migrar repo, docs handlebars, docs express )
 
-    URL buscar archivo de disco File URL
+    Cuando especificar las rutas con URL y porque - FF
+        No entiendo tu pregunta, trata de ser específico de en qué caso de uso te referís. - Tutor
+            Disculpe si no di contexto pero creo q fui especifico aparentemente ahora en NodeJS, SI NO ENTENDÍ MAL, se especifican URLs o file URLs en vez de Paths en los comandos, y me parece q es más q nada cuando NodeJS tiene q buscar algo de un medio de almacenamiento o recurso interno del servidor pero no me queda claro cuando son realmente necesarias y cuando es mejor utilizar las direcciones tipo /data/productos.js, lo de las files URLs si no entendí mal ayuda a cuando el servidor esta instalado en Linux, Windows, etc. así no importan q barra usas ( / \ ) y otros pequeños detalles q cambian según la plataforma.
+            Tiene q ver con lo de ___dirname.
+
+    Asincronismo, hacer RAMBox cómo lo dice el encabezado, frenando la clase y no al server. - FF
+        El método init que está en el constructor está bien que sea sincrónico, además que no afecta los endpoints del servidor porque se instancia antes de que se levante. El método m_new, m_del, m_set deben ser async y una vez que actualiza el atributo i escribir en el archivo asincrónicamente, una vez que se escribe devolves una respuesta en esos métodos. - Tutor
+            La gracia de RAMBox es manipular todo en RAM creo q si necesitara funciones Async para los metodos q no estan prefijos con file (m_new, m_del, etc.) perdería la gracia de su esencia y si justamente la parte de grabado en el archivo quisiera q fuera asincrónica y por eso detalle mi visión en el encabezado de RAMBox .
+
+    Como trabajar con ReactJS, ya q con lo q vimos lo tendría q usar después de un build, como hacíamos con los static files, pero no sé si es la forma, resulta raro q no haya un “modo dev”. - FF
+        Ya sea usando cualquier librería o framework de Frontend, nuestros endpoints se consumen via HTTP. Desde react tendrías que pegarle a la URL del Backend para obtener o modificar los productos. - Tutor
+            Justo lo charlamos hoy :) - FF
+
+    Ya estube viendo sobre TypeScript y Websockets, y ya tengo cosas para decir...
+
+    Si puede por favor mire los archivos de preguntas de las entregas 04 y 05 ya q me crucé con varias de las cosas nuevamente aquí.
 
 
-sobre typescript
+    Al menos mírelos, ni se gaste en contestar todo pero lo q me diga lo registro y lo tomo en cuenta.
+
+
+    No este pero el próximo fin de semana voy a intentar nuevamente compilarle las preguntas y pasárselas al profesor, ya q se ofreció en la clase anterior, tal vez no sabe lo q le espera xD.
+
+    Esta vez creo q me quedo mucho más desprolija como dije antes pensaba hacerla en Marko o Squirrelly.
+
+    Gracias y cuando pueda habilíteme 05__Templates_Engines.
++

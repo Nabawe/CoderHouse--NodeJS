@@ -8,7 +8,7 @@ const Route_Products = Router();
 
 
 Route_Products.get( '/products', ( req, res ) => {
-    res.render( 'Products_List', { 'Products': MerchMan.i, 'title': 'Austral Interpretar : Products' } );
+    res.render( 'Products_Table', { 'Products': MerchMan.i, 'title': 'Austral Interpretar : Products' } );
 } );
 
 Route_Products.post( '/products/del', ( req, res ) => {
@@ -26,7 +26,7 @@ Route_Products.post( '/products/add', ( req, res ) => {
         const v = Verdicts[match.cause];
         return res.status( v.status )[v.type]( v.outcome );
     };
-    res.render( 'Products_List', { 'Products': MerchMan.i, 'title': 'Austral Interpretar : Products' } );
+    res.render( 'Products_Table', { 'Products': MerchMan.i, 'title': 'Austral Interpretar : Products' } );
 } );
 
 /* * No permite actualizar el id de forma manual, de necesitarlo borrar el producto y re agregarlo, así garantiza el uso correcto de UUID */
@@ -37,7 +37,7 @@ Route_Products.post( '/products/update', ( req, res ) => {
         const v = Verdicts[match.cause];
         return res.status( v.status )[v.type]( v.outcome );
     };
-    res.render( 'Products_List', { 'Products': MerchMan.i, 'title': 'Austral Interpretar : Products' } );
+    res.render( 'Products_Table', { 'Products': MerchMan.i, 'title': 'Austral Interpretar : Products' } );
 } );
 
 Route_Products.get( '/', ( req, res ) => {

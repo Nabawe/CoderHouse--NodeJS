@@ -1,0 +1,14 @@
+/* +p-nav */
+#p-nav .logo {
+  width: 2rem;
+  height: 2rem;
+}
+/* +p-nav */
+
+
+/* +p-productsTable */
+#p-productsTable .pic {
+  width: 6rem;
+  height: calc( 6rem * 1.5 );
+}
+/* +p-productsTable */

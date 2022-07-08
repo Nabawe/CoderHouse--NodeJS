@@ -1,0 +1,17 @@
++ Testear Server json cfg
+    Para que nuestro servidor express pueda interpretar en forma automática mensajes de tipo JSON en formato urlencoded al recibirlos, debemos indicarlo en forma explícita, agregando las siguiente líneas luego de crearlo.
+
+        Server.use(express.json())
+        Server.use(express.urlencoded({ extended: true }))
+
+    Aclaración: {extended:true} precisa que el objeto req.body contendrá valores de cualquier tipo en lugar de solo cadenas.
+    ¡Sin esta línea, el servidor no sabrá cómo interpretar los objetos recibidos!
+
+    Los significados de estas lineas.
++
+
+
+Revisar Questions 02 y 03 y la contestación del tutor por plataforma, buscar 'muchas' o 'son muchas' o 'preguntas'.
+
+
+Id mostrada no deberia ser id interna, prodId zapatos negros
