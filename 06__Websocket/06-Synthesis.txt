@@ -1,0 +1,60 @@
++ Websocket Definition
+
+
++ Websocket Definition
+    " WebSocket is a computer communications protocol, providing full-duplex communication channels over a single TCP connection. " - Wikipedia
+
+    " With this API, you can send messages to a server and receive event-driven responses without having to poll the server for a reply. " - MDN, WebSocket API
+
+    " El protocolo TCP establece conexiones entre DOS PUNTOS FINALES de comunicación, LLAMADOS SOCKETS. " - CoderHouse
+
+    Supuestamente " En las conexiones bidireccionales, como las que crea Websocket, se intercambian datos en ambas direcciones al mismo tiempo. " - Slides ; pero realísticamente no se si sera así, aunque todo el tiempo habla de 2 End Points, quiero creer q son 2 canales q funcionan coordinados y no solo 1 q se alterna.
++
+
+
+
+
+Socket.on( 'eventName', callback( Data ){} );
+IO.emit( 'eventName', Data );
+
+
+Disable cors: { origin: "*" } socket io
+
+
+client
+    <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
+        ! Not a direct Websocket implementation
+    OR NPM and install the lib
+
+    const socket = io('ws://localhost:8080');
+
+
+Ver video fireship WebRTC, focused on browser to browser for voice and video
+Research WebTransport
+
+
+Confirmar si el orden de los eventos es:
+    Initial HTTP request
+    Handshake
+    WebSockets
+    Close
+
+
+El servidor puede activarse por sí mismo y poner toda la información a disposición del cliente, sin que este tenga que pedírselo. Si dispone de nueva información, se lo comunica al cliente, sin necesidad de recibir una solicitud específica para ello.
+    FF - Aquí tal vez hay mas q desglosar.
+
+
+Las notificaciones push de las páginas web funcionan según este principio.
+
+
+
+
+
+
+
+
++ SOURCES
+    - CoderHouse Backend Slides for Classes 11 and 12
+    - https://en.wikipedia.org/wiki/WebSocket
+    - https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API
++

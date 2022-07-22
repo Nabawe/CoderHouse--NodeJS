@@ -1,0 +1,76 @@
++ Sobre Websocket Definition
+
+
++ Sobre Websocket Definition
+    En 06-Synthesis.txt puse:
+
+        Supuestamente " En las conexiones bidireccionales, como las que crea Websocket, se intercambian datos en ambas direcciones al mismo tiempo. " - Slides ; pero realísticamente no se si sera así, aunque todo el tiempo habla de 2 End Points, quiero creer q son 2 canales q funcionan coordinados y no solo 1 q se alterna.
+
+    ¿Cuál de las 2 es la realidad?
++
+
+
+
+
+
+
+
+
+
+
+
+
+
++ Testear Server json cfg
+    Para que nuestro servidor express pueda interpretar en forma automática mensajes de tipo JSON en formato urlencoded al recibirlos, debemos indicarlo en forma explícita, agregando las siguiente líneas luego de crearlo.
+
+        Server.use(express.json())
+        Server.use(express.urlencoded({ extended: true }))
+
+    Aclaración: {extended:true} precisa que el objeto req.body contendrá valores de cualquier tipo en lugar de solo cadenas.
+    ¡Sin esta línea, el servidor no sabrá cómo interpretar los objetos recibidos!
+
+    Los significados de estas lineas.
++
+
+
+Revisar Questions 02 y 03 y la contestación del tutor por plataforma, buscar 'muchas' o 'son muchas' o 'preguntas'.
+
+
+!!! Lo fundamentalmente mal en mi pensamiento de las Async f tiene q ver con q creo q SIEMPRE tienen q devolver algo, y el no estar completamente seguro q SIEMPRE devuelven una promise, es importante recordar q SIEMPRE devuelven una promise y CASI SEGURO si uno intentara especificar return new Promise( etc. ) dentro de una ASYNC esa new Promise VA A SER WRAPEADA EN OTRA, si no entendí mal por eso se pierde la identidad de la promise especificada ya q la ASYNC la esta WRAPEANDO, si se q estoy diciendo lo mismo de distintas formas... Esto ya lo entendía pero no tenia suficiente seguridad y nuevamente es importante el DEJAR de pensar q TIENEN q RETORNAR algo, como también recordar q los AWAIT dentro de las ASYNC generan partes sincrónicas y asincrónicas y q se va devolviendo y retomando el hilo de ejecución constantemente como si las async estuvieran CONSTRUIDAS POR CADENAS DE .then .
+
+
+Reformar pregunta , si hay forma más prolija q andar un objeto con una única key gigante sin cambiar el JSON original de la entrega 05
+
+
+Id mostrada no deberia ser id interna, prodId zapatos negros
+
+
++ Lambda
+    Q es la letra Lambda uppercase Λ, lowercase λ q veo en algunos lados?
+        Tutor - Lambda: No sé donde lo viste, el que mencionas de uppercase se usa en expresiones regulares como un carácter especial.
++
+
+
+res.redirect
+
+ASK TUTOR
+    lo de como pasar la info del front al back, lo de los forms individuales por boton
+    ___dirname
+
+
+React-Native TO-DO
+    tsconfig.json
+    buscar la definicion correcta de type e interface
+    type es lo mismo q interface pero algo mas simple q no permite expandir e etc
+
+    Google useReducerm type e interface
+     // ! Dice q es mala practica usar Async Await dentro de un useEffect, confirmar
+     // ! Dice q los key tienen q ser siempre string en react native
+
+
+    googlear useRef, como un hook pero constante o sea q NO camiba entre states no entiendo pork no usar una constante
+    'un generico' de typescript generic ? y el uso de keyof
+
+
+Optional Chaining Operator NodeJS

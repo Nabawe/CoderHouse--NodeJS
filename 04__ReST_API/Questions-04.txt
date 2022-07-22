@@ -254,3 +254,73 @@
 
     Gracias y 'buen día'.
 +
+
+
+
+
+
+
+
+Hola Franco, como va? Ahí revisé el desafío y está aprobado! Muy buen trabajo. Como consejo te diría que trates de implementar solo lo que te pide la consigna, con las pautas que te da. Porque sino suponés escenarios que no pasarán y complejizan la solución. A medida que pasen los desafios tendrás mayor complejidad o más consignas a implementar así que no te preocupes si por ahora te resulta fácil.
+
+
+
+Te comento esto porque vi que agregaste métodos para obtener el 1er y último elemento del archivo, y también de pasar la ubicación de donde está el archivo. Súper válido pero para la consigna no era necesario, vos controlás el contenido del archivo y su ubicación, en esta instancia estaba más que bien que dentro de la clase sepa donde está el archivo de productos, lo mismo con el contenido, el endpoint de random no tendría que responder null, porque lo controlás vos. Distinto sería si se pedía un endpoint donde te pasan cualquier ID.
+
+
+
+Te respondo algunos cuestiones que me parecen importantes del archivo del desafío.
+
+
+
+Posibles Errores en la Slide 05
+
+La afirmación de la diapo es correcta. Cuando uno instala una dependencia global, se intala en el root de tu usuario de tu máquina, y queda con la versión que se instaló. Y desde ahí es accesible por cualquier proyecto existente o nuevo, al ser globla no agrega a cada proyecto.
+
+
+
+Especificar ~ ^ * en el comando npm
+
+npm install [package]@[version]
+
+
+
+Server Listener vs connectedServer
+
+Es un objeto escucha de la conexión del servidor, como lo tenemos en las diapos es la forma tradicional del cual se usa para un servidor web. Pero el tema de guardarlo es depende de qué quieras hacer con el objeto. Si lo necesitás en algún lado de tu aplicación y necesitás accederlo está bien guardarlo, caso contrario no tiene sentido.
+
+
+
+req = Request Body. res = Response Object
+
+ No entiendo que es lo que querés comparar.
+
+
+
+App vs Server
+
+ Cada dueño de su módulo pone el nombre que quiere, tendrías que preguntar al creador de express por qué no le puso "server" al objeto "app" como lo tiene nodejs.
+
+
+
+Tipos de res
+
+Lo más cercano es la docu de express https://expressjs.com/es/api.html#res
+
+
+
+Orden de Server.listen
+
+ La razón sería que idealmente se ponga abajo de todo, luego de inicializar todo lo que necesita la app pero no pasa nada si se pone el listen arriba de los app.get. En aplicaciones complejas uno tiene que asegurar que antes del listen se cargue todo lo que la app necesita, de lo contrario la app figurará disponible cuando en realidad no lo está.
+
+
+
+Async File Retrieve and Display
+
+Está correcto lo que hiciste, sino te lo marcaría
+
+
+
+JSONBox Esta lleno de errores, de diceño y no funcionales
+
+Depende de como lo veas, para este desafío que se evalúa el getAll y el random, está perfecto. Ya te comenté sobre lo que vi en random y como no está mal, está aprobado. En desafíos que correspondan, te marcaré las cosas de diseño.

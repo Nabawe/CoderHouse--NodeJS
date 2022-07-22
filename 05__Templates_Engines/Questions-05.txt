@@ -15,6 +15,8 @@
 + Encabezado Entrega
 + Chat CoderHouse
 
++ ReTutor
+
 
 + Consigna
     Cuando dice no ReST se refiere a q no se exponga la API?.
@@ -25,11 +27,15 @@
 
 + Mensaje al terminar el server
     Así como solemos poner un mensaje al iniciar el server, como haría para disparar algo al terminarlo? Ctrl C lo termina de forma bruta o le manda la señal de q se cierre? Cualquiera sea el caso como podría estar consiente de eso?
+
+        Tutor - Mensaje al terminar el server: No hay forma de controlar un CTRL C pero si errores internos más allá del evento error https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html
 +
 
 
 + Lambda
     Q es la letra Lambda uppercase Λ, lowercase λ q veo en algunos lados?
+
+        Tutor - No sé donde lo viste, el que mencionas de uppercase se usa en expresiones regulares como un carácter especial.
 +
 
 
@@ -80,6 +86,8 @@
     res.render()         Render a view template.
 
     Esto pasa en el servidor y ya envía la pagina? o el proceso de render se refiere a pasarlo por el engine de Templates para q produzca un html coherente a enviar?
+
+        Tutor - res.render: Exacto, pasa por el engine definido para mandar el html.
 +
 
 
@@ -94,7 +102,7 @@
 
 
 + Direcciones Absolutas
-    en /public/404.html puse:
+    1) en /public/404.html puse:
         <!-- De no usar el path absoluto la página no aplica el CSS en sub directorios -->
         <link href="/css/main.css" type="text/css" rel="stylesheet">
 
@@ -102,7 +110,7 @@
 
     El ejemplo de arriba con la 404 es aun más especial q las otras ocurrencias ya q el 404 puede pasar en cualquier subnivel. /cualquier-cosa/o3i426 ; /mas/cual/quiera , etc.
 
-    !) Otra cosa importante q me paso fue q:
+    ! 2) Otra cosa importante q me paso fue q:
         http://localhost:8080/ no es lo mismo q http://localhost:8080/index.html
 
         Al configurar la ruta raíz use:
@@ -112,6 +120,8 @@
             Route_Products.get( '/index.html', ( req, res ) => {
 
         Pero lo q intente usando eso y variaciones me fallo.
+
+            Tutor - http://localhost:8080/ no es lo mismo q http://localhost:8080/index.html: Está bien el comportamiento porque en tu carpeta public no definiste un index.html. Tu endpoint de entrada es / no index.html así que si el usuario entra a index.html esta bien que de 404 ya que está definido. Si necesitás que tanto / y /index.html muestren el mismo html, tenés que definir ambas rutas y en una de ellas redirigir a la otra con res.redirect
 +
 
 
@@ -135,6 +145,8 @@
         } );
 
     Me imagino q estará mal y q tendría q separar lo q es para servidores || APIs en /api pero queria saber si era posible ya q con un next tampoco pude y si podría haber un caso donde se aplique.
+
+        Tutor - Solo se envía una única respuesta.
 +
 
 
@@ -190,4 +202,15 @@
     Esta vez creo q me quedo mucho más desprolija como dije antes pensaba hacerla en Marko o Squirrelly.
 
     Gracias y cuando pueda habilíteme 05__Templates_Engines.
++
+
+
++ ReTutor
+    ¡Gracias por la entrega! Queda aprobado.Hola Franco, como va? Estuve probando y viendo el entregable, y cumple con lo pedido. Pude agregar un producto, ver los productos en el listado de productos y poder ir de una página a otra, todo funciona bien. Así que queda aprobado.
+
+    Como comentario me resultó un poco raro agregar productos y no tenerlos en el file, y verlo por separado en otro botón que hace el guardado. No está para nada mal pero es una perspectiva diferente, al menos desde el curso se desea introducir que el contenedor de archivos se comporte como una base de datos, entonces las acciones desde un cliente web se vea reflejado en el contenedor utilizado (memoria, archivo, database, etc.)
+
+    Sobre el manejo de errores, ya que el desafío apunta a no usar rest, los errores podes mostrarlos en una vista nueva o en la misma vista donde se hace la carga pasándole un objeto error, y si en la vista error tiene un valor lo mostrás.
+
+    Las consultas que tienen que ver con el cliente capaz te pueda ayudar más el profesor, yo puedo guiarte más con el backend. Saludos
 +

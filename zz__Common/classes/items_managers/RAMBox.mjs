@@ -24,6 +24,7 @@ import fs from 'node:fs';
 import { nanoid as f_makeUUID } from 'nanoid';
 const fsP = fs.promises;
 
+/* TO-DO Add this quirk to DocString No permite actualizar el id de forma manual, de necesitarlo borrar el producto y re agregarlo, así garantiza el uso correcto de UUID */
 /** Creates a simple interface wich helps manipulate a basic array of items stored in a JSON file. A JSON file's internal items manager. This variation of JSONBox makes its instances work on a RAM cached array and they only commit it to JSON file on command. */
 class RAMBox {
     /**
@@ -62,7 +63,7 @@ class RAMBox {
     // * Both Parameters are optional
     #dataChecks( flags, data = this.i ) {
         // Add new default values to flags in F.
-        let F = { NO_DATA: true, chespirito: true, meripoppins: true, ...flags };
+        let F = { NO_DATA: true, ...flags };
         if ( F.NO_DATA && !data.length )
             return console.error( new Error( `${ErrsMsgs.NO_DATA}:\n ${err.message}`, { cause: 'NO_DATA' } ) );
         return false;
@@ -118,13 +119,12 @@ class RAMBox {
         if ( verdict )
             return verdict;
 
-        const id = f_makeUUID();
         this.i.push( {
-            id: id,
+            id: f_makeUUID(),
             dateCreated: Date.now(),
             title, price, thumbnail
         } );
-        return id;
+        return this.i;
     };
 
     // Se podria usar delete[index] y luego al grabar o reindexar remover los undefined
@@ -148,9 +148,11 @@ class RAMBox {
         const index = this.i.findIndex( obj => id === obj.id );
         if ( index === -1 )
             return new Error( ErrsMsgs['SEARCH__NOT_FOUND'], { cause: 'SEARCH__NOT_FOUND' } );
+            /* The idea was if the ID didn't not exist it would creates a new item, but that kind of behaviour may lead to create entries by mistake when mistyping an Id. */
+            // return this.m_new( data ); // ! Se corre dataChecks 2 veces así
 
         const Target = this.i[index];
-        // Como this.i[index] ya esta declarado tengo q colocar el destructuring entre ()
+        /* Como this.i[index] ya esta declarado tengo q colocar el destructuring entre (), ya q al no usar const o let {} se tomaría como un bloque de codigo, por eso los parentesis */
         ( {
             title: Target.title,
             price: Target.price,
@@ -169,6 +171,7 @@ class RAMBox {
         ! No crea un archivo nuevo si no existe, de tener q crearlo tambien tendria q poder crear toda la ruta, o sea los dirs
 
         ! Tendria q usar append es una animalada hacerlo de esta forma, esta en las preguntas Questons-02.txt.
+
         ? confirmar q el metodo append de FS no cargue todo el archivo para modificarlo
     */
     m_fileSave() {
@@ -180,7 +183,7 @@ class RAMBox {
         };
     };
 
-    // Pensar ¿Tiene algun sentido q solo borre el archivo del disco pero deje la RAM?
+    // Pensar ¿Tiene algun sentido q solo borre el archivo del disco pero deje sin tocar la RAM?
     m_fileReset() {
         try {
             fs.writeFileSync( this.filePath, '[]', 'utf-8' );
