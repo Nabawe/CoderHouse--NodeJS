@@ -99,7 +99,7 @@
 			"path": "04__ReST_API/Questions-04.txt",
 			"bookmarks": [
 				{
-					"line": 190,
+					"line": 191,
 					"column": 27,
 					"label": ""
 				}
@@ -136,6 +136,36 @@
 				{
 					"line": 151,
 					"column": 75,
+					"label": ""
+				}
+			]
+		},
+		{
+			"path": "06__Websocket/06-TypeScript.ts",
+			"bookmarks": [
+				{
+					"line": 55,
+					"column": 32,
+					"label": ""
+				},
+				{
+					"line": 75,
+					"column": 23,
+					"label": ""
+				},
+				{
+					"line": 190,
+					"column": 14,
+					"label": ""
+				}
+			]
+		},
+		{
+			"path": "../Class - 11 - Websockets - 01/Class - 11 - Websockets - 01.txt",
+			"bookmarks": [
+				{
+					"line": 16,
+					"column": 67,
 					"label": ""
 				}
 			]

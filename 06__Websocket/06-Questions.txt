@@ -1,5 +1,10 @@
 + Sobre Websocket Definition
 
++ Encabezado Entrega
++ Chat CoderHouse
+
++ ReTutor
+
 
 + Sobre Websocket Definition
     En 06-Synthesis.txt puse:
@@ -74,3 +79,8 @@ React-Native TO-DO
 
 
 Optional Chaining Operator NodeJS
+
+
+Estructura
+    pasar data a -> models
+    q las rutas apunten a funciones en controller
