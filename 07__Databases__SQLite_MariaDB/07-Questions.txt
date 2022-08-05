@@ -2,3 +2,12 @@ Buscar sobre el límite cuando el dB engine es más rápido q el lenguaje de pro
 
 
 ! - Como es y q se hace para la validación de formularios desde el Backend a nivel profecional?
+    front > cors > ORM valide lo mas posible > validacion final regex
+
+    engineX y proxies para seguridad
+
+
+2002 - Como es q el front decodifica JWT si no tiene el secreto
+
+
+Log ins de misma persona con distintos mails y tokens de otras redes sociales
