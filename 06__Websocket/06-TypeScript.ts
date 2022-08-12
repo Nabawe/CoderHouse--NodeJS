@@ -24,11 +24,13 @@
     + Namespaces
     + Modules
     + Declaration Files .d.ts and .ts
+
     + Pros
 
 
     + QUESTIONS
     + TO-DO
+    + AUXILIO
     + SOURCES
 */
 
@@ -143,6 +145,7 @@
         "lib": [ "dom", "es2017" ],     // * adds typings for specific environments, improves intellisense a lot
         "module": "NodeNext",           // Enables TSC Modules Support
         "removeComments": true,
+        "skipLibCheck": true,           // Skip type checking all .d.ts files
         "strict": true,                 // to deepdive and learn proper
         "target": "esnext",
         "watch": "true",                // transpiles on save
@@ -152,22 +155,29 @@
 
 /* + Deployment Templates */ /*
     - NodeJS
-        [npm i -g nodemon]
+        npm i -g nodemon @types/node ts-node
         npm init -y
         [volta pin node]
-        npm i -D typescript @types/node ts-node
-        npx tsc --init --rootDir src --outDir dist --strict --esModuleInterop --resolveJsonModule --removeComments --forceConsistentCasingInFileNames --skipLibCheck --target ES2022 --module NodeNext --lib es6,dom
+        npm i -D typescript
+        npx tsc --init --rootDir src --outDir dist --strict --esModuleInterop --resolveJsonModule --removeComments --forceConsistentCasingInFileNames --skipLibCheck --target ES2022 --module NodeNext --lib ES2022,DOM
         */
         // package.json
         //     "type": "module",
         //     "scripts": {
-        //          "start": "npm run build:live",
+        //          "start": "npm run dev",
         //          "build": "tsc -p .",
-        //          "build:live": "nodemon --watch 'src/**/*.ts' --exec \"ts-node\" src/index.ts"
+        //          "dev": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" --esm --transpile-only src/index.ts"
         //     },
         /*
+        if tsc --importHelpers is being used then npm i -D tslib
 
     - ReactJS
+        npm i -g parcel
+
+        npm i react react-dom
+        npm i -D @types/react @types/react-dom
+        Create /src/index.html
+        Create /src/App.tsx
 
     - React Native
         npx react-native init AwesomeTSProject --template react-native-template-typescript
@@ -347,7 +357,8 @@
 
 /* + Pros */ /*
     - Customized intellisense thru lib key in tsconfig.json
-    - Combat JS weirdness : So you can incrementally upgrade your JavaScript code to TypeScript
+    - Combat JS Weirdness : So you can incrementally upgrade your JavaScript code to TypeScript
+    - Equality checks as consecuense of type and Interface ( from TypeScript Deep Dive chapter on Equality )
 /* + Pros */
 
 
@@ -415,19 +426,64 @@
     Docu
     Control null, undefined, NaN, etc
     ----showConfig add this flag to the building it could help to confirm the tsc cfg each time is run
+    https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-next
+    .eslintrc.cjs
     http://typescript-react-primer.loyc.net/minification.html
+    */
+    // tsconfig.json
+        // "include": ["src/**/*.ts"],
+        // "exclude": ["node_modules", "**/*.spec.ts"]
 
-    ! No se si se vuelve una contradiccion q este usando la version "estable" de TS pero activando tood lo q pueda de la ultima nightly ver con cosas como NodeNext
+    // ! No se si se vuelve una contradiccion q este usando la version "estable" de TS pero activando tood lo q pueda de la ultima nightly ver con cosas como NodeNext
 /* + TO-DO */
+
+
+/* + AUXILIO */ /*
+    - ts-node-dev
+        https://github.com/wclr/ts-node-dev
+
+        Ya q se supone q esto permite transpilacion mucho mas rapida y es como las nuevas herramientas lo estan haciendo.
+            Instalar el packete npm i -g esm me parecia un error
+
+        --transpile-only, might void checks in TypeScript only files.
+                Preguntar sobre concecuencias negativas
+
+    - ts-node
+        No logre hacerlo de esta forma https://github.com/TypeStrong/ts-node#via-tsconfigjson-recommended
+
+    - Parcel
+        La razon por la q no lo use aun es por no poder evaluar q tan fiable es.
+        Me interesa mucho la aplicación de compilación accelerada.
+        http://typescript-react-primer.loyc.net/tutorial-3.html
+        https://parceljs.org/docs/
+        https://blog.logrocket.com/sharing-code-react-native-web/#:~:text=Setting%20up%20Parcel,React%20Native%20project%20called%20web%2F%20.
+
+    - tsconfig.json
+        https://www.meziantou.net/which-version-of-ecmascript-should-i-use-in-the-typescript-configuration.htm
+            " TypeScript supports the configuration inheritance. So, you can create a common tsconfig.json that contains all the settings, and a tsconfig.dev.json that inherits from tsconfig.json. You can build using tsc tsconfig.dev.json. You can read the documentation about configuration inheritance for more information "
+/* + AUXILIO */
 
 
 /* + SOURCES */ /*
     - Fireship - TypeScript - The Basics
         https://www.youtube.com/watch?v=ahCwqrYpIuM
 
+    - TypeScript Deep Dive by Basarat Ali Syed
+        https://basarat.gitbook.io/typescript/
+
     - How we employed the new ecmascript module support in TypeScript
         https://yonatankra.com/how-to-use-the-new-ecmascript-module-in-typescript/
 
     - TypeScript: TSConfig Reference
         https://www.typescriptlang.org/tsconfig
+
+    - https://www.npmjs.com/package/ts-node
+
+    - TypeScript+React Primer
+        Esta pagina muestra una forma más moderna de aplicar TypeScript usando parcel
+        http://typescript-react-primer.loyc.net/tutorial-3.html
+        http://typescript-react-primer.loyc.net/tutorial-2.html
+
+    - Which version of EcmaScript should I use in the TypeScript configuration - Meziantou's blog
+        https://www.meziantou.net/which-version-of-ecmascript-should-i-use-in-the-typescript-configuration.htm
 /* + SOURCES */

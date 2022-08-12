@@ -1,6 +1,7 @@
-// lets do some test
+// lets do some tests
 
 /* does the comment ommiter work */
+
 
 /* + interface */ /*
     PascalCase.
@@ -25,6 +26,8 @@
             last: 'Bolt',
             fast: true
         };
+
+        console.log( person2 );
 
     // * Se recomienda poner las props arriba y metodos abajo
 /* + interface */
