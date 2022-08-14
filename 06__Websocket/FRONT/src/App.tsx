@@ -1,22 +1,22 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React, { useState } from 'react'
+import CssBaseline from '@mui/material/CssBaseline';
+import Button from '@mui/material/Button';
 
-class App extends React.Component<{ greeting: string }, { count: number }> {
-    state = { count: 0 };
-    render() {
-        return (
-            <div>
-                <h2>{this.props.greeting}</h2>
-                <button onClick={() => this.setState({ count: this.state.count + 1 })}>
-                    This button has been clicked {this.state.count} times.
-                </button>
-            </div>);
-    }
-}
 
-ReactDOM.render(
-    <App greeting="Hello, world!" />,
-    document.getElementById('app')
-);
+type Props = {
+    greeting?: string;
+};
 
-// ReactDOM.render(React.createElement("h2", null, "Hello, world!"), document.body);
+export default function App({ greeting="Hello, world!" }: Props) {
+    const [qty, setQty] = useState( 0 );
+
+    return (
+        <>
+            <CssBaseline />
+            <p>{ greeting }</p>
+            <Button size='large' onClick={ setQty( qty + 1 ) }>
+                Button Clicked { qty } times.
+            </Button>
+        </>
+    );
+};

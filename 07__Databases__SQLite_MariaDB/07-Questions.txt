@@ -33,3 +33,7 @@ Server Side React OR Server Side React Render
     Lo q me dicen me hace pensar q la primera pagina combiene meterla en handlebars o react en el server para q no se tenga q hacer esa primera consulta (bajar la pagina principal con sus opciones) y despues routear a todas paginas estaticas
 
 
+!!! when using react with hooks do I need to use react-dom? react-dom was used to control render but I am not sure if it is still needed
+
+
+Reemplazar npm por https://pnpm.io/ , pero volta no se si es compatible

@@ -1,14 +1,16 @@
 {
     "name": "06__websocket",
+    "author": "Nabawe",
     "version": "1.0.0",
     "description": "Websocket Practice",
-    "main": "index.js",
     "type": "module",
+    "private": true,
+    "source": "public/index.html",
+    "main": "index.js",
+    "license": "ISC",
     "scripts": {
-        "start": "npm run dev",
-        "build": "tsc -p .",
-        "dev": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" --esm --transpile-only src/index.ts",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "parcel",
+        "build": "parcel build"
     },
     "repository": {
         "type": "git",
@@ -18,21 +20,29 @@
         "test",
         "learning",
         "react",
+        "parcel",
         "websocket"
     ],
-    "author": "Nabawe",
-    "license": "ISC",
     "bugs": {
         "url": "https://github.com/Nabawe/CoderHouse--NodeJS/issues"
     },
     "homepage": "https://github.com/Nabawe/CoderHouse--NodeJS#readme",
-    "dependencies": {
-        "nanoid": "^4.0.0",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+    "volta": {
+        "node": "16.16.0"
     },
     "devDependencies": {
         "@types/react": "^18.0.17",
-        "@types/react-dom": "^18.0.6"
+        "@types/react-dom": "^18.0.6",
+        "parcel": "^2.7.0",
+        "process": "^0.11.10"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.10.0",
+        "@emotion/styled": "^11.10.0",
+        "@fontsource/roboto": "^4.5.8",
+        "@mui/icons-material": "^5.8.4",
+        "@mui/material": "^5.10.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
     }
 }
