@@ -4,7 +4,6 @@
     "version": "1.0.0",
     "description": "Websocket Practice",
     "type": "module",
-    "private": true,
     "source": "public/index.html",
     "main": "index.js",
     "license": "ISC",
@@ -22,6 +21,12 @@
         "react",
         "parcel",
         "websocket"
+    ],
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
     ],
     "bugs": {
         "url": "https://github.com/Nabawe/CoderHouse--NodeJS/issues"
