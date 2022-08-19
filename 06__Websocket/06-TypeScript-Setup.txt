@@ -104,8 +104,6 @@
 
 
 + Base tsconfig.json
-    ! RECHECK EVERYTHING set them for the latest JS
-
     This is a common array of setting across all deployment templates.
 
     npx tsc --init --rootDir src --outDir dist --target ES2022 --module NodeNext --strict --allowJs --allowSyntheticDefaultImports --declaration --esModuleInterop --experimentalDecorators --forceConsistentCasingInFileNames --noEmit --noFallthroughCasesInSwitch --noUnusedLocals --noUnusedParameters --removeComments --resolveJsonModule --skipDefaultLibCheck --skipLibCheck --sourceMap --lib ES2022,DOM
@@ -219,16 +217,29 @@
             "start": "parcel",
             "build": "parcel build"
         },
-        "browserslist": [
-            ">0.2%",                  // All browsers that have at least 0,2% of global market share
-            "not dead",
-            "not ie <= 11",
-            "not op_mini all"
-        ]
 
-        Aditionally one can edit the following to configure Parcel transpiler and build targets:
-            browserslist
-            targets
+        ! Aditionally one can edit the following to configure Parcel transpiler and build targets:
+            * I didn't set them up because it was unclear to me if this forced transpilation on every excecution.
+            ? Tengo la imprecion de q browserslist es para efectuarlo en todo y especificar los browsers y targets es solo para cuando build, confirmar leyendo.
+
+            " https://parceljs.org/features/targets/#targets
+                Parcel follows the dependencies in each resolved entry to build your source code for one or more targets. Targets specify the output directory or file path, as well as information about how your code should be compiled.
+                By default, Parcel includes a single implicit target which outputs into the dist folder. This can be overridden using the --dist-dir CLI option.
+                The output directory can also be specified in package.json using the targets field. This will override the --dist-dir CLI option.
+            "
+
+            "browserslist": [
+                ">0.2%",                  // All browsers that have at least 0,2% of global market share
+                "not dead",
+                "not ie <= 11",
+                "not op_mini all"
+            ],
+            "targets": {
+                "default": {
+                "distDir": "./output"
+                }
+            },
+
 
     - edit tsconfig.json
         Check +Base tsconfig.json for a base file then mod:
@@ -272,6 +283,9 @@
         · [ remove all the import React from 'react'; lines ]
 
     - Create public/index.html
+        https://parceljs.org/features/targets/#entries
+            This article clarifies the use of Parcel's entry files and directories.
+
         <head>
             <script defer type="module" src="../src/index.tsx"></script>
         </head>
@@ -281,11 +295,6 @@
         </body>
 
     - npm start
-
-    ! Testear q pasa si no se le especifican a Parcel browserslist y target en package.json, ver si usa la cfg de ESM
-        hacer build SIN
-        luego hacer build CON
-        LEER el art sobre conexion de back y front
 
     ! Distinguir q el index.html q usa Parcel tal vez no debería ser el mismo q pongo en public
         Esta pregunta tal vez mandarla a AUXILIO
@@ -382,32 +391,21 @@
             This part of the docs shows it should be put there https://parceljs.org/getting-started/migration/#code-changes
         ? "include": [ "src" ] Should I? or Parcel does this on its self?
         · A way to add include and exclude in the npx tsc --init cmd
+        ! edit package.json > browserslist, targets
+            https://parceljs.org/features/targets/
+            I am unsure if one can set this values to be used ONLY in the build script, it seams that if specified Parcel will transpile everytime, but I need confirmation, or if they should be specified as args in the scripts section of package.json.
 + QUESTIONS
 
 
 + TO-DO
-    Interfaces
-    Enums
-    Namespaces
-    Generics
-    Abstract classes
-    Data modifiers
-    Optionals
-    Function overloading
-    Decorators
-    Type utils
-    readonly keyword
-    Decorators
-    ! Duck Principle
-        In TypeScript because we really want it to be easy for JavaScript developers with a minimum cognitive overload, types are structural. This means that duck typing is a first class language construct.
-    Mixins
-    .d.ts
-        Better way to type functions inside these files.
     /// <reference path=""> File References
     Ambient
     Treeshaking and Bundling
     sourceMaps what are they
     Parece q MUI tiene algunos problemas con typescript revisar https://mui.com/material-ui/guides/typescript/
+    ! Parcel puede levantar simultaneamente front y back si no entendí mal
+        https://parceljs.org/features/targets/#package.json%23targets.*.source
+            " For example, you could build your frontend and backend simultaneously, or your desktop and mobile apps. "
 
 
     Preformatear testing
@@ -421,6 +419,8 @@
     Docu
     Control null, undefined, NaN, etc
     ----showConfig add this flag to the building it could help to confirm the tsc cfg each time is run
+    VS Code > Settings > Extensions > TypeScript
+    VS Code > Settings > Extensions > ESLint
 
     https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-next
     .eslintrc.cjs
@@ -429,6 +429,8 @@
     http://typescript-react-primer.loyc.net/minification.html
         https://parceljs.org/features/production/
             Parcel hace minificacion al correr el build
+
+    ! Mejorar la seccion de ReactJS Parcel browserslist y target
 
     ! No se si se vuelve una contradiccion q este usando la version "estable" de TS pero activando tood lo q pueda de la ultima nightly ver con cosas como NodeNext
 + TO-DO

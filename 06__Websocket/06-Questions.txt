@@ -90,3 +90,6 @@ agregar preguntas sobre tsconfig y package.json
      ver si no seria mejor cambiar a moduleResolution NodeNext ya q parece q lo sigue usando en valor node
      "build:live": "nodemon --watch src/**/*.ts --exec \"ts-node-esm\" src/index.ts",
         ver si hay forma de q no sea necesario especificar index.ts , se tendria q cambiar el main a index.ts en vez de .js ?
+
+
+Meditar sobre lo q dice BUILDS/README.txt

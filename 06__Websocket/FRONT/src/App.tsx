@@ -7,7 +7,7 @@ type Props = {
     greeting?: string;
 };
 
-function App( { greeting="Hello, world!" }: Props ) {
+function App( { greeting="Hello, world!", asd }: Props ) {
 
     const [qty, setQty] = useState( 0 );
 

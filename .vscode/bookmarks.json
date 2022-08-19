@@ -179,6 +179,21 @@
 					"label": ""
 				}
 			]
+		},
+		{
+			"path": "06__Websocket/06-TypeScript-Setup.txt",
+			"bookmarks": [
+				{
+					"line": 86,
+					"column": 7,
+					"label": ""
+				},
+				{
+					"line": 298,
+					"column": 0,
+					"label": ""
+				}
+			]
 		}
 	]
 }
