@@ -5,11 +5,13 @@
     "description": "Websocket Practice",
     "type": "module",
     "source": "public/index.html",
-    "main": "index.js",
+    "main": "dist/index.js",
     "license": "ISC",
+    "types": "dist/index.d.ts",
     "scripts": {
         "start": "parcel",
-        "build": "parcel build"
+        "build": "parcel build",
+        "check": "tsc --noEmit"
     },
     "repository": {
         "type": "git",

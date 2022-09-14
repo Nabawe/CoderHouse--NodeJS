@@ -4,18 +4,21 @@
 
     + Mantras
 
-    + Basic Types
+    + Basic or Primitive Types
     + Implicit Typing
     + Explicit Typing with :
+    + Arrays
     + type
     + interface
+    + Declaration Spaces
     + Functions
-    + Arrays
+    + Classes
     + Generics
     + Namespaces
     + Modules
     + Declaration Files .d.ts and .ts
 
+    + Last Words
     + Pros
 
     + QUESTIONS
@@ -53,11 +56,11 @@
 /* + Mantras */
 
 
-/* + Basic Types */ /*
-    Fill with string, number, etc
+/* + Basic or Primitive Types */ /*
+    Boolean, Number, String
     AND
     never, uknown, void
-/* + Basic Types */
+/* + Basic or Primitive Types */
 
 
 /* + Implicit Typing */ /*
@@ -77,7 +80,31 @@
     * For basic things is better to let TS infer it
     let name: string;
     let name: string = 'Hi'.
+
+    * Def " Anything that is available in the Type Declaration Space can be used as a Type Annotation " - TypeScrip Deep Dive, Basarat
+        Def of Type Declaration Space is soon below. This was just a formal statement.
 /* + Explicit Typing with : */
+
+
+/* + Arrays */ /*
+    Sufix [] to the type annotation.
+        const arry0: Number[] = [ 1, 2 ];
+        arry0.push( 'asd' );    // Error
+        arry0.push( 912 );
+
+    In Python tuples are fixed sized Arrays.
+    The ? is to make the value optional, but the type is still being checked. But it seams that "pushing a value" is not checked in Tuples.
+
+    type MyTuple1 = [ number, string?, boolean? ];
+    const arry1: MyTuple1 = [ 1, 123, 'asd' ];
+
+    arry1.push(1);
+    arry1.push('44');
+    arry1.push(false);
+
+    type MyTuple2 = [ number, string, boolean ];
+    const arry2: MyTuple2 = [ 1, 'asd', true ];
+/* + Arrays */
 
 
 /* + type */ /*
@@ -95,14 +122,15 @@
 /* + interface */ /*
     PascalCase.
     To validate Objects that follow a same structure.
-    Parameters, args and return values of a function.
+    Is common practise to sort properties first and then methods.
+    ? Parameters, args and return values of a function.
 
     // - Objects
         interface Person {
             first: string;
             last: string;
-            // * So that 'fast' does not produce a TS error, but this surely limits existence checks.
             [ key: string ]: any;
+                // So that 'fast' does not produce a TS error, but this surely limits existence checks.
         };
 
         const person1: Person = {
@@ -116,8 +144,39 @@
             fast: true
         };
 
-    // * Se recomienda poner las props arriba y metodos abajo
+    * Def " Interfaces are the core way in TypeScript to compose multiple type annotations into a single named annotation " - TypeScrip Deep Dive, Basarat
 /* + interface */
+
+
+/* + Declaration Spaces */ /*
+    A scope space is shared between Types and Variables Declarations.
+
+    - Type Declaration Space
+        When using a Type definition the name it was asigned gets reserved in a scope:
+            interface Bar {};
+            type Bas = {};
+
+        one could do:
+            let foo: Bas;
+        but coult NOT do:
+            let bar = Bar;
+
+    - Variable Declaration Space
+        It's populated by each declared variable:
+            let meVar = 1;
+
+        and they can not be used as Types:
+            let newVar: meVar;
+
+    - Classes
+        A Class Definition is both:
+            class Cool {};
+            let Miau: Cool;
+            let Mia = Cool;
+            const iMia = new Cool;
+
+    WIP improve this section, list all known Type, Variable Spaces and other special cases like Classes
+/* + Declaration Spaces */
 
 
 /* + Functions */ /*
@@ -131,21 +190,28 @@
 /* + Functions */
 
 
-/* + Arrays */ /*
-    Python's tuples are fixed sized Arrays.
-    The ? is to make the value optional, but the type is still being checked.
-        ! Tested and the types are not checked
+/* + Classes */ /*
+    class Foo {
+        x: number;
+        constructor( x: number ) {
+            this.x = x;
+        };
+    };
 
-    type MyTuple1 = [ number?, string?, boolean? ];
-    const arry1: MyTuple1 = [];
+    //  is Equivalent to
 
-    arry1.push(1);
-    arry1.push('44');
-    arry1.push(false);
+    class TwinFoo {
+        constructor ( public x: number ) {
 
-    type MyTuple2 = [ number, string, boolean ];
-    const arry2: MyTuple2 = [ 1, 'asd', true ];
-/* + Arrays */
+        };
+    };
+
+    // The short hand is adding public, private, etc in the constructor.
+    /* The type specification before the Constructor is still relevant since using a constructor is optional. */
+
+    // !WIP Ver si esta info esta actualizada o si hay una forma mejor de hacerlo
+    /* ? Ver como se convinan los access modifiers public, private, protected con # ; ya q TS access modifiers supuestamente HACEN NADA en JS y JS ya tiene la funcionalidad, en especial ver si private se traduce a # */
+/* + Classes */
 
 
 /* + Generics */ /*
@@ -155,9 +221,12 @@
 
 
 /* + Namespaces */ /*
+    File Modules cover most of this functionality but " the pattern is still useful for logical grouping of a bunch of functions " - TypeScrip Deep Dive
+
     JS does not have Namespaces.
     Use ; to separate members.
     export to publish.
+    Whats not exported becomes a private member.
 
     namespace nsCammelCase {
         const privateValue = "You can't acces this outside the Ns";
@@ -177,7 +246,7 @@
     console.log( nsCammelCase.nestedNamespace.moonlightSonata() );
 
 
-    ? Check if this is correct tsconfig:
+    ? Check if this is correct: tsconfig:
         "baseURL": "src",               // To use NameSpaces
         "paths": {                      // ! Unique names
             "@nmyApp-nameSpace/*":     ["app/nameSpace/*"],
@@ -188,14 +257,52 @@
 
 
 /* + Modules */ /*
-    Use import path without the file extension.
-    Only specify the .js extension when the target for transpilation is old.
+    One can export or import types just like any variable:
+        export type SomeType = {
+            blue: String;
+        };
+    OR
+        let myVar = 123;
+        type mewType = {
+            green: String;
+        };
+        export {
+            myVar,
+            mewType
+        };
 
-    tsconfig.json:
+    - tsconfig.json:
         "target":,
         "module":,
-    */
 
+    - Overturning dynamic lookup just for types
+        https://basarat.gitbook.io/typescript/project/modules/external-modules#overturning-dynamic-lookup-just-for-types
+        You can declare a module globally for your project by using declare module 'somePath' and then imports will resolve magically to that path
+
+        // global.d.ts
+            declare module 'foo' {
+                // Some variable declarations
+                export var bar: number; // sample
+            }
+
+        and then:
+
+        // anyOtherTsFileInYourProject.ts
+            import * as foo from 'foo';
+            // TypeScript assumes (without doing any lookup) that
+            // foo is {bar:number}
+
+    - Use case: Ensure Import
+        https://basarat.gitbook.io/typescript/project/modules/external-modules#use-case-ensure-import
+        Sometimes you want to load a file just for the side effect (e.g. the module might register itself with some library like CodeMirror addons etc.). However, if you just do a import/require the transpiled JavaScript will not contain a dependency on the module and your module loader (e.g. webpack) might completely ignore the import. In such cases you can use a ensureImport variable to ensure that the compiled JavaScript takes a dependency on the module e.g.:
+            ( FF: This is because if something isn't used after it goes thru Webpack it gets removed )
+        import foo = require('./foo');
+        import bar = require('./bar');
+        import bas = require('./bas');
+        const ensureImport: any =
+            foo
+            && bar
+            && bas;
 /* + Modules */
 
 
@@ -223,6 +330,31 @@
 /* + Declaration Files .d.ts and .ts */
 
 
+/* + Last Words */ /*
+    Some general conciderations
+        https://basarat.gitbook.io/typescript/recap
+        Equality
+        References
+        Null vs. Undefined
+            Something hasn't been initialized : undefined.
+            Something is currently unavailable: null.
+            if ( localVar != null ) // localVar is not null or undefined, mind is != and not !==
+            if ( typeof someGlobal !== 'undefined' ) doSomething ;
+        this
+        Closure
+        Number
+            Number.isSafeInterger( num )
+                - To check if num could be subject to binary to decimal rounding errors.
+                ! " Whenever you use math for financial calculations use a library like big.js"
+                ! " Do not use this lib for math used for UI or performance intensive purposes, charts, canvas, etc"
+                    I understand that JS already has incorporated this but a specialized lib my do the job better.
+                - Use Number.isNaN( var ) to check if var is of type Number and NaN.
+                - Use isNan( var ) to check if var coerces to NaN. It checks if var is not a number, so it could very well be any String, etc.
+                * " Further intuition: Just like values bigger than Number.MAX_VALUE get clamped to INFINITY, values smaller than Number.MIN_VALUE get clamped to 0. "
+        Truthy
+/* + Last Words */
+
+
 /* + Pros */ /*
     - Customized intellisense thru lib key in tsconfig.json
     - Combat JS Weirdness : So you can incrementally upgrade your JavaScript code to TypeScript
@@ -231,12 +363,15 @@
 
 
 /* + QUESTIONS */ /*
-    - what is the "name" of the colon operator in typescript? ( I mean the main operator the : ).
+    - What's the "name" of the colon operator in typescript? ( I mean the main operator the : ).
         type operator? typeS operator?
 
     - Still unsure if it is better to leave a space after the type or not asd:string vs asd: string
 
-    - interface
+    - Declaration Spaces
+        · Does Class Typing work by inference?
+
+    - Interface
         · Alternative to [ key: string ]: any;
         · For functions, arrays
 
@@ -245,6 +380,22 @@
 
     - Namespaces
         · Do the use of Namespaces have a big negative impact once transpiled into JS? Since they are turned into a mess of functions or objects.
+            If I understood correctly it gets transpiled to an annonymus function that aggregates to an object.
+        · Are all Namespaces global? Can we define scopes to them? ( Not by nesting a NS whiting a NS ).
+
+    - Modules
+        · " https://basarat.gitbook.io/typescript/project/modules/external-modules
+            Import a file only for its side effect with a single import statement:
+                import 'core-js'; // a common polyfill library
+        "
+                What does "for its side effect" mean?
+        · https://basarat.gitbook.io/typescript/project/modules/external-modules#use-case-lazy-loading
+            I believe it is based on the previous section BUT the code is common JS then if so the modules are always loaded since no transpilation occurred.
+        · https://basarat.gitbook.io/typescript/project/modules/external-modules#use-case-breaking-circular-dependencies
+
+    - Classes
+        · Property Initialization outside Class Constructor.
+            How reliable is it?; Is it still implemented?; Has this been implemented in JS?
 /* + QUESTIONS */
 
 

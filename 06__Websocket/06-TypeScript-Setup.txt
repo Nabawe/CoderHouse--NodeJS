@@ -1,3 +1,10 @@
+TO-DO to finish the minimum missing info is in:
+    https://parceljs.org/features/targets
+    https://parceljs.org/languages/typescript
+    https://parceljs.org/languages/javascript
+    https://parceljs.org/getting-started/library/#commonjs-and-es-modules
+
+
 + CODEX
 + TERMS
 + TOOLS
@@ -57,7 +64,7 @@
 
 
 + Base Setup
-    npm i -D typescript
+    npm i -D typescript or globally
         Parece ser q no se puede pinear con Volta
 
     VS Code
@@ -70,7 +77,19 @@
             ? Ver si se tambien excluye .mjs
 
     package.json root
-        "type": "module"
+        "main": "dist/index.js",
+            // ? NO ESTOY SEGURO Q PONER AQUI, si index.js, dist/index.js .ts .tsx o q
+            /* Recordar q todo esta corriengo gracias a Parcel por ende creo q no es importante ya q no estaria usando node . o nodemon posiblmente si deberia ir a dist/index.js a menos q configue react para correr TypeScript */
+        "type": "module",
+        "types": "dist/index.d.ts",         // So that index.d.ts files are generated
+            ? Creo q esta linea debería apuntar a un directorio
+            * Following Parcel Docs, it might need this line to know to autogenerate the .d.ts files
+            https://www.typescriptlang.org/docs/handbook/declaration-files/dts-from-js.html
+                Segun las docs es opcional especificarlo y al no especificarlo se busca en base a lo puesto en package.json main.
+        "scripts": {
+            "check": "tsc --noEmit"
+        },
+
 
     ! CHECK IF THIS IS NECESARY
         https://typescript-eslint.io/docs/
@@ -106,8 +125,11 @@
 + Base tsconfig.json
     This is a common array of setting across all deployment templates.
 
-    npx tsc --init --rootDir src --outDir dist --target ES2022 --module NodeNext --strict --allowJs --allowSyntheticDefaultImports --declaration --esModuleInterop --experimentalDecorators --forceConsistentCasingInFileNames --noEmit --noFallthroughCasesInSwitch --noUnusedLocals --noUnusedParameters --removeComments --resolveJsonModule --skipDefaultLibCheck --skipLibCheck --sourceMap --lib ES2022,DOM
+    npx tsc --init --rootDir src --outDir dist --target ES2022 --module NodeNext --strict --allowJs --allowSyntheticDefaultImports --declaration --declarationMap --esModuleInterop --experimentalDecorators --forceConsistentCasingInFileNames --noEmit --noFallthroughCasesInSwitch --noUnusedLocals --noUnusedParameters --removeComments --resolveJsonModule --skipDefaultLibCheck --skipLibCheck --sourceMap --lib ES2022,DOM
 
+    // ! include and exclude were manually added to the top level of package.json
+    "include": ["src/**/*.ts"],
+    "exclude": ["build", "node_modules", "**/*.spec.ts"],
     "compilerOptions": {
         "rootDir": "src",
         "outDir": "dist",
@@ -118,7 +140,9 @@
 
         "allowJs": true,                    // In case some lib uses JS
         "allowSyntheticDefaultImports": true,
+        "checkJs": true,                    // Report errors in .js files
         "declaration": true,                // Generate corresponding .d.ts file
+        "declarationMap": true,             // Enables IDEs .ts code navigation
         "esModuleInterop": true,
         "experimentalDecorators": true,     // enables extra features to type Classes
         "forceConsistentCasingInFileNames": true,
@@ -134,10 +158,6 @@
         "sourceMap": true,                  // Generate corrresponding .map files
 
         "lib": [ "dom", "es2022" ],         // * adds typings for specific environments, improves intellisense a lot
-
-    // !   Manually Add
-        "include": ["src/**/*.ts"],
-        "exclude": ["build", "node_modules", "**/*.spec.ts"],
     }
 
     ?
@@ -150,6 +170,8 @@
         noEmit
         "skipLibCheck": true
             should I?
+        "checkJs": true,
+            ? Dunno if it could drive me crazy with errors from other modules or libs or things left unTyped, probably solved by generating .d.ts files?
 
 
         module
@@ -162,10 +184,12 @@
 
 
 + Deployment Template: NodeJS
-    - npm i -g nodemon @types/node ts-node
+    - npm i -g nodemon ts-node @types/node typescript
+        · Its generall practice to install the following packages as dev deps:
+            npm i -D typescript @types/node
+                * A good advantage of installing per project is keeping track of which versions were used. ( And as usuall to avoid the "it worked on my computer" escenario. )
     - npm init -y
     - [volta pin node]
-    - npm i -D typescript or Globally
     - Check +Base tsconfig.json to generate it
 
     - package.json
@@ -209,8 +233,6 @@
     )
 
     - edit package.json
-        "main": "index.js", // ? NO ESTOY SEGURO Q PONER AQUI, si dist/index.js .ts .tsx o q
-            // Recordar q todo esta corriengo gracias a Parcel por ende creo q no es importante ya q no estaria usando node . o nodemon posiblmente si deberia ir a dist/index.js a menos q configue react para correr TypeScript
         "type": "module",
         "source": "src/index.html",         // Specifies parcel entry points
         "scripts": {
@@ -218,15 +240,25 @@
             "build": "parcel build"
         },
 
-        ! Aditionally one can edit the following to configure Parcel transpiler and build targets:
+        ! Aditionally one can edit the following to configure Parcel transpilation and builds:
+
+            https://parceljs.org/features/targets/
+                ! This document is a must read to tweak Parcel output, there is no escaping it, nor resume to make of it.
+
             * I didn't set them up because it was unclear to me if this forced transpilation on every excecution.
             ? Tengo la imprecion de q browserslist es para efectuarlo en todo y especificar los browsers y targets es solo para cuando build, confirmar leyendo.
+            ? No confundir target con targets
 
             " https://parceljs.org/features/targets/#targets
                 Parcel follows the dependencies in each resolved entry to build your source code for one or more targets. Targets specify the output directory or file path, as well as information about how your code should be compiled.
                 By default, Parcel includes a single implicit target which outputs into the dist folder. This can be overridden using the --dist-dir CLI option.
                 The output directory can also be specified in package.json using the targets field. This will override the --dist-dir CLI option.
             "
+            browserslist
+                Specify which browsers are going to be supported.
+            engines
+                " For Node.js and other targets ... are specified using a semver range. "
+            targets
 
             "browserslist": [
                 ">0.2%",                  // All browsers that have at least 0,2% of global market share
@@ -234,6 +266,9 @@
                 "not ie <= 11",
                 "not op_mini all"
             ],
+            "engines": {
+                "node": ">= 16"
+            },
             "targets": {
                 "default": {
                 "distDir": "./output"
@@ -379,6 +414,7 @@
 
     - Base Setup
         ! Might need to add /dist since the files seam to get quite big
+        ! types field
 
     - Git Ignore JS?
         Al hacer las cosas en TS tonces tendria q agregar JS al git ignore? Para excluir build o alguna cosa así. O q el build se haga automatico al subir el git en un server o algo así.
@@ -440,6 +476,13 @@
     ! https://parceljs.org/features/dependency-resolution/#typescript
         Esto parece bastante importante pero no se bien como aplicarlo y puede q solucione una buena cantidad de problemas.
 
+    ! Implicit Environments
+        " https://parceljs.org/features/targets/#implicit-environments
+            When one file depends on another, the environment is inherited from its parent. But how you depend on the asset can change some properties of the environment. For example, when depending on a service worker, the environment is automatically changed into a service worker context so that the code is compiled appropriately.
+
+            navigator.serviceWorker.register(new URL('service-worker.js', import.meta.url));
+        "
+
     - ts-node-dev
         https://github.com/wclr/ts-node-dev
 
@@ -500,6 +543,7 @@
         https://parceljs.org/getting-started/webapp/
         https://parceljs.org/recipes/react/
         https://parceljs.org/getting-started/library/
+        https://parceljs.org/features/targets/
 
     - Which version of EcmaScript should I use in the TypeScript configuration - Meziantou's blog
         https://www.meziantou.net/which-version-of-ecmascript-should-i-use-in-the-typescript-configuration.htm

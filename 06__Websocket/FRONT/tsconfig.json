@@ -1,4 +1,7 @@
 {
+    "include": ["src/**/*.ts", "src/**/*.tsx"],
+    "exclude": ["build", "node_modules", "**/*.spec.ts"],
+
     "compilerOptions": {
         "target": "ES2022",
         "lib": [
@@ -6,8 +9,6 @@
             "DOM.Iterable",
             "ES2022",
         ],
-        "include": ["src/**/*.ts", "src/**/*.tsx"],
-        "exclude": ["build", "node_modules", "**/*.spec.ts"],
 
         "rootDir": "src",
         "outDir": "dist",
@@ -16,7 +17,9 @@
 
         "allowJs": true,
         "allowSyntheticDefaultImports": true,
+        "checkJs": true,
         "declaration": true,
+        "declarationMap": true,
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "forceConsistentCasingInFileNames": true,

@@ -93,3 +93,55 @@ agregar preguntas sobre tsconfig y package.json
 
 
 Meditar sobre lo q dice BUILDS/README.txt
+
+
+Agregar package.json script para build minificado, el build no min tendría q ser preview
+
+
+Agregar showconfig a ts-node
+
+
+Ver de agregar la flag sourceMaps y si es q funcionó lo de ver la cfg al correr (flag de tsc en package.json)
+
+
+Franco Chiavarini, [2022-08-02 19:10]
+npm cors para validar datos de forms
+Franco Chiavarini, [2022-08-02 19:43]
+Front <---> Back
+fetch, curl, axios
+
+
+! Q las ROUTES no tengan res.send y etc sino q este dentro de un Controller, asi es mas mantenible, o sea q las ROUTES solo llamen a una funcion o metodo d clase de un Controller
+
+
+dangling else
+
+
+! PREGUNTARLE SI O SI AL TUTOR SOBRE
+    tsconfig.json
+        "include": ["src/**/*.ts"],
+        "exclude": ["build", "node_modules", "**/*.spec.ts"],
+    package.json
+        "types": "dist/index.d.ts"
+    Y
+        Si lo anterior funciona como mapa, no tendría q especificarse como directorios en vez d archivos? :
+        "types": [
+            "node",
+            "react",
+            "react-dom"
+        ]
+
+
+
+! Investigar "app-shell", dice el tutor lautaro q es sobre q el BackEnd arme la estructura base y despues " hidratar el resto en el cliente"
+    ver q es hidratar correctamente
+
+
+Preguntar al profesor sobre peerDependencies
+
+
+Did not understood:
+    - https://basarat.gitbook.io/typescript/project/modules/external-modules#use-case-lazy-loading
+        I believe it is based on the previous section BUT the code is common JS then if so the modules are always loaded since no transpilation occurred.
+
+    - https://basarat.gitbook.io/typescript/project/modules/external-modules#use-case-breaking-circular-dependencies

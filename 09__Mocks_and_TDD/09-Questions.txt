@@ -1,3 +1,6 @@
 https://purecss.io/
 
 https://markojs.com/docs/getting-started/
+
+
+Al usar argv o yargs ver de usar un objeto en vez de posiciones en un array
