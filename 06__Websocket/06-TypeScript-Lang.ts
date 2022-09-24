@@ -4,17 +4,18 @@
 
     + Mantras
 
-    + Basic or Primitive Types
+    + Primitive Types
     + Implicit Typing
     + Explicit Typing with :
     + Arrays
     + type
     + interface
-    + Declaration Spaces
+    + Inline Type Annotation
     + Functions
     + Classes
-    + Generics
+    + Declaration Spaces
     + Namespaces
+    + Generics
     + Modules
     + Declaration Files .d.ts and .ts
 
@@ -56,11 +57,30 @@
 /* + Mantras */
 
 
-/* + Basic or Primitive Types */ /*
-    Boolean, Number, String
+/* + Primitive Types */ /*
+    Basic from JavaScript: Boolean, Null, Number, Object, String, Undefined
     AND
-    never, uknown, void
-/* + Basic or Primitive Types */
+    Special added by TypeScript: any, never, uknown, void
+
+    - any
+        Mostly used when determining the type of a expression becomes too complicated or irrelevant. Assigning the "any" type will have the effect of turning type checking for that expression off.
+        " any is compatible with any and all types in the type system. This means that anything can be assigned to it and it can be assigned to anything. " - TypeScrip Deep Dive, Basarat
+        WIP Try to list good practice escenarios.
+
+    WIP INCOMPLETE DEFINITIONS AND USABILITY strictNullChecks, null, undefined, never, uknown
+
+    - void
+        To specify that a function does not have a return type.
+        " https://www.typescriptlang.org/docs/handbook/2/functions.html#void
+            It’s the inferred type any time a function doesn’t have any return statements, or doesn’t return any explicit value from those return statements.
+            In JavaScript, a function that doesn’t return any value will implicitly return the value undefined. However, void and undefined are not the same thing in TypeScript.
+        "
+            Additional Clarification at https://www.typescriptlang.org/docs/handbook/2/functions.html#return-type-void
+
+        function ASD( msg ): void {
+            console.log( msg );
+        };
+/* + Primitive Types */
 
 
 /* + Implicit Typing */ /*
@@ -130,7 +150,7 @@
             first: string;
             last: string;
             [ key: string ]: any;
-                // So that 'fast' does not produce a TS error, but this surely limits existence checks.
+                // ? So that 'fast' does not produce a TS error, but this surely limits existence checks.
         };
 
         const person1: Person = {
@@ -148,35 +168,33 @@
 /* + interface */
 
 
-/* + Declaration Spaces */ /*
-    A scope space is shared between Types and Variables Declarations.
+/* + Inline Type Annotation */ /*
+    Are specified by the structure :{ TypeAnnotation }
+    For one offs, saving the need of specifying a name to the Types Annotations (in other words to consume a slot in the Type Declaration Space).
+    On the other hand defining Interfaces and other annotations can be useful to spot repeating patterns and help remembering them by having a proper name.
 
-    - Type Declaration Space
-        When using a Type definition the name it was asigned gets reserved in a scope:
-            interface Bar {};
-            type Bas = {};
+    const myConstruct: {
+        first: string;
+        second: string;
+        third: string;
+    } = {
+        first: 'asd',
+        second: 'asd',
+        third: 'asd',
+    };
 
-        one could do:
-            let foo: Bas;
-        but coult NOT do:
-            let bar = Bar;
+    let myConstruct2: {
+        first: string;
+        second: string;
+        third: string;
+    };
 
-    - Variable Declaration Space
-        It's populated by each declared variable:
-            let meVar = 1;
-
-        and they can not be used as Types:
-            let newVar: meVar;
-
-    - Classes
-        A Class Definition is both:
-            class Cool {};
-            let Miau: Cool;
-            let Mia = Cool;
-            const iMia = new Cool;
-
-    WIP improve this section, list all known Type, Variable Spaces and other special cases like Classes
-/* + Declaration Spaces */
+    myConstruct2 = {
+        first: 'asd',
+        second: 'asd',
+        third: 'asd',
+    };
+/* + Inline Type Annotation */
 
 
 /* + Functions */ /*
@@ -206,18 +224,55 @@
         };
     };
 
-    // The short hand is adding public, private, etc in the constructor.
+    /* The short hand is adding access modifiers (public, private, etc) in the constructor. */
     /* The type specification before the Constructor is still relevant since using a constructor is optional. */
 
     // !WIP Ver si esta info esta actualizada o si hay una forma mejor de hacerlo
+    // ? Abstract Modifier
     /* ? Ver como se convinan los access modifiers public, private, protected con # ; ya q TS access modifiers supuestamente HACEN NADA en JS y JS ya tiene la funcionalidad, en especial ver si private se traduce a # */
 /* + Classes */
 
 
-/* + Generics */ /*
-    It seams to be a way to specify the type the moment it is being to be used.
-    <  > Syntax
-/* + Generics */
+/* + Declaration Spaces */ /*
+    A scope space is shared between Types and Variables Declarations.
+
+    - Type Declaration Space
+        When using a Type definition the name it was asigned gets reserved in a scope:
+            interface Bar {};
+            type Bas = {};
+
+        one could do:
+            let foo: Bas;
+        but coult NOT do:
+            let bar = Bar;
+
+    - Variable Declaration Space
+        It's populated by each declared variable:
+            let meVar = 1;
+
+        and they can not be used as Types:
+            let newVar: meVar;
+
+    - Classes
+        A Class Definition is both:
+            class Cool {
+                constructor ( public x: number ) {
+                    this.x = x;
+                }
+            };
+            class Scrool {
+                constructor ( public x: string ) {
+                    this.x = x;
+                }
+            };
+            let Miau: Cool;
+            let Mia = Cool;
+            const iMia = new Cool( 2 );
+            Miau = new Cool( 4 ); // OK
+            Miau = new Scrool( '4' ); // Error: Type 'Scrool' is not assignable to type 'Cool'.
+
+    WIP improve this section, list all known Type, Variable Spaces and other special cases like Classes
+/* + Declaration Spaces */
 
 
 /* + Namespaces */ /*
@@ -254,6 +309,32 @@
             "@nmyApp-environments/*":  ["environments/*"],
         },
 /* + Namespaces */
+
+
+/* + Generics */ /*
+    Generics add "Variable Typing", ie a way to specify types the moment it is going to being to be used.
+    <  > Syntax
+
+    Add Examples with functions, interfaces */
+
+    interface Wrinkly<T extends { name: String }> {
+        id: number;
+        author: string;
+        data: T
+    }
+
+    const FallOfNumenor: Wrinkly<{ name: String, FstParagraph: string }> = {
+        id: 123,
+        author: 'J.R.R. Tolkien',
+        data: {
+            name: 'Fall of Númenor',
+            FstParagraph: 'Lorem Ipsum'
+        }
+    }
+
+    console.log( FallOfNumenor );
+
+/* + Generics */
 
 
 /* + Modules */ /*
@@ -402,16 +483,14 @@
 /* + TO-DO */ /*
     Interfaces
     Enums
-    Namespaces
     Generics
     Abstract classes
     Data modifiers
     Optionals
     Function overloading
-    Decorators
+    Class Decorators
     Type utils
     readonly keyword
-    Decorators
     ! Duck Principle
         In TypeScript because we really want it to be easy for JavaScript developers with a minimum cognitive overload, types are structural. This means that duck typing is a first class language construct.
     Mixins

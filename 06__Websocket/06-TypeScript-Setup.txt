@@ -177,9 +177,10 @@ TO-DO to finish the minimum missing info is in:
         module
             Avoid the use of .mts and .cts
                 It is better to use the module (tsconfig.json) and type (package.json) setting to modify this behaviour. Only use for outlier files.
-
-            ? Test if it is still posible to ommit t import extension or if it still requires t .js ext
-                ? Check to which file it maps when ommiting it ( .ts or .js ), in essense if the import actually works while coding ( getting IntelliSense of the imported module )
+            If set to ESNext one can forego the file extensions.
+            Setting it to NodeNext has multiple implications best reviewed directly from the docs (Module Resollution, Transpile Output, etc):
+                https://www.typescriptlang.org/tsconfig#node16nodenext-nightly-builds
+                It forces the need to specify .js, .jsx, etc but it also allows for .json imports which are added as a declaration within the app's files the momment its built (Webpack).
 + Base tsconfig.json
 
 
@@ -468,7 +469,7 @@ TO-DO to finish the minimum missing info is in:
 
     ! Mejorar la seccion de ReactJS Parcel browserslist y target
 
-    ! No se si se vuelve una contradiccion q este usando la version "estable" de TS pero activando tood lo q pueda de la ultima nightly ver con cosas como NodeNext
+    ! No se si se vuelve una contradiccion q este usando la version "estable" de TS pero activando todo lo q pueda de la ultima nightly ver con cosas como NodeNext
 + TO-DO
 
 
