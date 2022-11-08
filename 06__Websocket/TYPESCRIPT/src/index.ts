@@ -6,7 +6,7 @@ if ( false ) console.log( 'true' );
 else console.log( 'else' );
 
 
-const arry0: Number[] = [ 1, 2 ];
+const arry0: number[] = [ 1, 2 ];
 
 arry0[ 5 ] = 3124514;
 
@@ -25,7 +25,7 @@ function reverse<T>(items: T[]): T[] {
 
 let sample = [ '1', 2, '3', 4, '5' ];
 let reversed = reverse( sample );
-sample[2] = 3; // Okay since: let sample: (string | number)[]
+sample[2] = 3; // Okay since: let sample: ( string | number )[]
 console.log( 'Reversed: ', reversed) ;
 
 let sample2 = [ '1', '3', '5' ];
@@ -35,13 +35,13 @@ reversed2[2] = 3; // Error: Type 'number' is not assignable to type 'string'.
 console.log( 'Reversed2: ', reversed2) ;
 
 
-interface Wrinkly<T extends { name: String }> {
+interface Wrinkly<T extends { name: string }> {
     id: number;
     author: string;
     data: T
 }
 
-const FallOfNumenor: Wrinkly<{ name: String, FstParagraph: string }> = {
+const FallOfNumenor: Wrinkly<{ name: string, FstParagraph: string }> = {
     id: 123,
     author: 'J.R.R. Tolkien',
     data: {
@@ -51,6 +51,4 @@ const FallOfNumenor: Wrinkly<{ name: String, FstParagraph: string }> = {
 }
 
 console.log( 'FallOfNumenor', FallOfNumenor );
-
-
 

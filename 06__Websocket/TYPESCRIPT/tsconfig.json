@@ -22,6 +22,7 @@
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "forceConsistentCasingInFileNames": true,
+        "noImplicitReturns": true,
         "noEmit": true,
         "noFallthroughCasesInSwitch": true,
         "noUnusedLocals": true,

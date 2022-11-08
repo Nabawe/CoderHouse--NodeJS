@@ -146,16 +146,18 @@ TO-DO to finish the minimum missing info is in:
         "esModuleInterop": true,
         "experimentalDecorators": true,     // enables extra features to type Classes
         "forceConsistentCasingInFileNames": true,
-        /* Do not emit compiler output files like JavaScript source code, source-maps or declarations. (meaning do not compile code, only perform type checking) */
-        "noEmit": true,
+        "noImplicitReturns": true,          // Error in case a functions return isn't typed
+
+        "noEmit": true,                     /* Do not emit compiler output files like JavaScript source code, source-maps or declarations. (meaning do not compile code, only perform type checking) */
+
         "noFallthroughCasesInSwitch": true, // Ensures switch cases end on a break or return
         "noUnusedLocals": true,             // Report errors on unused locals
         "noUnusedParameters": true,         // Report errors on unused parameters
         "removeComments": true,
         "resolveJsonModule": true,
         "skipDefaultLibCheck": true,
-        "skipLibCheck": true,               // Skip type checking all .d.ts files
-        "sourceMap": true,                  // Generate corrresponding .map files
+        "skipLibCheck": true,               // Skip type checking all .d.ts filess
+        "sourceMap": true,                  // .map files to enable better feedback and debugging
 
         "lib": [ "dom", "es2022" ],         // * adds typings for specific environments, improves intellisense a lot
     }
@@ -406,8 +408,7 @@ TO-DO to finish the minimum missing info is in:
 
 
 + QUESTIONS
-
-    - VS Code alternative, better squiggly wavy lines for errors
+    * VS Code alternative, better squiggly wavy lines for errors
 
     - Using Nightly Ver
         " I generally recommend people to use the nightly version because the compiler test suite only catches more bugs over time " - https://basarat.gitbook.io/typescript/getting-started#typescript-version
@@ -467,6 +468,10 @@ TO-DO to finish the minimum missing info is in:
         https://parceljs.org/features/production/
             Parcel hace minificacion al correr el build
 
+    ! Add VS Code debugging to each deployment section
+        launch.json
+            "preLaunchTask": "tsc: build - tsconfig.json"
+                Edit prev line to use the correct npm script or copy the script
     ! Mejorar la seccion de ReactJS Parcel browserslist y target
 
     ! No se si se vuelve una contradiccion q este usando la version "estable" de TS pero activando todo lo q pueda de la ultima nightly ver con cosas como NodeNext

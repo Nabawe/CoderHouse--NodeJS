@@ -8,6 +8,8 @@
     + Implicit Typing
     + Explicit Typing with :
     + Arrays
+    + Tuples
+    + enum
     + type
     + interface
     + Inline Type Annotation
@@ -17,6 +19,7 @@
     + Namespaces
     + Generics
     + Modules
+    + Function Overload
     + Declaration Files .d.ts and .ts
 
     + Last Words
@@ -58,16 +61,21 @@
 
 
 /* + Primitive Types */ /*
-    Basic from JavaScript: Boolean, Null, Number, Object, String, Undefined
+    ! All Primitive Types are LOWERCASE, object is not the same as Object.
+
+    Basic from JavaScript: bigint, boolean, null, number, object, string, symbol, undefined
+        Some Docs put Object as a non JavaScript Primitive Value but rather as something that TypeScript extends.
+
     AND
-    Special added by TypeScript: any, never, uknown, void
+
+    Special added by TypeScript: any, enum, never, tuple, unknown, void
 
     - any
         Mostly used when determining the type of a expression becomes too complicated or irrelevant. Assigning the "any" type will have the effect of turning type checking for that expression off.
         " any is compatible with any and all types in the type system. This means that anything can be assigned to it and it can be assigned to anything. " - TypeScrip Deep Dive, Basarat
-        WIP Try to list good practice escenarios.
+        WIP Try to list good practice scenarios.
 
-    WIP INCOMPLETE DEFINITIONS AND USABILITY strictNullChecks, null, undefined, never, uknown
+    WIP INCOMPLETE DEFINITIONS AND USABILITY strictNullChecks, null, undefined, never, unknown
 
     - void
         To specify that a function does not have a return type.
@@ -80,6 +88,17 @@
         function ASD( msg ): void {
             console.log( msg );
         };
+
+    - number
+        Can be separated by a _ to make more readable
+        console.log( 123_345_1234_934 ); // 1233451234934
+
+
+    - object, Object, {}
+        https://stackoverflow.com/questions/49464634/difference-between-object-and-object-in-typescript
+
+    - JavaScript built-in Objects, Properties, and Methods
+        Array ; Date ; eval ; function ; hasOwnProperty ; Infinity ; isFinite ; isNaN ; isPrototypeOf ; length ; Math ; NaN ; name ; Number ; Object ; prototype ; String ; toString ; undefined ; valueOf
 /* + Primitive Types */
 
 
@@ -107,24 +126,55 @@
 
 
 /* + Arrays */ /*
-    Sufix [] to the type annotation.
-        const arry0: Number[] = [ 1, 2 ];
+    Suffix [] to the type annotation.
+        const arry0: number[] = [ 1, 2 ];
         arry0.push( 'asd' );    // Error
         arry0.push( 912 );
 
-    In Python tuples are fixed sized Arrays.
-    The ? is to make the value optional, but the type is still being checked. But it seams that "pushing a value" is not checked in Tuples.
-
-    type MyTuple1 = [ number, string?, boolean? ];
-    const arry1: MyTuple1 = [ 1, 123, 'asd' ];
-
-    arry1.push(1);
-    arry1.push('44');
-    arry1.push(false);
-
-    type MyTuple2 = [ number, string, boolean ];
-    const arry2: MyTuple2 = [ 1, 'asd', true ];
+        type alfanumArry = ( number | string )[];
+        const arry1: alfanumArry = [ 1, "2", "5", 3 ];
 /* + Arrays */
+
+
+/* + Tuples */ /*
+    Tuples are fixed sized Arrays.
+    The ? is to make the value optional, the type is still being checked.
+
+    ! Tuples are transpiled into Arrays, so methods like "push" bypass TS checks.
+
+    type triValTuple = [ number, string?, boolean? ];
+    const tuple0: triValTuple = [ 1, 123, 'asd' ];    // Error
+
+    // Don't push values to Tuples they are meant to be fixed, i.e. constructed by literals.
+    // As seen below values pushed into tuple0 are not being validated.
+    tuple0.push(1);
+    tuple0.push('44');
+    tuple0.push(false);
+
+    type triValTupleFixed = [ number, string, boolean ];
+    const tuple1: triValTupleFixed = [ 1, 'asd', true ];
+/* + Tuples */
+
+
+/* + enum */ /*
+    PascalCase.
+    * Def "Enumerated Type". It is a data type consisting of a fixed set of NAMED CONSTANTS.
+
+    They generally have a small quantity of members.
+    For numeric values TS auto increments them by 1, starts at 0 if unspecified.
+    Adding const before enum outputs a more concise JS code and slightly more strict TS.
+    Avoid treating them as objects, always use them as the pair Name.Member .
+
+    const enum Size {
+        Small = -1,
+        Medium,
+        Large = 'SuperLongLong',
+        XL,                                 // Error : Non numeric values forces manual init
+    };
+
+    console.log( 'Size :', Size.Medium );   // 0
+    console.log( 'Size :', Size.XL );       // Error
+/* + enum */
 
 
 /* + type */ /*
@@ -140,17 +190,25 @@
 
 
 /* + interface */ /*
-    PascalCase.
-    To validate Objects that follow a same structure.
-    Is common practise to sort properties first and then methods.
+    - PascalCase.
+    - To validate Objects that follow a same structure.
+    - Is common practice to sort properties first and then methods.
+    - " key ?: " for Specified Optional Member
+    - " readonly key " so that said Member can't be reassigned.
+
     ? Parameters, args and return values of a function.
+    WIP Investigate if there are more uses for interfaces.
+    WIP readonly proper usage, specially to avoid over-use.
 
     // - Objects
         interface Person {
             first: string;
-            last: string;
+            readonly last: string;
+            opt?: number;
             [ key: string ]: any;
-                // ? So that 'fast' does not produce a TS error, but this surely limits existence checks.
+                // ? So that 'fast' does not produce a TS error,
+                // but this surely limits existence checks.
+                // This is adding types to a key that is defined on runtime.
         };
 
         const person1: Person = {
@@ -161,10 +219,14 @@
         const person2: Person = {
             first: 'Usain',
             last: 'Bolt',
-            fast: true
+            fast: true,
+            opt: true,              // Error, even if optional it must be a number
         };
 
-    * Def " Interfaces are the core way in TypeScript to compose multiple type annotations into a single named annotation " - TypeScrip Deep Dive, Basarat
+        person2.first   = 'Josh';   // Valid
+        person2.last    = 'Smith';  // Error since last is a readonly property
+
+    // * Def " Interfaces are the core way in TypeScript to compose multiple type annotations into a single named annotation " - TypeScrip Deep Dive, Basarat
 /* + interface */
 
 
@@ -172,6 +234,7 @@
     Are specified by the structure :{ TypeAnnotation }
     For one offs, saving the need of specifying a name to the Types Annotations (in other words to consume a slot in the Type Declaration Space).
     On the other hand defining Interfaces and other annotations can be useful to spot repeating patterns and help remembering them by having a proper name.
+    [], readonly, :? apply here too ( See +interface ).
 
     const myConstruct: {
         first: string;
@@ -198,13 +261,25 @@
 
 
 /* + Functions */ /*
-    In this particular case the return type could most proably be infered until they add ** operand to strings xD.
+    * Always specifying the function's return is concidered a good practise, to ensure different return values, for documentation, and to faster comprehend what it does.
+
+    In this particular case the return type could most probably be infered until they add ** operand to strings xD.
 
     function Pow( x:number, y:number ): number {
         return x ** y;
     };
+    console.log( Pow( 5, 2 ) );    // 25
 
-    Pow( 5, 2);
+
+    // Optional Parameters
+    function optParams( arg1?: number ): number | void {
+        if ( arg1 )
+            return 2
+    };
+    console.log( optParams() );
+
+    // Defining Function, Callbacks and Methods Signatures
+    WIP add about ( arg: Type ) => ReturnType from No BS TS, make use interface, type in examples
 /* + Functions */
 
 
@@ -224,12 +299,12 @@
         };
     };
 
-    /* The short hand is adding access modifiers (public, private, etc) in the constructor. */
+    /* The short hand is adding access modifiers (public, private, etc.) in the constructor. */
     /* The type specification before the Constructor is still relevant since using a constructor is optional. */
 
     // !WIP Ver si esta info esta actualizada o si hay una forma mejor de hacerlo
     // ? Abstract Modifier
-    /* ? Ver como se convinan los access modifiers public, private, protected con # ; ya q TS access modifiers supuestamente HACEN NADA en JS y JS ya tiene la funcionalidad, en especial ver si private se traduce a # */
+    /* ? Ver como se combinan los access modifiers public, private, protected con # ; ya q TS access modifiers supuestamente HACEN NADA en JS y JS ya tiene la funcionalidad, en especial ver si private se traduce a # */
 /* + Classes */
 
 
@@ -237,13 +312,13 @@
     A scope space is shared between Types and Variables Declarations.
 
     - Type Declaration Space
-        When using a Type definition the name it was asigned gets reserved in a scope:
+        When using a Type definition the name it was assigned gets reserved in a scope:
             interface Bar {};
             type Bas = {};
 
         one could do:
             let foo: Bas;
-        but coult NOT do:
+        but could NOT do:
             let bar = Bar;
 
     - Variable Declaration Space
@@ -283,8 +358,8 @@
     export to publish.
     Whats not exported becomes a private member.
 
-    namespace nsCammelCase {
-        const privateValue = "You can't acces this outside the Ns";
+    namespace nsCamelCase {
+        const privateValue = "You can't access this outside the Ns";
 
         export const expression = 'Laralilala';
 
@@ -292,13 +367,13 @@
 
         export namespace nestedNamespace {
             export function moonlightSonata() {
-                return 'Bethoven';
+                return 'Beethoven';
             };
         };
     };
 
-    console.log( nsCammelCase.expression );
-    console.log( nsCammelCase.nestedNamespace.moonlightSonata() );
+    console.log( nsCamelCase.expression );
+    console.log( nsCamelCase.nestedNamespace.moonlightSonata() );
 
 
     ? Check if this is correct: tsconfig:
@@ -312,18 +387,19 @@
 
 
 /* + Generics */ /*
-    Generics add "Variable Typing", ie a way to specify types the moment it is going to being to be used.
+    Generics add "Variable Typing", i.e. a way to specify types the moment it is going to being to be used.
     <  > Syntax
 
     Add Examples with functions, interfaces */
 
-    interface Wrinkly<T extends { name: String }> {
+    /* What would be passed to the Wrinkly Interfase as T MUST extend the Type Definition for an object with the format { name: string } */
+    interface Wrinkly<T extends { name: string }> {
         id: number;
         author: string;
         data: T
     }
 
-    const FallOfNumenor: Wrinkly<{ name: String, FstParagraph: string }> = {
+    const FallOfNumenor: Wrinkly<{ name: string, FstParagraph: string }> = {
         id: 123,
         author: 'J.R.R. Tolkien',
         data: {
@@ -340,12 +416,12 @@
 /* + Modules */ /*
     One can export or import types just like any variable:
         export type SomeType = {
-            blue: String;
+            blue: string;
         };
     OR
         let myVar = 123;
         type mewType = {
-            green: String;
+            green: string;
         };
         export {
             myVar,
@@ -387,6 +463,12 @@
 /* + Modules */
 
 
+/* + Function Overload */ /*
+    Overload Signature
+    Implementation Signature
+/* + Function Overload */
+
+
 /* + Declaration Files .d.ts and .ts */ /*
     - Can only contain types definitions.
     - d.ts Declaration Files are generally used to add types JS files without the need to rewrite them, they are generally auto associated, by using the same name or as a separated @types/libName package generally with an index.d.ts (its own package.json would have something like "types": "index.d.ts").
@@ -412,7 +494,7 @@
 
 
 /* + Last Words */ /*
-    Some general conciderations
+    Some general considerations
         https://basarat.gitbook.io/typescript/recap
         Equality
         References
@@ -427,7 +509,7 @@
             Number.isSafeInterger( num )
                 - To check if num could be subject to binary to decimal rounding errors.
                 ! " Whenever you use math for financial calculations use a library like big.js"
-                ! " Do not use this lib for math used for UI or performance intensive purposes, charts, canvas, etc"
+                ! " Do not use this lib for math used for UI or performance intensive purposes, charts, canvas, etc. "
                     I understand that JS already has incorporated this but a specialized lib my do the job better.
                 - Use Number.isNaN( var ) to check if var is of type Number and NaN.
                 - Use isNan( var ) to check if var coerces to NaN. It checks if var is not a number, so it could very well be any String, etc.
@@ -437,17 +519,15 @@
 
 
 /* + Pros */ /*
-    - Customized intellisense thru lib key in tsconfig.json
+    - Customized IntelliSense thru lib key in tsconfig.json
     - Combat JS Weirdness : So you can incrementally upgrade your JavaScript code to TypeScript
-    - Equality checks as consecuense of type and Interface ( from TypeScript Deep Dive chapter on Equality )
+    - Equality checks as consequence of type and Interface ( from TypeScript Deep Dive chapter on Equality )
 /* + Pros */
 
 
 /* + QUESTIONS */ /*
     - What's the "name" of the colon operator in typescript? ( I mean the main operator the : ).
         type operator? typeS operator?
-
-    - Still unsure if it is better to leave a space after the type or not asd:string vs asd: string
 
     - Declaration Spaces
         · Does Class Typing work by inference?
@@ -461,7 +541,7 @@
 
     - Namespaces
         · Do the use of Namespaces have a big negative impact once transpiled into JS? Since they are turned into a mess of functions or objects.
-            If I understood correctly it gets transpiled to an annonymus function that aggregates to an object.
+            If I understood correctly it gets transpiled to an anonymous function that aggregates to an object.
         · Are all Namespaces global? Can we define scopes to them? ( Not by nesting a NS whiting a NS ).
 
     - Modules
@@ -481,8 +561,6 @@
 
 
 /* + TO-DO */ /*
-    Interfaces
-    Enums
     Generics
     Abstract classes
     Data modifiers
@@ -490,7 +568,7 @@
     Function overloading
     Class Decorators
     Type utils
-    readonly keyword
+    readonly keyword ( It may apply to more than interfaces )
     ! Duck Principle
         In TypeScript because we really want it to be easy for JavaScript developers with a minimum cognitive overload, types are structural. This means that duck typing is a first class language construct.
     Mixins
