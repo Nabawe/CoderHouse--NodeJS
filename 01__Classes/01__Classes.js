@@ -4,8 +4,8 @@
 /** Crea un usuario */
 class Usuario {
     /**
-     * @param {String} nombre
-     * @param {String} apellido
+     * @param {string} nombre
+     * @param {string} apellido
      * @param {[titulo: string, autor: string]} libros
      * @param {[nombre: string]} mascotas
      */
@@ -31,8 +31,8 @@ class Usuario {
     // ! cambié nombre por titulo
     /**
      * Agrega un libro
-     * @param {String} titulo
-     * @param {String} autor
+     * @param {string} titulo
+     * @param {string} autor
      */
     addBook( titulo, autor ) {
         this.libros.push( { titulo, autor } );

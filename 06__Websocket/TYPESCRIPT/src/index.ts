@@ -51,4 +51,3 @@ const FallOfNumenor: Wrinkly<{ name: string, FstParagraph: string }> = {
 }
 
 console.log( 'FallOfNumenor', FallOfNumenor );
-

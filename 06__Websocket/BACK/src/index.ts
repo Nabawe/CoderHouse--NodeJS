@@ -31,3 +31,5 @@
 
     // * Se recomienda poner las props arriba y metodos abajo
 /* + interface */
+
+// ! CHECK https://levelup.gitconnected.com/how-to-properly-set-up-express-with-typescript-1b52570677c9

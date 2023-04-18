@@ -62,6 +62,7 @@
 
 /* + Primitive Types */ /*
     ! All Primitive Types are LOWERCASE, object is not the same as Object.
+    ? Trying to make a list of the non reduseable Types which is not the same as Basic Types, but I do believe I need to clean and trim.
 
     Basic from JavaScript: bigint, boolean, null, number, object, string, symbol, undefined
         Some Docs put Object as a non JavaScript Primitive Value but rather as something that TypeScript extends.
@@ -93,12 +94,14 @@
         Can be separated by a _ to make more readable
         console.log( 123_345_1234_934 ); // 1233451234934
 
-
     - object, Object, {}
         https://stackoverflow.com/questions/49464634/difference-between-object-and-object-in-typescript
 
     - JavaScript built-in Objects, Properties, and Methods
         Array ; Date ; eval ; function ; hasOwnProperty ; Infinity ; isFinite ; isNaN ; isPrototypeOf ; length ; Math ; NaN ; name ; Number ; Object ; prototype ; String ; toString ; undefined ; valueOf
+
+    - Need a Category
+        RegExp
 /* + Primitive Types */
 
 
@@ -265,7 +268,7 @@
 
     In this particular case the return type could most probably be infered until they add ** operand to strings xD.
 
-    function Pow( x:number, y:number ): number {
+    function Pow( x: number, y: number ): number {
         return x ** y;
     };
     console.log( Pow( 5, 2 ) );    // 25
@@ -568,6 +571,7 @@
     Function overloading
     Class Decorators
     Type utils
+    Record
     readonly keyword ( It may apply to more than interfaces )
     ! Duck Principle
         In TypeScript because we really want it to be easy for JavaScript developers with a minimum cognitive overload, types are structural. This means that duck typing is a first class language construct.
@@ -592,6 +596,12 @@
     Docu
     Control null, undefined, NaN, etc
     ----showConfig add this flag to the building it could help to confirm the tsc cfg each time is run
+
+    https://bobbyhadz.com/blog/typescript-add-property-to-object
+    https://blog.logrocket.com/dynamically-assign-properties-object-typescript/
+        Mirar para ver como agregar Typeo a propiedades o metodos q se agreguen LUEGO de su definicion o sea de forma dinamica.
+            La respuesta q buscaba en realidad era extender la definicion
+                https://blog.logrocket.com/extending-object-like-types-interfaces-typescript/
 
     https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-next
     .eslintrc.cjs
