@@ -181,18 +181,8 @@
 			]
 		},
 		{
-			"path": "06__Websocket/06-TypeScript-Setup.draft.txt",
+			"path": "06__Websocket/06-TypeScript-Setup.txt",
 			"bookmarks": [
-				{
-					"line": 84,
-					"column": 63,
-					"label": ""
-				},
-				{
-					"line": 105,
-					"column": 7,
-					"label": ""
-				},
 				{
 					"line": 263,
 					"column": 52,
